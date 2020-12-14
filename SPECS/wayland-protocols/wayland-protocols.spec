@@ -1,7 +1,7 @@
 Summary:        Wayland protocols that add functionality not available in the core protocol
 Name:           wayland-protocols
 Version:        1.20
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -46,9 +46,12 @@ wayland-protocols.
 %{_datadir}/%{name}/
 
 %changelog
-* Thu Dec 10 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.20-2
-- Initial CBL-Mariner import from Fedora 32 (license: MIT).
+* Thu Dec 10 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.20-3
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
+
+* Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.20-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
 * Sat Feb 29 2020 Jonas Ådahl <jadahl@redhat.com> - 1.20-1
 - Update to 1.20
