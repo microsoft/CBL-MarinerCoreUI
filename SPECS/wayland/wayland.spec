@@ -11,16 +11,10 @@ Source0:        https://wayland.freedesktop.org/releases/%{name}-%{version}.tar.
 Patch0:         0001-Idle-loop-thread-safe-fix.patch
 
 BuildRequires:  chrpath
-BuildRequires:  docbook-style-xsl
-BuildRequires:  doxygen
 BuildRequires:  expat-devel
 BuildRequires:  gcc
 BuildRequires:  libffi-devel
-BuildRequires:  libxml2-devel
-BuildRequires:  libxslt
 BuildRequires:  pkg-config
-BuildRequires:  xmlto
-BuildRequires:  pkgconfig(libffi)
 
 %description
 Wayland is a protocol for a compositor to talk to its clients as well as a C
@@ -31,6 +25,7 @@ applications, X servers (rootless or fullscreen) or other display servers.
 
 %package        devel
 Summary:        Development files for %{name}
+
 Requires:       libwayland-client%{?_isa} = %{version}-%{release}
 Requires:       libwayland-cursor%{?_isa} = %{version}-%{release}
 Requires:       libwayland-egl%{?_isa} = %{version}-%{release}
@@ -42,6 +37,7 @@ developing applications that use %{name}.
 
 %package doc
 Summary:        Wayland development documentation
+
 BuildArch:      noarch
 
 %description doc
@@ -94,15 +90,15 @@ XDG_RUNTIME_DIR=$PWD/tests/run make check || \
 { rc=$?; cat test-suite.log; exit $rc; }
 
 %files devel
-%{_bindir}/wayland-scanner
-%{_includedir}/wayland-*.h
-%{_libdir}/pkgconfig/wayland-*.pc
-%{_libdir}/libwayland-*.so
-%{_datadir}/aclocal/wayland-scanner.m4
 %dir %{_datadir}/wayland
+%{_bindir}/wayland-scanner
+%{_datadir}/aclocal/wayland-scanner.m4
 %{_datadir}/wayland/wayland-scanner.mk
-%{_datadir}/wayland/wayland.xml
 %{_datadir}/wayland/wayland.dtd
+%{_datadir}/wayland/wayland.xml
+%{_includedir}/wayland-*.h
+%{_libdir}/libwayland-*.so
+%{_libdir}/pkgconfig/wayland-*.pc
 
 %files doc
 %doc README TODO
@@ -128,8 +124,9 @@ XDG_RUNTIME_DIR=$PWD/tests/run make check || \
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Added a patch making the event loop thread-safe.
-- Added BuildRequires: libffi.
-- Removed BuildRequires: graphviz (disabled documentation).
+- Disabled documentation to remove BuildRequires on: 'graphviz'.
+- Documentation also removed BuildRequires on: 'docbook-style-xsl', 'doxygen', 'libxml2-devel', 'libxslt', and 'xmlto'.
+- Replaced BuildRequires 'pkgconfig(libffi)' with 'libffi-devel'.
 
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.18.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
