@@ -127,8 +127,9 @@ XDG_RUNTIME_DIR=$PWD/tests/run make check || \
 * Mon Dec 14 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.18.0-3
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
-- Added BuildRequires: libffi
-- Removed BuildRequires: graphviz (disabled documentation)
+- Added a patch making the event loop thread-safe.
+- Added BuildRequires: libffi.
+- Removed BuildRequires: graphviz (disabled documentation).
 
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.18.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
