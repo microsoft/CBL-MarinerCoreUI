@@ -10,16 +10,17 @@ Source0:        https://wayland.freedesktop.org/releases/%{name}-%{version}.tar.
 
 Patch0:         0001-Idle-loop-thread-safe-fix.patch
 
-BuildRequires:  gcc
 BuildRequires:  chrpath
 BuildRequires:  docbook-style-xsl
 BuildRequires:  doxygen
 BuildRequires:  expat-devel
+BuildRequires:  gcc
 BuildRequires:  libffi-devel
 BuildRequires:  libxml2-devel
 BuildRequires:  libxslt
-BuildRequires:  pkgconfig(libffi)
+BuildRequires:  pkg-config
 BuildRequires:  xmlto
+BuildRequires:  pkgconfig(libffi)
 
 %description
 Wayland is a protocol for a compositor to talk to its clients as well as a C
@@ -40,28 +41,33 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %package doc
-Summary: Wayland development documentation
-BuildArch: noarch
+Summary:        Wayland development documentation
+BuildArch:      noarch
+
 %description doc
 Wayland development documentation
 
 %package -n libwayland-client
-Summary: Wayland client library
+Summary:        Wayland client library
+
 %description -n libwayland-client
 Wayland client library
 
 %package -n libwayland-cursor
-Summary: Wayland cursor library
+Summary:        Wayland cursor library
+
 %description -n libwayland-cursor
 Wayland cursor library
 
 %package -n libwayland-egl
-Summary: Wayland egl library
+Summary:        Wayland egl library
+
 %description -n libwayland-egl
 Wayland egl library
 
 %package -n libwayland-server
-Summary: Wayland server library
+Summary:        Wayland server library
+
 %description -n libwayland-server
 Wayland server library
 
@@ -77,10 +83,10 @@ make %{?_smp_mflags}
 %install
 %make_install
 
-find $RPM_BUILD_ROOT -name \*.la | xargs rm -f
+find %{buildroot} -type f -name "*.la" -delete -print
 
 # Remove lib64 rpaths
-chrpath -d $RPM_BUILD_ROOT%{_libdir}/libwayland-cursor.so
+chrpath -d %{buildroot}%{_libdir}/libwayland-cursor.so
 
 %check
 mkdir -m 700 tests/run
