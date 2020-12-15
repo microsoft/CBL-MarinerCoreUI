@@ -17,11 +17,9 @@ BuildRequires:  ninja-build
 BuildRequires:  python3-devel
 BuildRequires:  python3-libs
 BuildRequires:  python3-setuptools
-BuildRequires:  python3-xml
 
 Requires:       ninja-build
 Requires:       python3-setuptools
-Requires:       python3-xml
 
 BuildArch:      noarch
 
@@ -58,6 +56,7 @@ python3 ./run_tests.py
 * Tue Dec 15 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.56.0-1
 - Update to 0.56.0.
 - License verified.
+- Removing 'python3-xml' from '*Requires'.
 
 * Mon Apr 13 2020 Emre Girgin <mrgirgin@microsoft.com> - 0.49.2-1
 - Update to 0.49.2.
