@@ -1,20 +1,22 @@
+Summary:        Tablet Information Client Library
 Name:           libwacom
 Version:        1.6
 Release:        2%{?dist}
-Summary:        Tablet Information Client Library
-Requires:       %{name}-data
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://github.com/linuxwacom/libwacom
 Source0:        https://github.com/linuxwacom/libwacom/releases/download/%{name}-%{version}/%{name}-%{version}.tar.bz2
 
-BuildRequires:  meson gcc
-BuildRequires:  marinerui-rpm-macros
-BuildRequires:  glib2-devel libgudev1-devel
-BuildRequires:  systemd systemd-devel
+BuildRequires:  gcc
 BuildRequires:  git
+BuildRequires:  glib2-devel
+BuildRequires:  libgudev1-devel
 BuildRequires:  libxml2-devel
+BuildRequires:  marinerui-rpm-macros
+BuildRequires:  meson
+BuildRequires:  systemd
+BuildRequires:  systemd-devel
 
 Requires:       %{name}-data = %{version}-%{release}
 
@@ -25,14 +27,16 @@ the UI or general settings to match the physical tablet.
 
 %package devel
 Summary:        Tablet Information Client Library Development Package
+
 Requires:       %{name} = %{version}-%{release}
-Requires:       pkgconfig
+Requires:       pkg-config
 
 %description devel
 Tablet information client library development package.
 
 %package data
 Summary:        Tablet Information Client Library Data Files
+
 BuildArch:      noarch
 
 %description data
@@ -47,7 +51,7 @@ Tablet information client library data files.
 
 %install
 %meson_install
-install -d ${RPM_BUILD_ROOT}/%{_udevrulesdir}
+install -d %{buildroot}/%{_udevrulesdir}
 
 %check
 %meson_test
@@ -70,7 +74,7 @@ install -d ${RPM_BUILD_ROOT}/%{_udevrulesdir}
 %{_libdir}/pkgconfig/libwacom.pc
 
 %files data
-%doc COPYING
+%license COPYING
 %{_udevrulesdir}/65-libwacom.rules
 %{_udevhwdbdir}/65-libwacom.hwdb
 %dir %{_datadir}/libwacom
