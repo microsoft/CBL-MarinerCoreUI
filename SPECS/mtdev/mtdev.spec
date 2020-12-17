@@ -1,23 +1,12 @@
-%global tarball mtdev
-#global gitdate 20110105
-
+Summary:        Multitouch Protocol Translation Library
 Name:           mtdev
 Version:        1.1.5
-Release:        18%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
-Summary:        Multitouch Protocol Translation Library
-
+Release:        19%%{?dist}
 License:        MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
 URL:            http://bitmath.org/code/mtdev/
-
-# upstream doesn't have tarballs
-
-%if 0%{?gitdate}
-Source0:        %{tarball}-%{gitdate}.tar.bz2
-Source1:        make-git-snapshot.sh
-Source2:        commitid
-%else
 Source0:        http://bitmath.org/code/%{name}/%{name}-%{version}.tar.bz2
-%endif
 
 BuildRequires:  autoconf automake libtool gcc
 
@@ -36,7 +25,7 @@ Requires:       pkgconfig
 Multitouch protocol translation library development package.
 
 %prep
-%setup -q -n %{tarball}-%{?gitdate:%{gitdate}}%{!?gitdate:%{version}}
+%setup -q
 
 %build
 autoreconf --force -v --install || exit 1
@@ -50,7 +39,8 @@ rm -rf %{buildroot}
 # We intentionally don't ship *.la files
 rm -f %{buildroot}%{_libdir}/*.la
 
-%ldconfig_scriptlets
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %doc COPYING README
@@ -65,6 +55,10 @@ rm -f %{buildroot}%{_libdir}/*.la
 %{_bindir}/mtdev-test
 
 %changelog
+* Wed Dec 16 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.5-19
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.5-18
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
