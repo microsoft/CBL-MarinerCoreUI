@@ -1,0 +1,7 @@
+# Fedora provides these through the 'redhat-rpm-config' package along with many other configurations.
+# More investigation needed to determine if 'redhat-rpm-config' should be made part of CBL-Mariner packages.
+%_vpath_srcdir      .
+%_vpath_builddir    %{_target_platform}
+
+# The '_smp_*' macros are defined in 'rpm' >= 1.15.1, which is above CBL-Mariner's version of 1.14.2.
+%_smp_build_ncpus   %(%{_bindir}/nproc 2>/dev/null)
