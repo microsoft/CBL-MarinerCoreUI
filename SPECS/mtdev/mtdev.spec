@@ -31,7 +31,7 @@ Provides:       pkgconfig(mtdev)
 Multitouch protocol translation library development package.
 
 %prep
-%setup -q
+%autosetup
 
 %build
 autoreconf --force -v --install || exit 1
