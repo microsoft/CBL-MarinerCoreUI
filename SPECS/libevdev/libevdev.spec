@@ -1,11 +1,12 @@
+Summary:        Kernel Evdev Device Wrapper Library
 Name:           libevdev
 Version:        1.9.1
-Release:        3%{?dist}
-Summary:        Kernel Evdev Device Wrapper Library
-
+Release:        4%{?dist}
 License:        MIT
-URL:            http://www.freedesktop.org/wiki/Software/libevdev
-Source0:        http://www.freedesktop.org/software/%{name}/%{name}-%{version}.tar.xz
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL:            https://www.freedesktop.org/wiki/Software/libevdev
+Source0:        https://www.freedesktop.org/software/%{name}/%{name}-%{version}.tar.xz
 
 BuildRequires:  git-core
 BuildRequires:  meson gcc
@@ -62,6 +63,10 @@ pathfix.py -i %{__python3} -p -n $(git grep -l '#!/usr/bin/.*python.*')
 %{_bindir}/libevdev-tweak-device
 
 %changelog
+* Thu Dec 10 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.9.1-4
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.9.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
