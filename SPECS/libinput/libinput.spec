@@ -11,7 +11,7 @@ Source0:        https://www.freedesktop.org/software/libinput/libinput-%{version
 
 BuildRequires:  check-devel
 BuildRequires:  gcc
-BuildRequires:  git-core
+BuildRequires:  git
 BuildRequires:  meson
 BuildRequires:  pkg-config
 BuildRequires:  python3-devel
