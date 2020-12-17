@@ -1,24 +1,24 @@
 %global udevdir %(pkg-config --variable=udevdir udev)
-
+Summary:        Input device library
 Name:           libinput
 Version:        1.16.4
 Release:        1%{?dist}
-Summary:        Input device library
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL:            http://www.freedesktop.org/wiki/Software/libinput/
-Source0:        http://www.freedesktop.org/software/libinput/libinput-%{version}.tar.xz
+URL:            https://www.freedesktop.org/wiki/Software/libinput/
+Source0:        https://www.freedesktop.org/software/libinput/libinput-%{version}.tar.xz
 
-BuildRequires:  git-core
-BuildRequires:  gcc
-BuildRequires:  meson
-BuildRequires:  pkgconfig(libudev)
-BuildRequires:  pkgconfig(mtdev) >= 1.1.0
-BuildRequires:  pkgconfig(libevdev) >= 0.4
-BuildRequires:  pkgconfig(libwacom) >= 0.20
-BuildRequires:  python3-devel
 BuildRequires:  check-devel
+BuildRequires:  gcc
+BuildRequires:  git-core
+BuildRequires:  meson
+BuildRequires:  pkg-config
+BuildRequires:  python3-devel
+BuildRequires:  pkgconfig(libevdev) >= 0.4
+BuildRequires:  pkgconfig(libudev)
+BuildRequires:  pkgconfig(libwacom) >= 0.20
+BuildRequires:  pkgconfig(mtdev) >= 1.1.0
 
 %description
 libinput is a library that handles input devices for display servers and other
@@ -28,9 +28,9 @@ It provides device detection, device handling, input device event processing
 and abstraction so minimize the amount of custom input code the user of
 libinput need to provide the common set of functionality that users expect.
 
-
 %package        devel
 Summary:        Development files for %{name}
+
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
@@ -39,8 +39,10 @@ developing applications that use %{name}.
 
 %package        utils
 Summary:        Utilities and tools for debugging %{name}
+
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       python3-pyudev python3-libevdev
+Requires:       python3-libevdev
+Requires:       python3-pyudev
 
 %description    utils
 The %{name}-utils package contains tools to debug hardware and analyze
@@ -48,6 +50,7 @@ The %{name}-utils package contains tools to debug hardware and analyze
 
 %package        test
 Summary:        libinput integration test suite
+
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    test
@@ -57,7 +60,7 @@ intended to be run by users.
 %prep
 %autosetup -S git
 # Replace whatever the source uses with the approved call
-pathfix.py -i %{__python3} -p -n $(git grep -l  '#!/usr/bin/.*python3')
+pathfix.py -i python3 -p -n $(git grep -l  '#!/usr/bin/.*python3')
 
 %build
 %meson -Ddebug-gui=false \
@@ -75,9 +78,8 @@ pathfix.py -i %{__python3} -p -n $(git grep -l  '#!/usr/bin/.*python3')
 
 %ldconfig_postun
 
-
 %files
-%doc COPYING
+%license COPYING
 %{_libdir}/libinput.so.*
 %{udevdir}/libinput-device-group
 %{udevdir}/libinput-fuzz-to-zero
