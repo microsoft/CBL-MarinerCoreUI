@@ -1,14 +1,17 @@
 Summary:        Multitouch Protocol Translation Library
 Name:           mtdev
 Version:        1.1.5
-Release:        19%%{?dist}
+Release:        19%{?dist}
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL:            http://bitmath.org/code/mtdev/
-Source0:        http://bitmath.org/code/%{name}/%{name}-%{version}.tar.bz2
+URL:            https://bitmath.org/code/mtdev/
+Source0:        https://bitmath.org/code/%{name}/%{name}-%{version}.tar.bz2
 
-BuildRequires:  autoconf automake libtool gcc
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  gcc
+BuildRequires:  libtool
 
 %description
 %{name} is a stand-alone library which transforms all variants of kernel MT
@@ -18,8 +21,9 @@ contact tracking, or type B with contact tracking.
 
 %package devel
 Summary:        Multitouch Protocol Translation Library Development Package
+
 Requires:       %{name} = %{version}-%{release}
-Requires:       pkgconfig
+Requires:       pkg-config
 
 %description devel
 Multitouch protocol translation library development package.
@@ -33,17 +37,17 @@ autoreconf --force -v --install || exit 1
 %make_build
 
 %install
-rm -rf %{buildroot}
 %make_install
 
 # We intentionally don't ship *.la files
-rm -f %{buildroot}%{_libdir}/*.la
+find %{buildroot} -type f -name "*.la" -delete -print
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
-%doc COPYING README
+%license COPYING
+%doc README
 %{_libdir}/libmtdev.so.*
 
 %files devel
@@ -146,7 +150,7 @@ rm -f %{buildroot}%{_libdir}/*.la
 * Mon Jun 18 2012 Peter Hutterer <peter.hutterer@redhat.com> 1.1.2-1
 - mtdev 1.1.2
 - upstream provides tarballs now, add the needed spec file changes
- 
+
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.1.0-3.20110105
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
