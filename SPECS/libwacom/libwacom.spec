@@ -1,3 +1,5 @@
+%global udevdir %(pkg-config --variable=udevdir udev)
+
 Summary:        Tablet Information Client Library
 Name:           libwacom
 Version:        1.6
@@ -10,8 +12,8 @@ Source0:        https://github.com/linuxwacom/libwacom/releases/download/%{name}
 
 BuildRequires:  gcc
 BuildRequires:  git
-BuildRequires:  glib2-devel
-BuildRequires:  libgudev1-devel
+BuildRequires:  glib-devel
+BuildRequires:  libgudev-devel
 BuildRequires:  libxml2-devel
 BuildRequires:  marinerui-rpm-macros
 BuildRequires:  meson
@@ -46,7 +48,12 @@ Tablet information client library data files.
 %autosetup
 
 %build
-%meson -Dtests=disabled -Ddocumentation=disabled
+%meson \
+  -Ddocumentation=disabled \
+%if !%{with_check}
+  -Dtests=disabled \
+%endif
+  -Dudev-dir=%{udevdir}
 %meson_build
 
 %install
@@ -88,6 +95,8 @@ install -d %{buildroot}/%{_udevrulesdir}
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Added build-time dependency on 'marinerui-rpm-macros'.
+- Conditionally enabled test builds.
+- Explicitly set the 'udev-dir' argument for the build.
 - Replaced %%ldconfig_scriptlets with explicit calls to ldconfig.
 
 * Tue Nov 03 2020 Peter Hutterer <peter.hutterer@redhat.com> 1.6-1
