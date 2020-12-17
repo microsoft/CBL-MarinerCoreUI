@@ -1,22 +1,14 @@
 %global udevdir %(pkg-config --variable=udevdir udev)
 
-#global gitdate 20141211
-%global gitversion 58abea394
-
 Name:           libinput
 Version:        1.16.4
-Release:        1%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
+Release:        1%{?dist}
 Summary:        Input device library
-
 License:        MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
 URL:            http://www.freedesktop.org/wiki/Software/libinput/
-%if 0%{?gitdate}
-Source0:        %{name}-%{gitdate}.tar.xz
-Source1:        make-git-snapshot.sh
-Source2:        commitid
-%else
 Source0:        http://www.freedesktop.org/software/libinput/libinput-%{version}.tar.xz
-%endif
 
 BuildRequires:  git-core
 BuildRequires:  gcc
@@ -142,6 +134,10 @@ pathfix.py -i %{__python3} -p -n $(git grep -l  '#!/usr/bin/.*python3')
 %{_mandir}/man1/libinput-test-suite.1*
 
 %changelog
+* Wed Dec 16 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.16.4-2
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+
 * Fri Nov 27 2020 Peter Hutterer <peter.hutterer@redhat.com> 1.16.4-1
 - libinput 1.16.4
 
