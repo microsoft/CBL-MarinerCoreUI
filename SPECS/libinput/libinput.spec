@@ -1,13 +1,9 @@
-# Setting '_vpath*' macros explicitly. Fedora provides these through the 'redhat-rpm-config' package.
-%define _vpath_srcdir .
-%define _vpath_builddir %{_target_platform}
-
 %global udevdir %(pkg-config --variable=udevdir udev)
 
 Summary:        Input device library
 Name:           libinput
 Version:        1.16.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -17,10 +13,11 @@ Source0:        https://www.freedesktop.org/software/libinput/libinput-%{version
 BuildRequires:  check
 BuildRequires:  gcc
 BuildRequires:  git
+BuildRequires:  marinerui-rpm-macros
 BuildRequires:  meson
 BuildRequires:  pkg-config
 BuildRequires:  python3-devel
-#BuildRequires:  pkgconfig(libevdev) >= 0.4
+BuildRequires:  pkgconfig(libevdev) >= 0.4
 BuildRequires:  pkgconfig(libudev)
 #BuildRequires:  pkgconfig(libwacom) >= 0.20
 BuildRequires:  pkgconfig(mtdev) >= 1.1.0
@@ -63,9 +60,7 @@ The %{name}-test package contains the libinput test suite. It is not
 intended to be run by users.
 
 %prep
-# %autosetup -S git
-# Replace whatever the source uses with the approved call
-# pathfix.py -i python3 -p -n $(git grep -l  '#!/usr/bin/.*python3')
+%autosetup
 
 %build
 %meson -Ddebug-gui=false \
@@ -144,7 +139,8 @@ intended to be run by users.
 * Wed Dec 16 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.16.4-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
-- Setting '_vpath*' macros explicitly.
+- Adding build-time dependency on 'marinerui-rpm-macros'.
+- Removing pathfix.py step.
 
 * Fri Nov 27 2020 Peter Hutterer <peter.hutterer@redhat.com> 1.16.4-1
 - libinput 1.16.4
