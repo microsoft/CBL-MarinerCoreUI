@@ -9,7 +9,7 @@ URL:            https://www.freedesktop.org/wiki/Software/libevdev
 Source0:        https://www.freedesktop.org/software/%{name}/%{name}-%{version}.tar.xz
 
 BuildRequires:  gcc
-BuildRequires:  git-core
+BuildRequires:  git
 BuildRequires:  meson
 BuildRequires:  python3
 BuildRequires:  python3-devel
