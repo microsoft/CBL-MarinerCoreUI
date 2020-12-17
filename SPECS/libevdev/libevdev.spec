@@ -10,6 +10,7 @@ Source0:        https://www.freedesktop.org/software/%{name}/%{name}-%{version}.
 
 BuildRequires:  gcc
 BuildRequires:  git
+BuildRequires:  marinerui-rpm-macros
 BuildRequires:  meson
 BuildRequires:  python3
 BuildRequires:  python3-devel
@@ -35,9 +36,7 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 Utilities to handle and/or debug evdev devices.
 
 %prep
-%autosetup -S git
-# Replace whatever the source uses with the approved call
-pathfix.py -i python3 -p -n $(git grep -l '#!/usr/bin/.*python.*')
+%autosetup
 
 %build
 %meson -Dtests=disabled -Ddocumentation=disabled -Dcoverity=false
@@ -46,7 +45,8 @@ pathfix.py -i python3 -p -n $(git grep -l '#!/usr/bin/.*python.*')
 %install
 %meson_install
 
-%ldconfig_scriptlets
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %license COPYING
@@ -70,6 +70,9 @@ pathfix.py -i python3 -p -n $(git grep -l '#!/usr/bin/.*python.*')
 * Thu Dec 10 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.9.1-4
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
+- Added build-time dependency on 'marinerui-rpm-macros'.
+- Removed pathfix.py step.
+- Replaced %%ldconfig_scriptlets with explicit calls to ldconfig.
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.9.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
