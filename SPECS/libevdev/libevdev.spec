@@ -8,9 +8,11 @@ Distribution:   Mariner
 URL:            https://www.freedesktop.org/wiki/Software/libevdev
 Source0:        https://www.freedesktop.org/software/%{name}/%{name}-%{version}.tar.xz
 
+BuildRequires:  gcc
 BuildRequires:  git-core
-BuildRequires:  meson gcc
-BuildRequires:  python3 python3-devel
+BuildRequires:  meson
+BuildRequires:  python3
+BuildRequires:  python3-devel
 
 %description
 %{name} is a library to wrap kernel evdev devices and provide a proper API
@@ -18,6 +20,7 @@ to interact with those devices.
 
 %package devel
 Summary:        Kernel Evdev Device Wrapper Library Development Package
+
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description devel
@@ -25,6 +28,7 @@ Kernel Evdev Device Wrapper Library Development Package.
 
 %package utils
 Summary:        Kernel Evdev Device Wrapper Library Utilities Package
+
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description utils
@@ -33,7 +37,7 @@ Utilities to handle and/or debug evdev devices.
 %prep
 %autosetup -S git
 # Replace whatever the source uses with the approved call
-pathfix.py -i %{__python3} -p -n $(git grep -l '#!/usr/bin/.*python.*')
+pathfix.py -i python3 -p -n $(git grep -l '#!/usr/bin/.*python.*')
 
 %build
 %meson -Dtests=disabled -Ddocumentation=disabled -Dcoverity=false
@@ -45,7 +49,7 @@ pathfix.py -i %{__python3} -p -n $(git grep -l '#!/usr/bin/.*python.*')
 %ldconfig_scriptlets
 
 %files
-%doc COPYING
+%license COPYING
 %{_libdir}/libevdev.so.*
 
 %files devel
@@ -276,4 +280,3 @@ pathfix.py -i %{__python3} -p -n $(git grep -l '#!/usr/bin/.*python.*')
 
 * Thu Jul 25 2013 Peter Hutterer <peter.hutterer@redhat.com> 0.2.1-1
 - Initial package (#987204)
-
