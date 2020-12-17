@@ -1,15 +1,16 @@
 Name:           libwacom
 Version:        1.6
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Tablet Information Client Library
 Requires:       %{name}-data
-
 License:        MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
 URL:            https://github.com/linuxwacom/libwacom
-
 Source0:        https://github.com/linuxwacom/libwacom/releases/download/%{name}-%{version}/%{name}-%{version}.tar.bz2
 
 BuildRequires:  meson gcc
+BuildRequires:  marinerui-rpm-macros
 BuildRequires:  glib2-devel libgudev1-devel
 BuildRequires:  systemd systemd-devel
 BuildRequires:  git
@@ -38,7 +39,7 @@ BuildArch:      noarch
 Tablet information client library data files.
 
 %prep
-%autosetup -S git
+%autosetup
 
 %build
 %meson -Dtests=disabled -Ddocumentation=disabled
@@ -51,7 +52,8 @@ install -d ${RPM_BUILD_ROOT}/%{_udevrulesdir}
 %check
 %meson_test
 
-%ldconfig_scriptlets
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %license COPYING
@@ -78,6 +80,12 @@ install -d ${RPM_BUILD_ROOT}/%{_udevrulesdir}
 %{_datadir}/libwacom/layouts/*.svg
 
 %changelog
+* Thu Dec 10 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.6-2
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added build-time dependency on 'marinerui-rpm-macros'.
+- Replaced %%ldconfig_scriptlets with explicit calls to ldconfig.
+
 * Tue Nov 03 2020 Peter Hutterer <peter.hutterer@redhat.com> 1.6-1
 - libwacom 1.6
 
