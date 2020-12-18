@@ -8,7 +8,7 @@ License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://www.freedesktop.org/wiki/Software/libinput/
-Source0:        https://www.freedesktop.org/software/libinput/libinput-%{version}.tar.xz
+Source0:        https://www.freedesktop.org/software/%{name}/%{name}-%{version}.tar.xz
 
 BuildRequires:  check
 BuildRequires:  gcc
