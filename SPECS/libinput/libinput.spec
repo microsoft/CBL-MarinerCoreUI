@@ -17,6 +17,7 @@ BuildRequires:  marinerui-rpm-macros
 BuildRequires:  meson
 BuildRequires:  pkg-config
 BuildRequires:  python3-devel
+BuildRequires:  pkgconfig(libevdev)
 BuildRequires:  pkgconfig(libudev)
 BuildRequires:  pkgconfig(libwacom)
 BuildRequires:  pkgconfig(mtdev)
