@@ -19,7 +19,7 @@ BuildRequires:  pkg-config
 BuildRequires:  python3-devel
 BuildRequires:  pkgconfig(libevdev) >= 0.4
 BuildRequires:  pkgconfig(libudev)
-#BuildRequires:  pkgconfig(libwacom) >= 0.20
+BuildRequires:  pkgconfig(libwacom) >= 0.20
 BuildRequires:  pkgconfig(mtdev) >= 1.1.0
 
 %description
