@@ -39,17 +39,6 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
-%package        utils
-Summary:        Utilities and tools for debugging %{name}
-
-Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       python3-libevdev
-Requires:       python3-pyudev
-
-%description    utils
-The %{name}-utils package contains tools to debug hardware and analyze
-%{name}.
-
 %package        test
 Summary:        libinput integration test suite
 
@@ -73,6 +62,11 @@ intended to be run by users.
 %install
 %meson_install
 
+# Removing 'libinput-utils' subpackage files.
+UTILS_FILES_REGEX=".*/libinput-(analyze|debug-tablet|measure|quirks|record|replay).*"
+find %{buildroot}/%{_libexecdir}/libinput -type f -regextype posix-egrep -regex "$UTILS_FILES_REGEX" -delete
+find %{buildroot}/%{_mandir}/man1 -type f -regextype posix-egrep -regex "$UTILS_FILES_REGEX" -delete
+
 %post
 %{?ldconfig}
 
@@ -90,11 +84,11 @@ intended to be run by users.
 %dir %{_libexecdir}/libinput/
 %{_libexecdir}/libinput/libinput-debug-events
 %{_libexecdir}/libinput/libinput-list-devices
-%{_mandir}/man1/libinput.1*
 %{_datadir}/libinput/*.quirks
 %dir %{_datadir}/zsh
 %dir %{_datadir}/zsh/site-functions
 %{_datadir}/zsh/site-functions/*
+%{_mandir}/man1/libinput.1*
 %{_mandir}/man1/libinput-list-devices.1*
 %{_mandir}/man1/libinput-debug-events.1*
 
@@ -102,34 +96,6 @@ intended to be run by users.
 %{_includedir}/libinput.h
 %{_libdir}/libinput.so
 %{_libdir}/pkgconfig/libinput.pc
-
-%files utils
-%{_libexecdir}/libinput/libinput-analyze
-%{_libexecdir}/libinput/libinput-analyze-per-slot-delta
-%{_libexecdir}/libinput/libinput-debug-tablet
-%{_libexecdir}/libinput/libinput-measure
-%{_libexecdir}/libinput/libinput-measure-fuzz
-%{_libexecdir}/libinput/libinput-measure-touchpad-tap
-%{_libexecdir}/libinput/libinput-measure-touchpad-pressure
-%{_libexecdir}/libinput/libinput-measure-touchpad-size
-%{_libexecdir}/libinput/libinput-measure-touch-size
-%{_libexecdir}/libinput/libinput-quirks
-%{_libexecdir}/libinput/libinput-record
-%{_libexecdir}/libinput/libinput-replay
-%{_mandir}/man1/libinput-analyze.1*
-%{_mandir}/man1/libinput-analyze-per-slot-delta.1*
-%{_mandir}/man1/libinput-debug-tablet.1*
-%{_mandir}/man1/libinput-measure.1*
-%{_mandir}/man1/libinput-measure-fuzz.1*
-%{_mandir}/man1/libinput-measure-touchpad-tap.1*
-%{_mandir}/man1/libinput-measure-touch-size.1*
-%{_mandir}/man1/libinput-measure-touchpad-pressure.1*
-%{_mandir}/man1/libinput-measure-touchpad-size.1*
-%{_mandir}/man1/libinput-quirks.1*
-%{_mandir}/man1/libinput-quirks-list.1*
-%{_mandir}/man1/libinput-quirks-validate.1*
-%{_mandir}/man1/libinput-record.1*
-%{_mandir}/man1/libinput-replay.1*
 
 %files test
 %{_libexecdir}/libinput/libinput-test-suite
@@ -141,6 +107,8 @@ intended to be run by users.
 - License verified.
 - Adding build-time dependency on 'marinerui-rpm-macros'.
 - Removing pathfix.py step.
+- Removing the 'libinput-utils' subpackage, since it's not needed and its
+  run-time requirements 'python3-libevdev' and 'python3-pyudev' are not available.
 
 * Fri Nov 27 2020 Peter Hutterer <peter.hutterer@redhat.com> 1.16.4-1
 - libinput 1.16.4
