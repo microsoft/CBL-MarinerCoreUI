@@ -17,10 +17,9 @@ BuildRequires:  marinerui-rpm-macros
 BuildRequires:  meson
 BuildRequires:  pkg-config
 BuildRequires:  python3-devel
-BuildRequires:  pkgconfig(libevdev) >= 0.4
 BuildRequires:  pkgconfig(libudev)
-BuildRequires:  pkgconfig(libwacom) >= 0.20
-BuildRequires:  pkgconfig(mtdev) >= 1.1.0
+BuildRequires:  pkgconfig(libwacom)
+BuildRequires:  pkgconfig(mtdev)
 
 %description
 libinput is a library that handles input devices for display servers and other
