@@ -35,7 +35,6 @@ end}
 %bcond_with    etnaviv
 %endif
 %bcond_with    cairo_tests
-%bcond_without man_pages
 %ifarch %{valgrind_arches}
 %bcond_without valgrind
 %else
@@ -68,11 +67,6 @@ BuildRequires:  pkgconfig(pciaccess) >= 0.10
 #BuildRequires:  pkgconfig(cunit) >= 2.1
 %if %{with cairo_tests}
 BuildRequires:  pkgconfig(cairo)
-%endif
-%if %{with man_pages}
-BuildRequires:  %{_bindir}/xsltproc
-BuildRequires:  %{_bindir}/sed
-BuildRequires:  docbook-style-xsl
 %endif
 %if %{with valgrind}
 BuildRequires:  valgrind-devel
@@ -125,7 +119,6 @@ Utility programs for the kernel DRM interface.  Will void your warranty.
   %{bcond_meson vc4}                   \
   %{bcond_meson etnaviv}               \
   %{bcond_meson cairo_tests}           \
-  %{bcond_meson man_pages}             \
   %{bcond_meson valgrind}              \
   %{bcond_meson freedreno_kgsl}        \
   %{bcond_meson install_test_programs} \
@@ -267,10 +260,6 @@ cp %{SOURCE1} %{buildroot}%{_docdir}/libdrm
 %{_includedir}/libsync.h
 %{_includedir}/xf86drm.h
 %{_includedir}/xf86drmMode.h
-%if %{with man_pages}
-%{_mandir}/man3/drm*.3*
-%{_mandir}/man7/drm*.7*
-%endif
 
 %if %{with install_test_programs}
 %files -n drm-utils
@@ -292,6 +281,7 @@ cp %{SOURCE1} %{buildroot}%{_docdir}/libdrm
 * Fri Dec 18 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.4.102-3
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - Added the "LICENSE.PTR" file.
+- Removed manual pages.
 - License verified.
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2.4.102-2
