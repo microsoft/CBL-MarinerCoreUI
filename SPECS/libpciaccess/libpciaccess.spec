@@ -6,14 +6,9 @@ License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://www.x.org/
+Source0:        https://www.x.org/archive/individual/lib/%{name}-%{version}.tar.bz2
 
-# git snapshot.  To recreate, run
-# % ./make-libpciaccess-snapshot.sh %{gitrev}
-#Source0:        libpciaccess-%{gitdate}.tar.bz2
-Source0:	https://www.x.org/archive/individual/lib/%{name}-%{version}.tar.bz2
-Source1:        make-libpciaccess-snapshot.sh
-
-Patch2:		libpciaccess-rom-size.patch
+Patch0:         libpciaccess-rom-size.patch
 
 BuildRequires:  autoconf automake libtool pkgconfig xorg-x11-util-macros
 Requires:       hwdata
@@ -58,6 +53,7 @@ rm -f $RPM_BUILD_ROOT/%{_libdir}/*.la
 %changelog
 * Fri Dec 18 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.16-4
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- Removed unused 'make-libpciaccess-snapshot.sh' from sources.
 - License verified.
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.16-3
