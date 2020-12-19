@@ -11,11 +11,13 @@ end}
 %else
 %bcond_with    intel
 %endif
+
 %ifarch %{arm}
 %bcond_without omap
 %else
 %bcond_with    omap
 %endif
+
 %ifarch %{arm} aarch64
 %bcond_without exynos
 %bcond_without freedreno
@@ -29,11 +31,13 @@ end}
 %bcond_with    vc4
 %bcond_with    etnaviv
 %endif
+
 %ifarch %{valgrind_arches}
 %bcond_without valgrind
 %else
 %bcond_with    valgrind
 %endif
+
 %bcond_without libkms
 %bcond_without radeon
 %bcond_without amdgpu
@@ -128,17 +132,21 @@ cp %{SOURCE2} .
 
 %install
 %meson_install
+
 %if %{with install_test_programs}
 chrpath -d %{_vpath_builddir}/tests/drmdevice
 install -Dpm0755 -t %{buildroot}%{_bindir} %{_vpath_builddir}/tests/drmdevice
 %endif
+
 %if %{with udev}
 install -Dpm0644 -t %{buildroot}%{_udevrulesdir} %{SOURCE1}
 %endif
+
 mkdir -p %{buildroot}%{_docdir}/libdrm
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
+
 
 %files
 %doc README.rst
@@ -146,50 +154,62 @@ mkdir -p %{buildroot}%{_docdir}/libdrm
 %{_libdir}/libdrm.so.2
 %{_libdir}/libdrm.so.2.4.0
 %dir %{_datadir}/libdrm
+
 %if %{with libkms}
 %{_libdir}/libkms.so.1
 %{_libdir}/libkms.so.1.0.0
 %endif
+
 %if %{with intel}
 %{_libdir}/libdrm_intel.so.1
 %{_libdir}/libdrm_intel.so.1.0.0
 %endif
+
 %if %{with radeon}
 %{_libdir}/libdrm_radeon.so.1
 %{_libdir}/libdrm_radeon.so.1.0.1
 %endif
+
 %if %{with amdgpu}
 %{_libdir}/libdrm_amdgpu.so.1
 %{_libdir}/libdrm_amdgpu.so.1.0.0
 %{_datadir}/libdrm/amdgpu.ids
 %endif
+
 %if %{with nouveau}
 %{_libdir}/libdrm_nouveau.so.2
 %{_libdir}/libdrm_nouveau.so.2.0.0
 %endif
+
 %if %{with omap}
 %{_libdir}/libdrm_omap.so.1
 %{_libdir}/libdrm_omap.so.1.0.0
 %endif
+
 %if %{with exynos}
 %{_libdir}/libdrm_exynos.so.1
 %{_libdir}/libdrm_exynos.so.1.0.0
 %endif
+
 %if %{with freedreno}
 %{_libdir}/libdrm_freedreno.so.1
 %{_libdir}/libdrm_freedreno.so.1.0.0
 %endif
+
 %if %{with tegra}
 %{_libdir}/libdrm_tegra.so.0
 %{_libdir}/libdrm_tegra.so.0.0.0
 %endif
+
 %if %{with etnaviv}
 %{_libdir}/libdrm_etnaviv.so.1
 %{_libdir}/libdrm_etnaviv.so.1.0.0
 %endif
+
 %if %{with udev}
 %{_udevrulesdir}/91-drm-modeset.rules
 %endif
+
 
 %files devel
 %dir %{_includedir}/libdrm
@@ -198,68 +218,80 @@ mkdir -p %{buildroot}%{_docdir}/libdrm
 %{_includedir}/libdrm/drm_mode.h
 %{_includedir}/libdrm/drm_sarea.h
 %{_includedir}/libdrm/*_drm.h
+%{_includedir}/libsync.h
+%{_includedir}/xf86drm.h
+%{_includedir}/xf86drmMode.h
 %{_libdir}/libdrm.so
 %{_libdir}/pkgconfig/libdrm.pc
+
 %if %{with libkms}
 %{_includedir}/libkms/
 %{_libdir}/libkms.so
 %{_libdir}/pkgconfig/libkms.pc
 %endif
+
 %if %{with intel}
 %{_includedir}/libdrm/intel_*.h
 %{_libdir}/libdrm_intel.so
 %{_libdir}/pkgconfig/libdrm_intel.pc
 %endif
+
 %if %{with radeon}
 %{_includedir}/libdrm/radeon_*.h
 %{_includedir}/libdrm/r600_pci_ids.h
 %{_libdir}/libdrm_radeon.so
 %{_libdir}/pkgconfig/libdrm_radeon.pc
 %endif
+
 %if %{with amdgpu}
 %{_includedir}/libdrm/amdgpu.h
 %{_libdir}/libdrm_amdgpu.so
 %{_libdir}/pkgconfig/libdrm_amdgpu.pc
 %endif
+
 %if %{with nouveau}
 %{_includedir}/libdrm/nouveau/
 %{_libdir}/libdrm_nouveau.so
 %{_libdir}/pkgconfig/libdrm_nouveau.pc
 %endif
+
 %if %{with omap}
 %{_includedir}/libdrm/omap_*.h
 %{_includedir}/omap/
 %{_libdir}/libdrm_omap.so
 %{_libdir}/pkgconfig/libdrm_omap.pc
 %endif
+
 %if %{with exynos}
 %{_includedir}/libdrm/exynos_*.h
 %{_includedir}/exynos/
 %{_libdir}/libdrm_exynos.so
 %{_libdir}/pkgconfig/libdrm_exynos.pc
 %endif
+
 %if %{with freedreno}
 %{_includedir}/freedreno/
 %{_libdir}/libdrm_freedreno.so
 %{_libdir}/pkgconfig/libdrm_freedreno.pc
 %endif
+
 %if %{with tegra}
 %{_includedir}/libdrm/tegra.h
 %{_libdir}/libdrm_tegra.so
 %{_libdir}/pkgconfig/libdrm_tegra.pc
 %endif
+
 %if %{with vc4}
 %{_includedir}/libdrm/vc4_*.h
 %{_libdir}/pkgconfig/libdrm_vc4.pc
 %endif
+
 %if %{with etnaviv}
 %{_includedir}/libdrm/etnaviv_*.h
 %{_libdir}/libdrm_etnaviv.so
 %{_libdir}/pkgconfig/libdrm_etnaviv.pc
 %endif
-%{_includedir}/libsync.h
-%{_includedir}/xf86drm.h
-%{_includedir}/xf86drmMode.h
+
 
 %if %{with install_test_programs}
 %files -n drm-utils
@@ -268,14 +300,17 @@ mkdir -p %{buildroot}%{_docdir}/libdrm
 %exclude %{_bindir}/exynos_*
 %{_bindir}/kms-steal-crtc
 %{_bindir}/kms-universal-planes
+
 %if %{with libkms}
 %{_bindir}/kmstest
 %endif
+
 %{_bindir}/modeprint
 %{_bindir}/modetest
 %{_bindir}/proptest
 %{_bindir}/vbltest
 %endif
+
 
 %changelog
 * Fri Dec 18 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.4.102-3
