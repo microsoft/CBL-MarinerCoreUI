@@ -28,7 +28,7 @@ Summary:        PCI access library development package
 Requires:       %{name} = %{version}-%{release}
 Requires:       pkg-config
 
-Provides:       pkgconfig(libpciaccess)
+Provides:       pkgconfig(pciaccess)
 
 %description devel
 Development package for libpciaccess.
@@ -62,6 +62,7 @@ find %{buildroot} -type f -name "*.la" -delete -print
 %changelog
 * Fri Dec 18 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.16-4
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- Added an explicit 'pkgconfig(pciaccess)' for 'libpciaccess-devel'.
 - Removed unused 'make-libpciaccess-snapshot.sh' from sources.
 - Replaced ldconfig scriptlets with explicit calls to ldconfig.
 - License verified.
