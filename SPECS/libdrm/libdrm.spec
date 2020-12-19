@@ -45,16 +45,18 @@ end}
 %bcond_without install_test_programs
 %bcond_without udev
 
-Name:           libdrm
 Summary:        Direct Rendering Manager runtime library
+Name:           libdrm
 Version:        2.4.102
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        MIT
-
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
 URL:            https://dri.freedesktop.org
 Source0:        %{url}/libdrm/%{name}-%{version}.tar.xz
 Source1:        README.rst
 Source2:        91-drm-modeset.rules
+Source3:        LICENSE.PTR
 
 BuildRequires:  meson >= 0.43
 BuildRequires:  gcc
@@ -147,6 +149,7 @@ cp %{SOURCE1} %{buildroot}%{_docdir}/libdrm
 
 %files
 %doc README.rst
+%license LICENSE.ptr
 %{_libdir}/libdrm.so.2
 %{_libdir}/libdrm.so.2.4.0
 %dir %{_datadir}/libdrm
@@ -286,6 +289,11 @@ cp %{SOURCE1} %{buildroot}%{_docdir}/libdrm
 %endif
 
 %changelog
+* Fri Dec 18 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.4.102-3
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- Added the "LICENSE.PTR" file.
+- License verified.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2.4.102-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
