@@ -6,16 +6,11 @@
   print(string.format("-D%s=%s", option, value))
 end}
 
-%bcond_without libkms
 %ifarch %{ix86} x86_64
 %bcond_without intel
 %else
 %bcond_with    intel
 %endif
-%bcond_without radeon
-%bcond_without amdgpu
-%bcond_without nouveau
-%bcond_without vmwgfx
 %ifarch %{arm}
 %bcond_without omap
 %else
@@ -34,12 +29,17 @@ end}
 %bcond_with    vc4
 %bcond_with    etnaviv
 %endif
-%bcond_with    cairo_tests
 %ifarch %{valgrind_arches}
 %bcond_without valgrind
 %else
 %bcond_with    valgrind
 %endif
+%bcond_without libkms
+%bcond_without radeon
+%bcond_without amdgpu
+%bcond_without nouveau
+%bcond_without vmwgfx
+%bcond_with    cairo_tests
 %bcond_with    freedreno_kgsl
 %bcond_without install_test_programs
 %bcond_without udev
@@ -57,10 +57,16 @@ Source1:        README.rst
 Source2:        91-drm-modeset.rules
 Source3:        LICENSE.PTR
 
-BuildRequires:  meson >= 0.43
+# hardcode the 666 instead of 660 for device nodes
+Patch1001:      libdrm-make-dri-perms-okay.patch
+# remove backwards compat not needed on Fedora
+Patch1002:      libdrm-2.4.0-no-bc.patch
+
+BuildRequires:  chrpath
 BuildRequires:  gcc
-BuildRequires:  libatomic_ops-devel
 BuildRequires:  kernel-headers
+BuildRequires:  libatomic_ops-devel
+BuildRequires:  meson >= 0.43
 %if %{with intel}
 BuildRequires:  pkgconfig(pciaccess) >= 0.10
 %endif
@@ -74,12 +80,6 @@ BuildRequires:  valgrind-devel
 %if %{with udev}
 BuildRequires:  pkgconfig(udev)
 %endif
-BuildRequires:  chrpath
-
-# hardcode the 666 instead of 660 for device nodes
-Patch1001:      libdrm-make-dri-perms-okay.patch
-# remove backwards compat not needed on Fedora
-Patch1002:      libdrm-2.4.0-no-bc.patch
 
 %description
 Direct Rendering Manager runtime library
@@ -133,7 +133,7 @@ chrpath -d %{_vpath_builddir}/tests/drmdevice
 install -Dpm0755 -t %{buildroot}%{_bindir} %{_vpath_builddir}/tests/drmdevice
 %endif
 %if %{with udev}
-install -Dpm0644 -t %{buildroot}%{_udevrulesdir} %{S:2}
+install -Dpm0644 -t %{buildroot}%{_udevrulesdir} %{SOURCE2}
 %endif
 mkdir -p %{buildroot}%{_docdir}/libdrm
 cp %{SOURCE1} %{buildroot}%{_docdir}/libdrm
@@ -542,8 +542,8 @@ cp %{SOURCE1} %{buildroot}%{_docdir}/libdrm
 
 * Fri Nov 08 2013 Dave Airlie <airlied@redhat.com> 2.4.47-1
 - libdrm 2.4.47
-
 - add fix for nouveau with gcc 4.8
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.4.46-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
