@@ -68,10 +68,10 @@ BuildRequires:  gcc
 BuildRequires:  kernel-headers
 BuildRequires:  libatomic_ops-devel
 BuildRequires:  marinerui-rpm-macros
-BuildRequires:  meson >= 0.43
+BuildRequires:  meson
 
 %if %{with intel}
-BuildRequires:  pkgconfig(pciaccess) >= 0.10
+BuildRequires:  pkgconfig(pciaccess)
 %endif
 
 %if %{with valgrind}
