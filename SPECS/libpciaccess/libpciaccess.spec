@@ -10,7 +10,12 @@ Source0:        https://www.x.org/archive/individual/lib/%{name}-%{version}.tar.
 
 Patch0:         libpciaccess-rom-size.patch
 
-BuildRequires:  autoconf automake libtool pkgconfig xorg-x11-util-macros
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
+BuildRequires:  pkg-config
+BuildRequires:  xorg-x11-util-macros
+
 Requires:       hwdata
 
 %description
@@ -19,8 +24,9 @@ operating systems.
 
 %package devel
 Summary:        PCI access library development package
+
 Requires:       %{name} = %{version}-%{release}
-Requires:       pkgconfig
+Requires:       pkg-config
 
 %description devel
 Development package for libpciaccess.
@@ -35,7 +41,7 @@ autoreconf -v --install
 
 %install
 %make_install
-rm -f $RPM_BUILD_ROOT/%{_libdir}/*.la
+find %{buildroot} -type f -name "*.la" -delete -print
 
 %ldconfig_scriptlets
 
