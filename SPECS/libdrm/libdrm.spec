@@ -65,12 +65,15 @@ BuildRequires:  kernel-headers
 BuildRequires:  libatomic_ops-devel
 BuildRequires:  marinerui-rpm-macros
 BuildRequires:  meson >= 0.43
+
 %if %{with intel}
 BuildRequires:  pkgconfig(pciaccess) >= 0.10
 %endif
+
 %if %{with valgrind}
 BuildRequires:  valgrind-devel
 %endif
+
 %if %{with udev}
 BuildRequires:  pkgconfig(udev)
 %endif
@@ -80,8 +83,11 @@ Direct Rendering Manager runtime library
 
 %package devel
 Summary:        Direct Rendering Manager development package
+
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       kernel-headers
+
+Provides:       pkgconfig(libdrm)
 
 %description devel
 Direct Rendering Manager development package.
@@ -89,6 +95,7 @@ Direct Rendering Manager development package.
 %if %{with install_test_programs}
 %package -n drm-utils
 Summary:        Direct Rendering Manager utilities
+
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description -n drm-utils
@@ -273,6 +280,7 @@ mkdir -p %{buildroot}%{_docdir}/libdrm
 %changelog
 * Fri Dec 18 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.4.102-3
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- Added an explicit 'pkgconfig(libdrm)' for 'libdrm-devel'.
 - Added build-time dependency on 'marinerui-rpm-macros'.
 - Added the "LICENSE.PTR" file.
 - Removed manual pages.
