@@ -67,10 +67,8 @@ UTILS_FILES_REGEX=".*/libinput-(analyze|debug-tablet|measure|quirks|record|repla
 find %{buildroot}/%{_libexecdir}/libinput -type f -regextype posix-egrep -regex "$UTILS_FILES_REGEX" -delete
 find %{buildroot}/%{_mandir}/man1 -type f -regextype posix-egrep -regex "$UTILS_FILES_REGEX" -delete
 
-%post
-%{?ldconfig}
-
-%ldconfig_postun
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %license COPYING
@@ -107,6 +105,7 @@ find %{buildroot}/%{_mandir}/man1 -type f -regextype posix-egrep -regex "$UTILS_
 - License verified.
 - Adding build-time dependency on 'marinerui-rpm-macros'.
 - Removing pathfix.py step.
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
 - Removing the 'libinput-utils' subpackage, since it's not needed and its
   run-time requirements 'python3-libevdev' and 'python3-pyudev' are not available.
 
