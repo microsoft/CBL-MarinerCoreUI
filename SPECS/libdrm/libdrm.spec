@@ -53,9 +53,8 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://dri.freedesktop.org
 Source0:        %{url}/libdrm/%{name}-%{version}.tar.xz
-Source1:        README.rst
-Source2:        91-drm-modeset.rules
-Source3:        LICENSE.PTR
+Source1:        91-drm-modeset.rules
+Source2:        LICENSE.PTR
 
 # hardcode the 666 instead of 660 for device nodes
 Patch1001:      libdrm-make-dri-perms-okay.patch
@@ -66,6 +65,7 @@ BuildRequires:  chrpath
 BuildRequires:  gcc
 BuildRequires:  kernel-headers
 BuildRequires:  libatomic_ops-devel
+BuildRequires:  marinerui-rpm-macros
 BuildRequires:  meson >= 0.43
 %if %{with intel}
 BuildRequires:  pkgconfig(pciaccess) >= 0.10
@@ -103,6 +103,7 @@ Utility programs for the kernel DRM interface.  Will void your warranty.
 
 %prep
 %autosetup -p1
+cp %{SOURCE2} .
 
 %build
 %meson \
@@ -133,16 +134,16 @@ chrpath -d %{_vpath_builddir}/tests/drmdevice
 install -Dpm0755 -t %{buildroot}%{_bindir} %{_vpath_builddir}/tests/drmdevice
 %endif
 %if %{with udev}
-install -Dpm0644 -t %{buildroot}%{_udevrulesdir} %{SOURCE2}
+install -Dpm0644 -t %{buildroot}%{_udevrulesdir} %{SOURCE1}
 %endif
 mkdir -p %{buildroot}%{_docdir}/libdrm
-cp %{SOURCE1} %{buildroot}%{_docdir}/libdrm
 
-%ldconfig_scriptlets
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %doc README.rst
-%license LICENSE.ptr
+%license LICENSE.PTR
 %{_libdir}/libdrm.so.2
 %{_libdir}/libdrm.so.2.4.0
 %dir %{_datadir}/libdrm
@@ -280,8 +281,10 @@ cp %{SOURCE1} %{buildroot}%{_docdir}/libdrm
 %changelog
 * Fri Dec 18 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.4.102-3
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- Added build-time dependency on 'marinerui-rpm-macros'.
 - Added the "LICENSE.PTR" file.
 - Removed manual pages.
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
 - License verified.
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2.4.102-2
