@@ -1,9 +1,10 @@
+Summary:        PCI access library
 Name:           libpciaccess
 Version:        0.16
-Release:        3%{?dist}
-Summary:        PCI access library
-
+Release:        4%{?dist}
 License:        MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
 URL:            https://www.x.org/
 
 # git snapshot.  To recreate, run
@@ -55,6 +56,10 @@ rm -f $RPM_BUILD_ROOT/%{_libdir}/*.la
 %{_libdir}/pkgconfig/pciaccess.pc
 
 %changelog
+* Fri Dec 18 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.16-4
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.16-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
