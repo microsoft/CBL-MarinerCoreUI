@@ -39,8 +39,6 @@ end}
 %bcond_without amdgpu
 %bcond_without nouveau
 %bcond_without vmwgfx
-%bcond_with    cairo_tests
-%bcond_with    freedreno_kgsl
 %bcond_without install_test_programs
 %bcond_without udev
 
@@ -56,9 +54,9 @@ Source0:        %{url}/libdrm/%{name}-%{version}.tar.xz
 Source1:        91-drm-modeset.rules
 Source2:        LICENSE.PTR
 
-# hardcode the 666 instead of 660 for device nodes
+# Hardcode the 666 instead of 660 for device nodes
 Patch1001:      libdrm-make-dri-perms-okay.patch
-# remove backwards compat not needed on Fedora
+# Remove backwards compat not needed on CBL-Mariner
 Patch1002:      libdrm-2.4.0-no-bc.patch
 
 BuildRequires:  chrpath
@@ -69,10 +67,6 @@ BuildRequires:  marinerui-rpm-macros
 BuildRequires:  meson >= 0.43
 %if %{with intel}
 BuildRequires:  pkgconfig(pciaccess) >= 0.10
-%endif
-#BuildRequires:  pkgconfig(cunit) >= 2.1
-%if %{with cairo_tests}
-BuildRequires:  pkgconfig(cairo)
 %endif
 %if %{with valgrind}
 BuildRequires:  valgrind-devel
@@ -119,9 +113,7 @@ cp %{SOURCE2} .
   %{bcond_meson tegra}                 \
   %{bcond_meson vc4}                   \
   %{bcond_meson etnaviv}               \
-  %{bcond_meson cairo_tests}           \
   %{bcond_meson valgrind}              \
-  %{bcond_meson freedreno_kgsl}        \
   %{bcond_meson install_test_programs} \
   %{bcond_meson udev}                  \
   %{nil}
@@ -285,6 +277,7 @@ mkdir -p %{buildroot}%{_docdir}/libdrm
 - Added the "LICENSE.PTR" file.
 - Removed manual pages.
 - Replaced ldconfig scriptlets with explicit calls to ldconfig.
+- Removed sections related to %%bcond_with for 'cairo_tests' and 'freedreno_kgsl'.
 - License verified.
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2.4.102-2
