@@ -1,13 +1,14 @@
-Summary: Hardware identification and configuration data
-Name: hwdata
-Version: 0.341
-Release: 2%{?dist}
-License: GPLv2+
+Summary:        Hardware identification and configuration data
+Name:           hwdata
+Version:        0.341
+Release:        2%{?dist}
+License:        GPLv2+ OR XFree86 1.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-Source: https://github.com/vcrhonek/hwdata/archive/v%{version}.tar.gz
-URL:    https://github.com/vcrhonek/hwdata
-BuildArch: noarch
+URL:            https://github.com/vcrhonek/hwdata
+Source:         https://github.com/vcrhonek/hwdata/archive/v%{version}.tar.gz
+
+BuildArch:      noarch
 
 %description
 hwdata contains various hardware identification and configuration data,
@@ -21,14 +22,12 @@ such as the pci.ids and usb.ids databases.
 # nothing to build
 
 %install
-rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT libdir=%{_prefix}/lib
+make install DESTDIR=%{buildroot} libdir=%{_lib}
 
 %files
-%license COPYING
-%doc LICENSE
+%license COPYING LICENSE
 %dir %{_datadir}/%{name}
-%{_prefix}/lib/modprobe.d/dist-blacklist.conf
+%{_lib}/modprobe.d/dist-blacklist.conf
 %{_datadir}/%{name}/*
 
 %changelog
@@ -465,7 +464,6 @@ make install DESTDIR=$RPM_BUILD_ROOT libdir=%{_prefix}/lib
 - update usb.ids, fixes #439963
 - add HP w1907 LCD monitor, fixes #431359
 - fix many monitor entries (Stanislav Ievlev, #430276)
-
 
 * Mon Mar 03 2008 Karsten Hopp <karsten@redhat.com> 0.216-1
 - update pci.ids, usb.ids (#431658)
@@ -947,7 +945,7 @@ make install DESTDIR=$RPM_BUILD_ROOT libdir=%{_prefix}/lib
 * Tue Feb 18 2003 Mike A. Harris <mharris@redhat.com> 0.75-1
 - Change savage MX and IX driver default back to "savage" for the 1.1.27t
   driver update
-  
+
 * Tue Feb 18 2003 Brent Fox <bfox@redhat.com> 0.74-1
 - Use full resolution description for Dell laptop screens (bug #80398)
 
@@ -969,7 +967,7 @@ make install DESTDIR=$RPM_BUILD_ROOT libdir=%{_prefix}/lib
 * Mon Feb 10 2003 Mike A. Harris <mharris@redhat.com> 0.68-1
 - Massive update of all ATI video hardware PCI IDs in pcitable and a fair
   number of additions and corrections to the Cards database as well
-  
+
 * Wed Jan 29 2003 Brent Fox <bfox@redhat.com> 0.67-1
 - change refresh rates of sny0000 monitors to use a low common denominator
 
