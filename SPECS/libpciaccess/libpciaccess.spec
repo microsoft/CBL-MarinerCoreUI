@@ -43,7 +43,8 @@ autoreconf -v --install
 %make_install
 find %{buildroot} -type f -name "*.la" -delete -print
 
-%ldconfig_scriptlets
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %license COPYING
@@ -60,6 +61,7 @@ find %{buildroot} -type f -name "*.la" -delete -print
 * Fri Dec 18 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.16-4
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - Removed unused 'make-libpciaccess-snapshot.sh' from sources.
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
 - License verified.
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.16-3
