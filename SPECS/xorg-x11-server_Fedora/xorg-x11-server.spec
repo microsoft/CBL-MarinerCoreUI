@@ -154,7 +154,7 @@ Common files shared among all X servers.
 %package Xorg
 Summary: Xorg X server
 Provides: Xorg = %{version}-%{release}
-Provides: Xserver
+Provides: Xserver = %{version}-%{release}
 # HdG: This should be moved to the wrapper package once the wrapper gets
 # its own sub-package:
 Provides: xorg-x11-server-wrapper = %{version}-%{release}
@@ -198,7 +198,7 @@ Requires: xorg-x11-util-macros
 Requires: xorg-x11-proto-devel
 Requires: libXfont2-devel
 Requires: pkgconfig pixman-devel libpciaccess-devel
-Provides: xorg-x11-server-static
+Provides: xorg-x11-server-static = %{version}-%{release}
 Obsoletes: xorg-x11-glamor-devel < %{version}-%{release}
 Provides: xorg-x11-glamor-devel = %{version}-%{release}
 
