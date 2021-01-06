@@ -12,10 +12,9 @@
 %undefine _hardened_build
 %undefine _strict_symbol_defs_build
 
-#global gitdate 20161026
 %global stable_abi 1
 
-%if !0%{?gitdate} || %{stable_abi}
+%if %{stable_abi}
 # Released ABI versions.  Have to keep these manually in sync with the
 # source because rpm is a terrible language.
 %global ansic_major 0
@@ -28,42 +27,19 @@
 %global extension_minor 0
 %endif
 
-%if 0%{?gitdate}
-# For git snapshots, use date for major and a serial number for minor
-%global minor_serial 0
-%global git_ansic_major %{gitdate}
-%global git_ansic_minor %{minor_serial}
-%global git_videodrv_major %{gitdate}
-%global git_videodrv_minor %{minor_serial}
-%global git_xinput_major %{gitdate}
-%global git_xinput_minor %{minor_serial}
-%global git_extension_major %{gitdate}
-%global git_extension_minor %{minor_serial}
-%endif
-
 %global pkgname xorg-server
 
 Summary:      X.Org X11 X server
 Name:         xorg-x11-server
 Version:      1.20.10
-Release:      2%{?gitdate:.%{gitdate}}%{?dist}
+Release:      2%{?dist}
 License:      MIT
 Vendor:       Microsoft Corporation
 Distribution: Mariner
 URL:          https://www.x.org
 
-#VCS:      git:git://git.freedesktop.org/git/xorg/xserver
-%if 0%{?gitdate}
-# git snapshot.  to recreate, run:
-# ./make-git-snapshot.sh `cat commitid`
-Source0:   xorg-server-%{gitdate}.tar.xz
-#Source0:   http://www.x.org/pub/individual/xserver/%{pkgname}-%{version}.tar.bz2
-Source1:   make-git-snapshot.sh
-Source2:   commitid
-%else
 Source0:   https://www.x.org/pub/individual/xserver/%{pkgname}-%{version}.tar.bz2
 Source1:   gitignore
-%endif
 
 Source4:   10-quirks.conf
 
@@ -189,17 +165,11 @@ Provides: Xserver
 # HdG: This should be moved to the wrapper package once the wrapper gets
 # its own sub-package:
 Provides: xorg-x11-server-wrapper = %{version}-%{release}
-%if !0%{?gitdate} || %{stable_abi}
+%if %{stable_abi}
 Provides: xserver-abi(ansic-%{ansic_major}) = %{ansic_minor}
 Provides: xserver-abi(videodrv-%{videodrv_major}) = %{videodrv_minor}
 Provides: xserver-abi(xinput-%{xinput_major}) = %{xinput_minor}
 Provides: xserver-abi(extension-%{extension_major}) = %{extension_minor}
-%endif
-%if 0%{?gitdate}
-Provides: xserver-abi(ansic-%{git_ansic_major}) = %{git_ansic_minor}
-Provides: xserver-abi(videodrv-%{git_videodrv_major}) = %{git_videodrv_minor}
-Provides: xserver-abi(xinput-%{git_xinput_major}) = %{git_xinput_minor}
-Provides: xserver-abi(extension-%{git_extension_major}) = %{git_extension_minor}
 %endif
 Obsoletes: xorg-x11-glamor < %{version}-%{release}
 Provides: xorg-x11-glamor = %{version}-%{release}
@@ -255,7 +225,7 @@ Xserver source code needed to build VNC server (Xvnc)
 
 
 %prep
-%autosetup -N -n %{pkgname}-%{?gitdate:%{gitdate}}%{!?gitdate:%{version}}
+%autosetup -N -n %{pkgname}-%{version}
 rm -rf .git
 cp %{SOURCE1} .gitignore
 # ick
@@ -343,13 +313,7 @@ install -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/X11/xorg.conf.d
 # relies on it more or less.
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/X11/xorg.conf.d
 
-%if %{stable_abi}
 install -m 755 %{SOURCE30} $RPM_BUILD_ROOT%{_bindir}/xserver-sdk-abi-requires
-%else
-sed -e s/@MAJOR@/%{gitdate}/g -e s/@MINOR@/%{minor_serial}/g %{SOURCE31} > \
-    $RPM_BUILD_ROOT%{_bindir}/xserver-sdk-abi-requires
-chmod 755 $RPM_BUILD_ROOT%{_bindir}/xserver-sdk-abi-requires
-%endif
 
 # Make the source package
 %global xserver_source_dir %{_datadir}/xorg-x11-server-source
