@@ -393,7 +393,7 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 
 
 %changelog
-* Tue Jan 05 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.20.10-2
+* Tue Jan 05 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.20.10-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Removed following subpackages: Xdmx, Xephyr, Xnest, Xvfb.
