@@ -69,9 +69,6 @@ Source4:   10-quirks.conf
 
 Source10:   xserver.pamd
 
-# "useful" xvfb-run script
-Source20:  http://svn.exactcode.de/t2/trunk/package/xorg/xorg-server/xvfb-run.sh
-
 # for requires generation in drivers
 Source30: xserver-sdk-abi-requires.release
 Source31: xserver-sdk-abi-requires.git
@@ -236,23 +233,6 @@ is a very useful tool for developers who wish to test their
 applications without running them on their real X server.
 
 
-%package Xvfb
-Summary: A X Windows System virtual framebuffer X server
-# xvfb-run is GPLv2, rest is MIT
-License: MIT and GPLv2
-Requires: xorg-x11-server-common >= %{version}-%{release}
-# required for xvfb-run
-Requires: xorg-x11-xauth
-Provides: Xvfb
-
-%description Xvfb
-Xvfb (X Virtual Frame Buffer) is an X server that is able to run on
-machines with no display hardware and no physical input devices.
-Xvfb simulates a dumb framebuffer using virtual memory.  Xvfb does
-not open any devices, but behaves otherwise as an X display.  Xvfb
-is normally used for testing servers.
-
-
 %package Xephyr
 Summary: A nested server
 Requires: xorg-x11-server-common >= %{version}-%{release}
@@ -346,7 +326,7 @@ export LDFLAGS="$RPM_LD_FLAGS -specs=/usr/lib/rpm/redhat/redhat-hardened-ld"
 %endif
 
 %global kdrive --enable-kdrive --enable-xephyr --disable-xfake --disable-xfbdev
-%global xservers --enable-xvfb --enable-xnest %{kdrive} --enable-xorg
+%global xservers --enable-xnest %{kdrive} --enable-xorg
 %global default_font_path "catalogue:/etc/X11/fontpath.d,built-ins"
 %global dri_flags --enable-dri --enable-dri2 %{?!rhel:--enable-dri3} --enable-suid-wrapper --enable-glamor
 %global bodhi_flags --with-vendor-name="Fedora Project"
@@ -399,8 +379,6 @@ sed -e s/@MAJOR@/%{gitdate}/g -e s/@MINOR@/%{minor_serial}/g %{SOURCE31} > \
     $RPM_BUILD_ROOT%{_bindir}/xserver-sdk-abi-requires
 chmod 755 $RPM_BUILD_ROOT%{_bindir}/xserver-sdk-abi-requires
 %endif
-
-install -m 0755 %{SOURCE20} $RPM_BUILD_ROOT%{_bindir}/xvfb-run
 
 # Make the source package
 %global xserver_source_dir %{_datadir}/xorg-x11-server-source
@@ -489,11 +467,6 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_bindir}/Xnest
 %{_mandir}/man1/Xnest.1*
 
-%files Xvfb
-%{_bindir}/Xvfb
-%{_bindir}/xvfb-run
-%{_mandir}/man1/Xvfb.1*
-
 %files Xephyr
 %{_bindir}/Xephyr
 %{_mandir}/man1/Xephyr.1*
@@ -518,7 +491,7 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 * Tue Jan 05 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.20.10-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
-- Removed "*-xdmx" subpackage.
+- Removed following subpackages: Xdmx, Xvfb.
 
 * Wed Dec  2 2020 Olivier Fourdan <ofourdan@redhat.com> - 1.20.10-1
 - xserver 1.20.10 (CVE-2020-14360, CVE-2020-25712)
