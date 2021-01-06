@@ -43,12 +43,14 @@
 
 %global pkgname xorg-server
 
-Summary:   X.Org X11 X server
-Name:      xorg-x11-server
-Version:   1.20.10
-Release:   1%{?gitdate:.%{gitdate}}%{?dist}
-URL:       http://www.x.org
-License:   MIT
+Summary:      X.Org X11 X server
+Name:         xorg-x11-server
+Version:      1.20.10
+Release:      2%{?gitdate:.%{gitdate}}%{?dist}
+License:      MIT
+Vendor:       Microsoft Corporation
+Distribution: Mariner
+URL:          https://www.x.org
 
 #VCS:      git:git://git.freedesktop.org/git/xorg/xserver
 %if 0%{?gitdate}
@@ -553,6 +555,10 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 
 
 %changelog
+* Tue Jan 05 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.20.10-2
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+
 * Wed Dec  2 2020 Olivier Fourdan <ofourdan@redhat.com> - 1.20.10-1
 - xserver 1.20.10 (CVE-2020-14360, CVE-2020-25712)
 
