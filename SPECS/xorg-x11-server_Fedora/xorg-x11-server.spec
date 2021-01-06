@@ -334,25 +334,25 @@ export LDFLAGS="$RPM_LD_FLAGS -specs=/usr/lib/rpm/redhat/redhat-hardened-ld"
 autoreconf -f -v --install || exit 1
 
 %configure %{xservers} \
-	--enable-dependency-tracking \
+  --enable-dependency-tracking \
         --enable-xwayland-eglstream \
-	--disable-static \
-	--with-pic \
-	%{?no_int10} --with-int10=x86emu \
-	--with-default-font-path=%{default_font_path} \
-	--with-module-dir=%{_libdir}/xorg/modules \
-	--with-builderstring="Build ID: %{name} %{version}-%{release}" \
-	--with-os-name="$(hostname -s) $(uname -r)" \
-	--with-xkb-output=%{_localstatedir}/lib/xkb \
+  --disable-static \
+  --with-pic \
+  %{?no_int10} --with-int10=x86emu \
+  --with-default-font-path=%{default_font_path} \
+  --with-module-dir=%{_libdir}/xorg/modules \
+  --with-builderstring="Build ID: %{name} %{version}-%{release}" \
+  --with-os-name="$(hostname -s) $(uname -r)" \
+  --with-xkb-output=%{_localstatedir}/lib/xkb \
         --without-dtrace \
-	--disable-linux-acpi --disable-linux-apm \
-	--enable-xselinux --enable-record --enable-present \
+  --disable-linux-acpi --disable-linux-apm \
+  --enable-xselinux --enable-record --enable-present \
         --enable-xcsecurity \
-	--enable-config-udev \
-	--disable-unit-tests \
-	--enable-xwayland \
-	%{dri_flags} %{?bodhi_flags} \
-	${CONFIGURE}
+  --enable-config-udev \
+  --disable-unit-tests \
+  --enable-xwayland \
+  %{dri_flags} %{?bodhi_flags} \
+  ${CONFIGURE}
 
 make V=1 %{?_smp_mflags}
 
