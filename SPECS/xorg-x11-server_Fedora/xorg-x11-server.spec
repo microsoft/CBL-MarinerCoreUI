@@ -134,12 +134,6 @@ BuildRequires: libdrm-devel >= 2.4.0 kernel-headers
 
 BuildRequires: audit-libs-devel libselinux-devel >= 2.0.86-1
 BuildRequires: libudev-devel
-# libunwind is Exclusive for the following arches
-%ifarch aarch64 %{arm} hppa ia64 mips ppc ppc64 %{ix86} x86_64
-%if !0%{?rhel}
-BuildRequires: libunwind-devel
-%endif
-%endif
 
 BuildRequires: pkgconfig(xcb-aux) pkgconfig(xcb-image) pkgconfig(xcb-icccm)
 BuildRequires: pkgconfig(xcb-keysyms) pkgconfig(xcb-renderutil)
@@ -291,6 +285,7 @@ autoreconf -f -v --install || exit 1
   --enable-config-udev \
   --disable-unit-tests \
   --enable-xwayland \
+  --enable-libunwind=no \
   %{dri_flags} %{?bodhi_flags} \
   ${CONFIGURE}
 
@@ -418,6 +413,7 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Removed following subpackages: Xdmx, Xephyr, Xnest, Xvfb.
+- Removed dependency on "libunwind".
 
 * Wed Dec  2 2020 Olivier Fourdan <ofourdan@redhat.com> - 1.20.10-1
 - xserver 1.20.10 (CVE-2020-14360, CVE-2020-25712)
