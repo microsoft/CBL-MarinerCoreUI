@@ -131,7 +131,7 @@ BuildRequires: make
 BuildRequires: systemtap-sdt-devel
 
 # Regular 'git' from Mariner repo.
-BuildRequires: git-core
+BuildRequires: git
 BuildRequires: automake autoconf libtool pkgconfig
 BuildRequires: xorg-x11-util-macros >= 1.17
 
