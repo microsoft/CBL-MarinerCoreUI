@@ -255,38 +255,26 @@ export CFLAGS="$RPM_OPT_FLAGS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1"
 export CXXFLAGS="$RPM_OPT_FLAGS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1"
 export LDFLAGS="$RPM_LD_FLAGS -specs=/usr/lib/rpm/redhat/redhat-hardened-ld"
 
-%ifnarch %{ix86} x86_64
-%global no_int10 --disable-vbe --disable-int10-module
-%endif
-
-%global kdrive --enable-kdrive --disable-xfake --disable-xfbdev
-%global xservers %{kdrive} --enable-xorg
 %global default_font_path "catalogue:/etc/X11/fontpath.d,built-ins"
-%global dri_flags --enable-dri --enable-dri2 %{?!rhel:--enable-dri3} --enable-suid-wrapper --enable-glamor
-%global bodhi_flags --with-vendor-name="Fedora Project"
 
 autoreconf -f -v --install || exit 1
 
-%configure %{xservers} \
-  --enable-dependency-tracking \
-        --enable-xwayland-eglstream \
+%configure \
   --disable-static \
-  --with-pic \
-  %{?no_int10} --with-int10=x86emu \
+  --disable-systemd-logind \
+  --disable-unit-tests \
+  --enable-glamor \
+  --enable-install-setuid \
+  --enable-libunwind=no \
+  --enable-suid-wrapper \
+  --enable-xwayland \
+  --with-builderstring="Build ID: %{name} %{version}-%{release}" \
   --with-default-font-path=%{default_font_path} \
   --with-module-dir=%{_libdir}/xorg/modules \
-  --with-builderstring="Build ID: %{name} %{version}-%{release}" \
+  --with-pic \
   --with-os-name="$(hostname -s) $(uname -r)" \
+  --with-vendor-name="%{vendor}" \
   --with-xkb-output=%{_localstatedir}/lib/xkb \
-        --without-dtrace \
-  --disable-linux-acpi --disable-linux-apm \
-  --enable-xselinux --enable-record --enable-present \
-        --enable-xcsecurity \
-  --enable-config-udev \
-  --disable-unit-tests \
-  --enable-xwayland \
-  --enable-libunwind=no \
-  %{dri_flags} %{?bodhi_flags} \
   ${CONFIGURE}
 
 make V=1 %{?_smp_mflags}
@@ -330,10 +318,6 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 # Remove unwanted files/dirs
 {
     find $RPM_BUILD_ROOT -type f -name '*.la' | xargs rm -f -- || :
-# wtf
-%ifnarch %{ix86} x86_64
-    rm -f $RPM_BUILD_ROOT%{_libdir}/xorg/modules/lib{int10,vbe}.so
-%endif
 }
 
 
