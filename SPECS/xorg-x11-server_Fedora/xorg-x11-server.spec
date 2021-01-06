@@ -220,19 +220,6 @@ graphical user interfaces (GUIs) such as GNOME and KDE are designed
 upon.
 
 
-%package Xnest
-Summary: A nested server
-Requires: xorg-x11-server-common >= %{version}-%{release}
-Provides: Xnest
-
-%description Xnest
-Xnest is an X server which has been implemented as an ordinary
-X application.  It runs in a window just like other X applications,
-but it is an X server itself in which you can run other software.  It
-is a very useful tool for developers who wish to test their
-applications without running them on their real X server.
-
-
 %package Xephyr
 Summary: A nested server
 Requires: xorg-x11-server-common >= %{version}-%{release}
@@ -326,7 +313,7 @@ export LDFLAGS="$RPM_LD_FLAGS -specs=/usr/lib/rpm/redhat/redhat-hardened-ld"
 %endif
 
 %global kdrive --enable-kdrive --enable-xephyr --disable-xfake --disable-xfbdev
-%global xservers --enable-xnest %{kdrive} --enable-xorg
+%global xservers %{kdrive} --enable-xorg
 %global default_font_path "catalogue:/etc/X11/fontpath.d,built-ins"
 %global dri_flags --enable-dri --enable-dri2 %{?!rhel:--enable-dri3} --enable-suid-wrapper --enable-glamor
 %global bodhi_flags --with-vendor-name="Fedora Project"
@@ -463,10 +450,6 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %dir %{_datadir}/X11/xorg.conf.d
 %{_datadir}/X11/xorg.conf.d/10-quirks.conf
 
-%files Xnest
-%{_bindir}/Xnest
-%{_mandir}/man1/Xnest.1*
-
 %files Xephyr
 %{_bindir}/Xephyr
 %{_mandir}/man1/Xephyr.1*
@@ -491,7 +474,7 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 * Tue Jan 05 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.20.10-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
-- Removed following subpackages: Xdmx, Xvfb.
+- Removed following subpackages: Xdmx, Xnest, Xvfb.
 
 * Wed Dec  2 2020 Olivier Fourdan <ofourdan@redhat.com> - 1.20.10-1
 - xserver 1.20.10 (CVE-2020-14360, CVE-2020-25712)
