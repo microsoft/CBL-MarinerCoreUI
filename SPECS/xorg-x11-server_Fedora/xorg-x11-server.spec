@@ -145,10 +145,6 @@ BuildRequires: libfontenc-devel libXtst-devel libXdmcp-devel
 BuildRequires: libX11-devel libXext-devel
 BuildRequires: libXinerama-devel libXi-devel
 
-# DMX config utils buildreqs.
-BuildRequires: libXt-devel libdmx-devel libXmu-devel libXrender-devel
-BuildRequires: libXi-devel libXpm-devel libXaw-devel libXfixes-devel
-
 BuildRequires: wayland-devel
 BuildRequires: wayland-protocols-devel
 BuildRequires: pkgconfig(wayland-eglstream-protocols)
@@ -238,22 +234,6 @@ X application.  It runs in a window just like other X applications,
 but it is an X server itself in which you can run other software.  It
 is a very useful tool for developers who wish to test their
 applications without running them on their real X server.
-
-
-%package Xdmx
-Summary: Distributed Multihead X Server and utilities
-Requires: xorg-x11-server-common >= %{version}-%{release}
-Provides: Xdmx
-
-%description Xdmx
-Xdmx is proxy X server that provides multi-head support for multiple displays
-attached to different machines (each of which is running a typical X server).
-When Xinerama is used with Xdmx, the multiple displays on multiple machines
-are presented to the user as a single unified screen.  A simple application
-for Xdmx would be to provide multi-head support using two desktop machines,
-each of which has a single display device attached to it.  A complex
-application for Xdmx would be to unify a 4 by 4 grid of 1280x1024 displays
-(each attached to one of 16 computers) into a unified 5120x4096 display.
 
 
 %package Xvfb
@@ -390,7 +370,6 @@ autoreconf -f -v --install || exit 1
         --enable-xcsecurity \
 	--enable-config-udev \
 	--disable-unit-tests \
-	--enable-dmx \
 	--enable-xwayland \
 	%{dri_flags} %{?bodhi_flags} \
 	${CONFIGURE}
@@ -428,11 +407,10 @@ install -m 0755 %{SOURCE20} $RPM_BUILD_ROOT%{_bindir}/xvfb-run
 %global inst_srcdir %{buildroot}/%{xserver_source_dir}
 
 mkdir -p %{inst_srcdir}/{Xext,xkb,GL,hw/{xquartz/bundle,xfree86/common}}
-mkdir -p %{inst_srcdir}/{hw/dmx/doc,man,doc,hw/dmx/doxygen}
+mkdir -p %{inst_srcdir}/{man,doc}
 cp {,%{inst_srcdir}/}hw/xquartz/bundle/cpprules.in
 cp {,%{inst_srcdir}/}man/Xserver.man
 cp {,%{inst_srcdir}/}doc/smartsched
-cp {,%{inst_srcdir}/}hw/dmx/doxygen/doxygen.conf.in
 cp {,%{inst_srcdir}/}xserver.ent.in
 cp {,%{inst_srcdir}/}hw/xfree86/Xorg.sh.in
 cp xkb/README.compiled %{inst_srcdir}/xkb
@@ -511,24 +489,6 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_bindir}/Xnest
 %{_mandir}/man1/Xnest.1*
 
-%files Xdmx
-%{_bindir}/Xdmx
-%{_bindir}/dmxaddinput
-%{_bindir}/dmxaddscreen
-%{_bindir}/dmxreconfig
-%{_bindir}/dmxresize
-%{_bindir}/dmxrminput
-%{_bindir}/dmxrmscreen
-%{_bindir}/dmxtodmx
-%{_bindir}/dmxwininfo
-%{_bindir}/vdltodmx
-%{_bindir}/dmxinfo
-%{_bindir}/xdmxconfig
-%{_mandir}/man1/Xdmx.1*
-%{_mandir}/man1/dmxtodmx.1*
-%{_mandir}/man1/vdltodmx.1*
-%{_mandir}/man1/xdmxconfig.1*
-
 %files Xvfb
 %{_bindir}/Xvfb
 %{_bindir}/xvfb-run
@@ -558,6 +518,7 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 * Tue Jan 05 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.20.10-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
+- Removed "*-xdmx" subpackage.
 
 * Wed Dec  2 2020 Olivier Fourdan <ofourdan@redhat.com> - 1.20.10-1
 - xserver 1.20.10 (CVE-2020-14360, CVE-2020-25712)
