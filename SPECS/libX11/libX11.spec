@@ -1,23 +1,13 @@
-%global tarball libX11
-#global gitdate 20130524
-%global gitversion a3bdd2b09
-
 Summary: Core X11 protocol client library
 Name: libX11
 Version: 1.6.12
-Release: 4%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
+Release: 4%{?dist}
 License: MIT
 Vendor:       Microsoft Corporation
 Distribution: Mariner
 URL: http://www.x.org
 
-%if 0%{?gitdate}
-Source0:    %{tarball}-%{gitdate}.tar.bz2
-Source1:    make-git-snapshot.sh
-Source2:    commitid
-%else
 Source0: https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
-%endif
 
 Patch2: dont-forward-keycode-0.patch
 # diff from https://gitlab.freedesktop.org/xorg/lib/libx11/-/merge_requests/53
@@ -59,7 +49,7 @@ Conflicts: %{name} < %{version}-%{release}
 libX11/libxcb interoperability library
 
 %prep
-%setup -q -n %{tarball}-%{?gitdate:%{gitdate}}%{!?gitdate:%{version}}
+%setup -q -n %{name}-%{version}
 %patch2 -p1 -b .dont-forward-keycode-0
 %patch3 -p1 -b .race-condition
 
