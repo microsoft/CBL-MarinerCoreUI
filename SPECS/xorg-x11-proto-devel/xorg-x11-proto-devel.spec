@@ -1,29 +1,27 @@
 %global debug_package %{nil}
-
 # When releasing a xorg-x11-proto-devel version with updated keysyms,
 # rebuild libX11
+Summary:        X.Org X11 Protocol headers
+Name:           xorg-x11-proto-devel
+Version:        2019.1
+Release:        5%{?dist}
+License:        MIT AND BSD
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL:            https://www.x.org
+Source0:        https://www.x.org/pub/individual/proto/xorgproto-%{version}.tar.bz2
+Source40:       make-git-snapshot.sh
 
-Summary: X.Org X11 Protocol headers
-Name: xorg-x11-proto-devel
-Version: 2019.1
-Release: 5%{?dist}
-License: MIT AND BSD
-Vendor:       Microsoft Corporation
-Distribution: Mariner
-URL: https://www.x.org
-BuildArch: noarch
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
+BuildRequires:  pkg-config
+BuildRequires:  xorg-x11-util-macros >= 1.0.2-1
 
-Source0:  https://www.x.org/pub/individual/proto/xorgproto-%{version}.tar.bz2
-
-Source40: make-git-snapshot.sh
-
-BuildRequires: pkgconfig
-BuildRequires: xorg-x11-util-macros >= 1.0.2-1
-BuildRequires: autoconf automake libtool
+BuildArch:      noarch
 
 %description
 X.Org X11 Protocol headers
-
 
 %prep
 %autosetup -n xorgproto-%{version}
@@ -39,12 +37,12 @@ make %{?_smp_mflags}
 
 # trim some fat
 for i in apple windows trap ; do
-    rm -f $RPM_BUILD_ROOT%{_includedir}/X11/extensions/*${i}*
-    rm -f $RPM_BUILD_ROOT%{_datadir}/pkgconfig/*${i}*
+    rm -f %{buildroot}%{_includedir}/X11/extensions/*${i}*
+    rm -f %{buildroot}%{_datadir}/pkgconfig/*${i}*
 done
 
 # keep things building even if you have the html doc tools for xmlto installed
-rm -f $RPM_BUILD_ROOT%{_docdir}/*/*.{html,svg}
+rm -f %{buildroot}%{_docdir}/*/*.{html,svg}
 
 %files
 %doc COPYING-*
