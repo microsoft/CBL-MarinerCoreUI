@@ -132,7 +132,7 @@ BuildRequires: mesa-libgbm-devel
 # XXX silly...
 BuildRequires: libdrm-devel >= 2.4.0 kernel-headers
 
-BuildRequires: audit-libs-devel libselinux-devel >= 2.0.86-1
+BuildRequires: audit-devel libselinux-devel >= 2.0.86-1
 BuildRequires: libudev-devel
 
 BuildRequires: pkgconfig(xcb-aux) pkgconfig(xcb-image) pkgconfig(xcb-icccm)
@@ -398,6 +398,7 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 - License verified.
 - Removed following subpackages: Xdmx, Xephyr, Xnest, Xvfb.
 - Removed dependency on "libunwind".
+- Changed BuildRequires for "audit-libs-devel" to "audit-devel".
 
 * Wed Dec  2 2020 Olivier Fourdan <ofourdan@redhat.com> - 1.20.10-1
 - xserver 1.20.10 (CVE-2020-14360, CVE-2020-25712)
