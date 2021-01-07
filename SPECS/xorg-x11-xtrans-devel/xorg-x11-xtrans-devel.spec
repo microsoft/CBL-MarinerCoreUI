@@ -1,27 +1,25 @@
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
-
 # NOTE: This package contains only C source and header files and pkg-config
 # *.pc files, and does not contain any ELF binaries or DSOs, so we disable
 # debuginfo generation.
 %global debug_package %{nil}
+Summary:        X.Org X11 developmental X transport library
+Name:           xorg-x11-xtrans-devel
+Version:        1.4.0
+Release:        5%{?dist}
+License:        MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL:            https://www.x.org
+Source0:        https://xorg.freedesktop.org/archive/individual/lib/xtrans-%{version}.tar.bz2
 
-Summary: X.Org X11 developmental X transport library
-Name: xorg-x11-xtrans-devel
-Version: 1.4.0
-Release: 5%{?dist}
-License: MIT
-Vendor:       Microsoft Corporation
-Distribution: Mariner
-URL: http://www.x.org
-BuildArch: noarch
+# Copying Fedora specific patch
+Patch1:         xtrans-1.0.3-avoid-gethostname.patch
 
-Source0: https://xorg.freedesktop.org/archive/individual/lib/xtrans-%{version}.tar.bz2
+BuildArch:      noarch
 
-# Fedora specific patch
-Patch1: xtrans-1.0.3-avoid-gethostname.patch
-
-BuildRequires: pkg-config
-BuildRequires: xorg-x11-util-macros
+BuildRequires:  pkg-config
+BuildRequires:  xorg-x11-util-macros
 
 %description
 X.Org X11 developmental X transport library
@@ -36,10 +34,11 @@ X.Org X11 developmental X transport library
 # Running 'make' not needed.
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
+make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 %files
-%doc AUTHORS COPYING ChangeLog README.md
+%license COPYING
+%doc AUTHORS ChangeLog README.md
 %dir %{_includedir}/X11
 %dir %{_includedir}/X11/Xtrans
 %{_includedir}/X11/Xtrans/Xtrans.c
