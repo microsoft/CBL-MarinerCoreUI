@@ -5,8 +5,10 @@
 Summary: Core X11 protocol client library
 Name: libX11
 Version: 1.6.12
-Release: 3%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
+Release: 4%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
 License: MIT
+Vendor:       Microsoft Corporation
+Distribution: Mariner
 URL: http://www.x.org
 
 %if 0%{?gitdate}
@@ -125,6 +127,10 @@ make %{?_smp_mflags} check
 %{_mandir}/man5/*.5*
 
 %changelog
+* Thu Jan 07 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.6.12-4
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+
 * Mon Nov 09 2020 Peter Hutterer <peter.hutterer@redhat.com> 1.6.12-3
 - Fix a race-condition in poll_for_response (#1758384)
 
