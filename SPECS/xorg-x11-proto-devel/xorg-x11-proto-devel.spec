@@ -6,8 +6,10 @@
 Summary: X.Org X11 Protocol headers
 Name: xorg-x11-proto-devel
 Version: 2019.1
-Release: 4%{?dist}
-License: MIT
+Release: 5%{?dist}
+License: MIT AND BSD
+Vendor:       Microsoft Corporation
+Distribution: Mariner
 URL: https://www.x.org
 BuildArch: noarch
 
@@ -210,6 +212,10 @@ rm -f $RPM_BUILD_ROOT%{_docdir}/*/*.{html,svg}
 %{_docdir}/xorgproto/*
 
 %changelog
+* Thu Jan 07 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2019.1-5
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2019.1-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
