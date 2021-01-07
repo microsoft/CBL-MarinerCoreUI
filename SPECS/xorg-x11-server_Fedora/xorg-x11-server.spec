@@ -220,14 +220,6 @@ outside of the standard X11 source code tree.  Developers writing video
 drivers, input drivers, or other X modules should install this package.
 
 
-%package source
-Summary: Xserver source code required to build VNC server (Xvnc)
-BuildArch: noarch
-
-%description source
-Xserver source code needed to build VNC server (Xvnc)
-
-
 %prep
 %autosetup -N -n %{pkgname}-%{version}
 rm -rf .git
@@ -308,24 +300,6 @@ mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/X11/xorg.conf.d
 
 install -m 755 %{SOURCE30} $RPM_BUILD_ROOT%{_bindir}/xserver-sdk-abi-requires
 
-# Make the source package
-%global xserver_source_dir %{_datadir}/xorg-x11-server-source
-%global inst_srcdir %{buildroot}/%{xserver_source_dir}
-
-mkdir -p %{inst_srcdir}/{Xext,xkb,GL,hw/{xquartz/bundle,xfree86/common}}
-mkdir -p %{inst_srcdir}/{man,doc}
-cp {,%{inst_srcdir}/}hw/xquartz/bundle/cpprules.in
-cp {,%{inst_srcdir}/}man/Xserver.man
-cp {,%{inst_srcdir}/}doc/smartsched
-cp {,%{inst_srcdir}/}xserver.ent.in
-cp {,%{inst_srcdir}/}hw/xfree86/Xorg.sh.in
-cp xkb/README.compiled %{inst_srcdir}/xkb
-cp hw/xfree86/xorgconf.cpp %{inst_srcdir}/hw/xfree86
-
-find . -type f | egrep '.*\.(c|h|am|ac|inc|m4|h.in|pc.in|man.pre|pl|txt)$' |
-xargs tar cf - | (cd %{inst_srcdir} && tar xf -)
-find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
-
 # Remove unwanted files/dirs
 {
     find $RPM_BUILD_ROOT -type f -name '*.la' | xargs rm -f -- || :
@@ -399,15 +373,12 @@ find %{inst_srcdir}/hw/xfree86 -name \*.c -delete
 %{_includedir}/xorg/*.h
 %{_datadir}/aclocal/xorg-server.m4
 
-%files source
-%{xserver_source_dir}
-
 
 %changelog
 * Tue Jan 05 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.20.10-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
-- Removed following subpackages: Xdmx, Xephyr, Xnest, Xvfb.
+- Removed following subpackages: source, Xdmx, Xephyr, Xnest, Xvfb.
 - Removed dependency on "libunwind".
 - Changed BuildRequires for "audit-libs-devel" to "audit-devel".
 
