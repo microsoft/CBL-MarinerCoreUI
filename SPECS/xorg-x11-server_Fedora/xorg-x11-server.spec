@@ -104,39 +104,50 @@ BuildRequires: make
 BuildRequires: systemtap-sdt-devel
 
 BuildRequires: git
-BuildRequires: automake autoconf libtool pkgconfig
+BuildRequires: automake
+BuildRequires: autoconf
+BuildRequires: libtool
+BuildRequires: pkg-config
 BuildRequires: xorg-x11-util-macros >= 1.17
 
-BuildRequires: xorg-x11-proto-devel >= 7.7-10
-BuildRequires: xorg-x11-font-utils >= 7.2-11
+#BuildRequires: xorg-x11-proto-devel >= 7.7-10
+#BuildRequires: xorg-x11-font-utils >= 7.2-11
 
-BuildRequires: dbus-devel libepoxy-devel systemd-devel
-BuildRequires: xorg-x11-xtrans-devel >= 1.3.2
-BuildRequires: libXfont2-devel libXau-devel libxkbfile-devel libXres-devel
-BuildRequires: libfontenc-devel libXtst-devel libXdmcp-devel
-BuildRequires: libX11-devel libXext-devel
-BuildRequires: libXinerama-devel libXi-devel
+BuildRequires: dbus-devel
+BuildRequires: systemd-devel
+#BuildRequires: libepoxy-devel
+#BuildRequires: xorg-x11-xtrans-devel >= 1.3.2
+#BuildRequires: libXfont2-devel libXau-devel libxkbfile-devel libXres-devel
+#BuildRequires: libfontenc-devel libXtst-devel libXdmcp-devel
+#BuildRequires: libX11-devel libXext-devel
+#BuildRequires: libXinerama-devel libXi-devel
 
 BuildRequires: wayland-devel
 BuildRequires: wayland-protocols-devel
-BuildRequires: pkgconfig(wayland-eglstream-protocols)
+#BuildRequires: pkgconfig(wayland-eglstream-protocols) <- Provided by "egl-wayland-devel".
 BuildRequires: pkgconfig(wayland-client) >= 1.3.0
-BuildRequires: pkgconfig(epoxy)
-BuildRequires: pkgconfig(xshmfence) >= 1.1
-BuildRequires: libXv-devel
-BuildRequires: pixman-devel >= 0.30.0
-BuildRequires: libpciaccess-devel >= 0.13.1 openssl-devel bison flex flex-devel
-BuildRequires: mesa-libGL-devel >= 9.2
-BuildRequires: mesa-libEGL-devel
-BuildRequires: mesa-libgbm-devel
+#BuildRequires: pkgconfig(epoxy) <- Provided by "libepoxy-devel".
+#BuildRequires: pkgconfig(xshmfence) >= 1.1
+#BuildRequires: libXv-devel
+#BuildRequires: pixman-devel >= 0.30.0
+BuildRequires: libpciaccess-devel >= 0.13.1
+BuildRequires: openssl-devel
+BuildRequires: bison
+BuildRequires: flex
+BuildRequires: flex-devel
+#BuildRequires: mesa-libGL-devel >= 9.2
+#BuildRequires: mesa-libEGL-devel
+#BuildRequires: mesa-libgbm-devel
 # XXX silly...
-BuildRequires: libdrm-devel >= 2.4.0 kernel-headers
+BuildRequires: libdrm-devel >= 2.4.0
+BuildRequires: kernel-headers
 
-BuildRequires: audit-devel libselinux-devel >= 2.0.86-1
-BuildRequires: libudev-devel
+BuildRequires: audit-devel
+BuildRequires: libselinux-devel >= 2.0.86-1
+#BuildRequires: libudev-devel
 
-BuildRequires: pkgconfig(xcb-aux) pkgconfig(xcb-image) pkgconfig(xcb-icccm)
-BuildRequires: pkgconfig(xcb-keysyms) pkgconfig(xcb-renderutil)
+#BuildRequires: pkgconfig(xcb-aux) pkgconfig(xcb-image) pkgconfig(xcb-icccm)
+#BuildRequires: pkgconfig(xcb-keysyms) pkgconfig(xcb-renderutil)
 
 %description
 X.Org X11 X server
