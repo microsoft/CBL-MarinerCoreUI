@@ -8,8 +8,10 @@
 Summary: X.Org X11 developmental X transport library
 Name: xorg-x11-xtrans-devel
 Version: 1.4.0
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: MIT
+Vendor:       Microsoft Corporation
+Distribution: Mariner
 URL: http://www.x.org
 BuildArch: noarch
 
@@ -51,6 +53,10 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 %{_datadir}/pkgconfig/xtrans.pc
 
 %changelog
+* Thu Jan 07 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.4.0-5
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
