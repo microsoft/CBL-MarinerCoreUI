@@ -26,6 +26,8 @@ applications, X servers (rootless or fullscreen) or other display servers.
 %package        devel
 Summary:        Development files for %{name}
 
+Provides:       pkgconfig(wayland-client) = %{version}-%{release}
+
 Requires:       libwayland-client%{?_isa} = %{version}-%{release}
 Requires:       libwayland-cursor%{?_isa} = %{version}-%{release}
 Requires:       libwayland-egl%{?_isa} = %{version}-%{release}
@@ -124,6 +126,7 @@ XDG_RUNTIME_DIR=$PWD/tests/run make check || \
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Added a patch making the event loop thread-safe.
+- Added explicit Provides for "pkgconfig(wayland-client)".
 - Disabled documentation to remove BuildRequires on: 'graphviz'.
 - Documentation also removed BuildRequires on: 'docbook-style-xsl', 'doxygen', 'libxml2-devel', 'libxslt', and 'xmlto'.
 - Replaced BuildRequires 'pkgconfig(libffi)' with 'libffi-devel'.
