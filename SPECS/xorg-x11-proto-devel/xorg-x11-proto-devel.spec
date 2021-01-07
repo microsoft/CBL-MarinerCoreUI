@@ -10,7 +10,6 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://www.x.org
 Source0:        https://www.x.org/pub/individual/proto/xorgproto-%{version}.tar.bz2
-Source40:       make-git-snapshot.sh
 
 BuildArch:      noarch
 
