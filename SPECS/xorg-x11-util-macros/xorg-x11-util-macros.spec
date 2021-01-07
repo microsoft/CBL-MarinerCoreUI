@@ -10,6 +10,8 @@ Distribution:   Mariner
 URL:            https://www.x.org
 Source0:        https://www.x.org/pub/individual/util/%{pkgname}-%{version}.tar.bz2
 
+Provides:       pkgconfig(xorg-macros) = %{version}-%{release}
+
 Requires:       autoconf
 Requires:       automake
 Requires:       libtool
@@ -42,6 +44,7 @@ make install DESTDIR=%{buildroot} INSTALL="install -p"
 * Thu Dec 10 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.19.2-8
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
+- Added explicit Provides for "pkgconfig(xorg-macros)".
 
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.19.2-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
