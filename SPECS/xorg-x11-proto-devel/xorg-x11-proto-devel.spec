@@ -12,13 +12,40 @@ URL:            https://www.x.org
 Source0:        https://www.x.org/pub/individual/proto/xorgproto-%{version}.tar.bz2
 Source40:       make-git-snapshot.sh
 
+BuildArch:      noarch
+
 BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  libtool
 BuildRequires:  pkg-config
-BuildRequires:  xorg-x11-util-macros >= 1.0.2-1
+BuildRequires:  xorg-x11-util-macros
 
-BuildArch:      noarch
+Provides:       pkgconfig(bigreqsproto) = %{name}-%{version}
+Provides:       pkgconfig(compositeproto) = %{name}-%{version}
+Provides:       pkgconfig(damageproto) = %{name}-%{version}
+Provides:       pkgconfig(dmxproto) = %{name}-%{version}
+Provides:       pkgconfig(dri2proto) = %{name}-%{version}
+Provides:       pkgconfig(dri3proto) = %{name}-%{version}
+Provides:       pkgconfig(fixesproto) = %{name}-%{version}
+Provides:       pkgconfig(fontsproto) = %{name}-%{version}
+Provides:       pkgconfig(glproto) = %{name}-%{version}
+Provides:       pkgconfig(inputproto) = %{name}-%{version}
+Provides:       pkgconfig(kbproto) = %{name}-%{version}
+Provides:       pkgconfig(presentproto) = %{name}-%{version}
+Provides:       pkgconfig(randrproto) = %{name}-%{version}
+Provides:       pkgconfig(recordproto) = %{name}-%{version}
+Provides:       pkgconfig(renderproto) = %{name}-%{version}
+Provides:       pkgconfig(resourceproto) = %{name}-%{version}
+Provides:       pkgconfig(scrnsaverproto) = %{name}-%{version}
+Provides:       pkgconfig(videoproto) = %{name}-%{version}
+Provides:       pkgconfig(xcmiscproto) = %{name}-%{version}
+Provides:       pkgconfig(xextproto) = %{name}-%{version}
+Provides:       pkgconfig(xf86bigfontproto) = %{name}-%{version}
+Provides:       pkgconfig(xf86dgaproto) = %{name}-%{version}
+Provides:       pkgconfig(xf86driproto) = %{name}-%{version}
+Provides:       pkgconfig(xf86vidmodeproto) = %{name}-%{version}
+Provides:       pkgconfig(xineramaproto) = %{name}-%{version}
+Provides:       pkgconfig(xproto) = %{name}-%{version}
 
 %description
 X.Org X11 Protocol headers
@@ -213,6 +240,7 @@ rm -f %{buildroot}%{_docdir}/*/*.{html,svg}
 * Thu Jan 07 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2019.1-5
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
+- Added explicit "Provides" for 26 "pkgconfig(*)".
 
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2019.1-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
