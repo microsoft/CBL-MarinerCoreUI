@@ -45,7 +45,7 @@ done
 rm -f %{buildroot}%{_docdir}/*/*.{html,svg}
 
 %files
-%doc COPYING-*
+%license COPYING-*
 %doc *.txt
 %dir %{_includedir}/GL
 %{_includedir}/GL/glxint.h
