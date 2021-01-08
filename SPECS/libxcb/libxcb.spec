@@ -2,12 +2,14 @@
 
 Name:       libxcb
 Version:    1.13.1
-Release:    5%{?dist}
+Release:    6%{?dist}
 Summary:    A C binding to the X11 protocol
 License:    MIT
-URL:        http://xcb.freedesktop.org/
+Vendor:       Microsoft Corporation
+Distribution: Mariner
+URL:        https://xcb.freedesktop.org/
 
-Source0:    http://xcb.freedesktop.org/dist/%{name}-%{version}.tar.bz2
+Source0:    https://xcb.freedesktop.org/dist/%{name}-%{version}.tar.bz2
 
 # This is stolen straight from the pthread-stubs source:
 # http://cgit.freedesktop.org/xcb/pthread-stubs/blob/?id=6900598192bacf5fd9a34619b11328f746a5956d
@@ -116,6 +118,10 @@ find $RPM_BUILD_ROOT -name '*.la' -delete
 %{_pkgdocdir}
 
 %changelog
+* Thu Jan 07 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.13.1-6
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.13.1-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
