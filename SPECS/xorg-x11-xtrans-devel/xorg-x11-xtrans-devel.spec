@@ -21,6 +21,8 @@ BuildArch:      noarch
 BuildRequires:  pkg-config
 BuildRequires:  xorg-x11-util-macros
 
+Provides:       pkgconfig(xtrans) = %{version}-%{release}
+
 %description
 X.Org X11 developmental X transport library
 
@@ -29,7 +31,7 @@ X.Org X11 developmental X transport library
 %patch1 -p1 -b .my-name-is-unix
 
 %build
-# yes, this looks horrible, but it's to get the .pc file in datadir
+# Needed to get the .pc file in datadir
 %configure --libdir=%{_datadir} --disable-docs
 # Running 'make' not needed.
 
@@ -55,6 +57,7 @@ make install DESTDIR=%{buildroot} INSTALL="install -p"
 * Thu Jan 07 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.4.0-5
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
+- Added explicit "Provides" for "pkgconfig(xtrans)".
 
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
