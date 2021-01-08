@@ -1,5 +1,3 @@
-%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
-
 Name:       libxcb
 Version:    1.13.1
 Release:    6%{?dist}
@@ -17,8 +15,6 @@ Source0:    https://xcb.freedesktop.org/dist/%{name}-%{version}.tar.bz2
 # the pkgconfig file so libs that link against libxcb know this...
 Source1:    pthread-stubs.pc.in
 
-BuildRequires:  doxygen
-BuildRequires:  graphviz
 BuildRequires:  libtool
 BuildRequires:  libxslt
 BuildRequires:  pkgconfig
@@ -40,13 +36,6 @@ Requires:   %{name}%{?_isa} = %{version}-%{release}
 The %{name}-devel package contains libraries and header files for developing
 applications that use %{name}.
 
-%package doc
-Summary:    Documentation for %{name}
-BuildArch:  noarch
-
-%description doc
-The %{name}-doc package contains documentation for the %{name} library.
-
 %prep
 %autosetup -p1
 
@@ -56,12 +45,12 @@ sed -i 's/pthread-stubs //' configure.ac
 autoreconf -v -f --install
 %configure \
     --disable-static \
-    --docdir=%{_pkgdocdir} \
     --enable-selinux \
     --enable-xkb \
     --enable-xinput \
     --disable-xprint \
-    --disable-silent-rules
+    --disable-silent-rules \
+    --with_doxygen=no
 
 # Remove rpath from libtool (extra insurance if autoreconf is ever dropped)
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -71,7 +60,6 @@ make %{?_smp_mflags}
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
-install -pm 644 COPYING NEWS README $RPM_BUILD_ROOT%{_pkgdocdir}
 sed 's,@libdir@,%{_libdir},;s,@prefix@,%{_prefix},;s,@exec_prefix@,%{_exec_prefix},' %{SOURCE1} \
     > $RPM_BUILD_ROOT%{_libdir}/pkgconfig/pthread-stubs.pc
 
@@ -114,13 +102,11 @@ find $RPM_BUILD_ROOT -name '*.la' -delete
 %{_libdir}/pkgconfig/*.pc
 %{_mandir}/man3/*.3*
 
-%files doc
-%{_pkgdocdir}
-
 %changelog
 * Thu Jan 07 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.13.1-6
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
+- Removed the "*-doc" subpackage to remove BRs on "doxygen" and "graphviz".
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.13.1-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
