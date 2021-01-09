@@ -1,3 +1,4 @@
+%{!?python3_sitelib: %define python3_sitelib %(python3 -c "from distutils.sysconfig import get_python_lib;print(get_python_lib())")}
 %define debug_package %{nil}
 Summary:        XCB protocol descriptions
 Name:           xcb-proto
@@ -52,6 +53,7 @@ the protocol.
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Added explicit "Provides" for "pkgconfig(xcb-proto)".
+- Added definition for the 'python3_sitelib' macro, if not present.
 
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.13-14
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
