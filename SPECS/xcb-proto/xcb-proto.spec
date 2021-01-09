@@ -1,11 +1,12 @@
 %define debug_package %{nil}
 
+Summary:        XCB protocol descriptions
 Name:           xcb-proto
 Version:        1.13
-Release:        14%{?dist}
-Summary:        XCB protocol descriptions
-
+Release:        15%{?dist}
 License:        MIT
+Vendor:       Microsoft Corporation
+Distribution: Mariner
 URL:            https://xcb.freedesktop.org/
 Source0:        https://xcb.freedesktop.org/dist/%{name}-%{version}.tar.bz2
 
@@ -15,7 +16,7 @@ Patch0001:      xcb-proto-1.13-python39.patch
 
 BuildArch:      noarch
 
-BuildRequires:	python3-devel
+BuildRequires:  python3-devel
 Requires:       pkgconfig
 
 %description
@@ -45,6 +46,10 @@ the protocol.
 %{python3_sitelib}/xcbgen
 
 %changelog
+* Fri Jan 08 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.13-15
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.13-14
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
