@@ -1,26 +1,25 @@
 %define debug_package %{nil}
-
 Summary:        XCB protocol descriptions
 Name:           xcb-proto
 Version:        1.13
 Release:        15%{?dist}
 License:        MIT
-Vendor:       Microsoft Corporation
-Distribution: Mariner
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
 URL:            https://xcb.freedesktop.org/
 Source0:        https://xcb.freedesktop.org/dist/%{name}-%{version}.tar.bz2
+
+BuildArch:      noarch
 
 # cElementTree no longer exists in Python 3.9
 # fractions.gcd has been replaced by math.gcd
 Patch0001:      xcb-proto-1.13-python39.patch
 
-BuildArch:      noarch
-
 BuildRequires:  python3-devel
 
-Provides:       pkgconfig(xcb-proto) = %{version}-%{release}
-
 Requires:       pkg-config
+
+Provides:       pkgconfig(xcb-proto) = %{version}-%{release}
 
 %description
 XCB is a project to enable efficient language bindings to the X11 protocol.
