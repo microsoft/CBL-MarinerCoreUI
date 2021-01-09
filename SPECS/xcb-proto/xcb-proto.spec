@@ -17,7 +17,10 @@ Patch0001:      xcb-proto-1.13-python39.patch
 BuildArch:      noarch
 
 BuildRequires:  python3-devel
-Requires:       pkgconfig
+
+Provides:       pkgconfig(xcb-proto) = %{version}-%{release}
+
+Requires:       pkg-config
 
 %description
 XCB is a project to enable efficient language bindings to the X11 protocol.
@@ -49,6 +52,7 @@ the protocol.
 * Fri Jan 08 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.13-15
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
+- Added explicit "Provides" for "pkgconfig(xcb-proto)".
 
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.13-14
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
