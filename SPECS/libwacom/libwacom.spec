@@ -33,7 +33,7 @@ Summary:        Tablet Information Client Library Development Package
 Requires:       %{name} = %{version}-%{release}
 Requires:       pkg-config
 
-Provides:       pkgconfig(libwacom)
+Provides:       pkgconfig(libwacom) = %{version}-%{release}
 
 %description devel
 Tablet information client library development package.

@@ -28,7 +28,7 @@ Summary:        PCI access library development package
 Requires:       %{name} = %{version}-%{release}
 Requires:       pkg-config
 
-Provides:       pkgconfig(pciaccess)
+Provides:       pkgconfig(pciaccess) = %{version}-%{release}
 
 %description devel
 Development package for libpciaccess.

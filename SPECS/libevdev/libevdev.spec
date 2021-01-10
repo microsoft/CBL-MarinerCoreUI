@@ -24,6 +24,8 @@ Summary:        Kernel Evdev Device Wrapper Library Development Package
 
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
+Provides:       pkgconfig(libevdev) = %{version}-%{release}
+
 %description devel
 Kernel Evdev Device Wrapper Library Development Package.
 
@@ -31,8 +33,6 @@ Kernel Evdev Device Wrapper Library Development Package.
 Summary:        Kernel Evdev Device Wrapper Library Utilities Package
 
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-
-Provides:       pkgconfig(libevdev)
 
 %description utils
 Utilities to handle and/or debug evdev devices.
