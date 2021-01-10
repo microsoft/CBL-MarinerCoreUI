@@ -27,6 +27,8 @@ Summary:        Development files for %{name}
 
 BuildRequires:  xorg-x11-proto-devel
 
+Provides:       pkgconfig(xau) = %{version}-%{release}
+
 Requires:       %{name} = %{version}-%{release}
 Requires:       pkg-config
 Requires:       xorg-x11-proto-devel
@@ -73,6 +75,7 @@ make check
 * Sun Jan 10 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.9-5
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
+- Added explicit "Provides" for "pkgconfig(xau)".
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.9-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
