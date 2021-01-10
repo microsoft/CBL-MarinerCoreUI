@@ -91,7 +91,7 @@ Summary:        Direct Rendering Manager development package
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       kernel-headers
 
-Provides:       pkgconfig(libdrm)
+Provides:       pkgconfig(libdrm) = %{version}-%{release}
 
 %description devel
 Direct Rendering Manager development package.

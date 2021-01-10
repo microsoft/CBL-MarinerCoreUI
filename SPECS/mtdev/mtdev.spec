@@ -25,7 +25,7 @@ Summary:        Multitouch Protocol Translation Library Development Package
 Requires:       %{name} = %{version}-%{release}
 Requires:       pkg-config
 
-Provides:       pkgconfig(mtdev)
+Provides:       pkgconfig(mtdev) = %{version}-%{release}
 
 %description devel
 Multitouch protocol translation library development package.
