@@ -1,31 +1,35 @@
-Summary: Sample Authorization Protocol for X
-Name: libXau
-Version: 1.0.9
-Release: 5%{?dist}
-License: MIT
-Vendor:       Microsoft Corporation
-Distribution: Mariner
-URL: https://www.x.org
-Source0: https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
+Summary:        Sample Authorization Protocol for X
+Name:           libXau
+Version:        1.0.9
+Release:        5%{?dist}
+License:        MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL:            https://www.x.org
+Source0:        https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
 
-BuildRequires: xorg-x11-util-macros
-BuildRequires: autoconf automake libtool
-BuildRequires: pkg-config
-BuildRequires: xorg-x11-proto-devel
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
+BuildRequires:  pkg-config
+BuildRequires:  xorg-x11-proto-devel
+BuildRequires:  xorg-x11-util-macros
 
 %description
 This is a very simple mechanism for providing individual access to an X Window
 System display.It uses existing core protocol and library hooks for specifying
 authorization data in the connection setup block to restrict use of the display
-to only those clients that show that they know a server-specific key 
+to only those clients that show that they know a server-specific key
 called a "magic cookie".
 
 %package devel
-Summary: Development files for %{name}
-Requires: %{name} = %{version}-%{release}
-Requires: xorg-x11-proto-devel
-Requires: pkgconfig
-BuildRequires: xorg-x11-proto-devel
+Summary:        Development files for %{name}
+
+BuildRequires:  xorg-x11-proto-devel
+
+Requires:       %{name} = %{version}-%{release}
+Requires:       pkg-config
+Requires:       xorg-x11-proto-devel
 
 %description devel
 X.Org X11 libXau development package
@@ -41,12 +45,11 @@ autoreconf -v --install --force
 make %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
+make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 # We intentionally don't ship *.la files
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+find %{buildroot} -type f -name "*.la" -delete -print
 
 %check
 make check
@@ -55,7 +58,8 @@ make check
 %ldconfig_postun
 
 %files
-%doc AUTHORS COPYING README ChangeLog
+%license COPYING
+%doc AUTHORS README ChangeLog
 %{_libdir}/libXau.so.6
 %{_libdir}/libXau.so.6.0.0
 
