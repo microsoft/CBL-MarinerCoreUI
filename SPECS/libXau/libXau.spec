@@ -1,17 +1,16 @@
 Summary: Sample Authorization Protocol for X
 Name: libXau
 Version: 1.0.9
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: MIT
-URL: http://www.x.org
-
+Vendor:       Microsoft Corporation
+Distribution: Mariner
+URL: https://www.x.org
 Source0: https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
-
-#Patch0: xau-1.0.4-local.patch
 
 BuildRequires: xorg-x11-util-macros
 BuildRequires: autoconf automake libtool
-BuildRequires: pkgconfig
+BuildRequires: pkg-config
 BuildRequires: xorg-x11-proto-devel
 
 %description
@@ -67,6 +66,10 @@ make check
 %{_mandir}/man3/*.3*
 
 %changelog
+* Sun Jan 10 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.9-5
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.9-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
