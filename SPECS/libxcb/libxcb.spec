@@ -1,27 +1,26 @@
-Name:       libxcb
-Version:    1.13.1
-Release:    6%{?dist}
-Summary:    A C binding to the X11 protocol
-License:    MIT
-Vendor:       Microsoft Corporation
-Distribution: Mariner
-URL:        https://xcb.freedesktop.org/
-
-Source0:    https://xcb.freedesktop.org/dist/%{name}-%{version}.tar.bz2
-
+Summary:        A C binding to the X11 protocol
+Name:           libxcb
+Version:        1.13.1
+Release:        6%{?dist}
+License:        MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL:            https://xcb.freedesktop.org/
+Source0:        https://xcb.freedesktop.org/dist/%{name}-%{version}.tar.bz2
 # This is stolen straight from the pthread-stubs source:
 # http://cgit.freedesktop.org/xcb/pthread-stubs/blob/?id=6900598192bacf5fd9a34619b11328f746a5956d
 # we don't need the library because glibc has working pthreads, but we need
 # the pkgconfig file so libs that link against libxcb know this...
-Source1:    pthread-stubs.pc.in
+Source1:        pthread-stubs.pc.in
 
 BuildRequires:  libtool
 BuildRequires:  libxslt
 BuildRequires:  pkg-config
+BuildRequires:  python3
+BuildRequires:  python3-devel
 BuildRequires:  pkgconfig(xau) >= 0.99.2
 BuildRequires:  pkgconfig(xcb-proto) >= 1.13
 BuildRequires:  pkgconfig(xorg-macros) >= 1.18
-BuildRequires:  python3 python3-devel
 
 %description
 The X protocol C-language Binding (XCB) is a replacement for Xlib featuring a
@@ -29,36 +28,36 @@ small footprint, latency hiding, direct access to the protocol, improved
 threading support, and extensibility.
 
 %package devel
-Summary:    Development files for %{name}
+Summary:        Development files for %{name}
 
-Requires:   %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
-Provides: pkgconfig(pthread-stubs) = %{version}-%{release}
-Provides: pkgconfig(xcb) = %{version}-%{release}
-Provides: pkgconfig(xcb-composite) = %{version}-%{release}
-Provides: pkgconfig(xcb-damage) = %{version}-%{release}
-Provides: pkgconfig(xcb-dpms) = %{version}-%{release}
-Provides: pkgconfig(xcb-dri2) = %{version}-%{release}
-Provides: pkgconfig(xcb-dri3) = %{version}-%{release}
-Provides: pkgconfig(xcb-glx) = %{version}-%{release}
-Provides: pkgconfig(xcb-present) = %{version}-%{release}
-Provides: pkgconfig(xcb-randr) = %{version}-%{release}
-Provides: pkgconfig(xcb-record) = %{version}-%{release}
-Provides: pkgconfig(xcb-render) = %{version}-%{release}
-Provides: pkgconfig(xcb-res) = %{version}-%{release}
-Provides: pkgconfig(xcb-screensaver) = %{version}-%{release}
-Provides: pkgconfig(xcb-shape) = %{version}-%{release}
-Provides: pkgconfig(xcb-shm) = %{version}-%{release}
-Provides: pkgconfig(xcb-sync) = %{version}-%{release}
-Provides: pkgconfig(xcb-xf86dri) = %{version}-%{release}
-Provides: pkgconfig(xcb-xfixes) = %{version}-%{release}
-Provides: pkgconfig(xcb-xinerama) = %{version}-%{release}
-Provides: pkgconfig(xcb-xinput) = %{version}-%{release}
-Provides: pkgconfig(xcb-xkb) = %{version}-%{release}
-Provides: pkgconfig(xcb-xselinux) = %{version}-%{release}
-Provides: pkgconfig(xcb-xtest) = %{version}-%{release}
-Provides: pkgconfig(xcb-xv) = %{version}-%{release}
-Provides: pkgconfig(xcb-xvmc)  = %{version}-%{release}
+Provides:       pkgconfig(pthread-stubs) = %{version}-%{release}
+Provides:       pkgconfig(xcb) = %{version}-%{release}
+Provides:       pkgconfig(xcb-composite) = %{version}-%{release}
+Provides:       pkgconfig(xcb-damage) = %{version}-%{release}
+Provides:       pkgconfig(xcb-dpms) = %{version}-%{release}
+Provides:       pkgconfig(xcb-dri2) = %{version}-%{release}
+Provides:       pkgconfig(xcb-dri3) = %{version}-%{release}
+Provides:       pkgconfig(xcb-glx) = %{version}-%{release}
+Provides:       pkgconfig(xcb-present) = %{version}-%{release}
+Provides:       pkgconfig(xcb-randr) = %{version}-%{release}
+Provides:       pkgconfig(xcb-record) = %{version}-%{release}
+Provides:       pkgconfig(xcb-render) = %{version}-%{release}
+Provides:       pkgconfig(xcb-res) = %{version}-%{release}
+Provides:       pkgconfig(xcb-screensaver) = %{version}-%{release}
+Provides:       pkgconfig(xcb-shape) = %{version}-%{release}
+Provides:       pkgconfig(xcb-shm) = %{version}-%{release}
+Provides:       pkgconfig(xcb-sync) = %{version}-%{release}
+Provides:       pkgconfig(xcb-xf86dri) = %{version}-%{release}
+Provides:       pkgconfig(xcb-xfixes) = %{version}-%{release}
+Provides:       pkgconfig(xcb-xinerama) = %{version}-%{release}
+Provides:       pkgconfig(xcb-xinput) = %{version}-%{release}
+Provides:       pkgconfig(xcb-xkb) = %{version}-%{release}
+Provides:       pkgconfig(xcb-xselinux) = %{version}-%{release}
+Provides:       pkgconfig(xcb-xtest) = %{version}-%{release}
+Provides:       pkgconfig(xcb-xv) = %{version}-%{release}
+Provides:       pkgconfig(xcb-xvmc) = %{version}-%{release}
 
 %description devel
 The %{name}-devel package contains libraries and header files for developing
@@ -86,14 +85,13 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 make %{?_smp_mflags}
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=%{buildroot}
 sed 's,@libdir@,%{_libdir},;s,@prefix@,%{_prefix},;s,@exec_prefix@,%{_exec_prefix},' %{SOURCE1} \
-    > $RPM_BUILD_ROOT%{_libdir}/pkgconfig/pthread-stubs.pc
+    > %{buildroot}%{_libdir}/pkgconfig/pthread-stubs.pc
 
-find $RPM_BUILD_ROOT -name '*.la' -delete
+find %{buildroot} -type f -name "*.la" -delete -print
 
 %post -p /sbin/ldconfig
-
 %postun -p /sbin/ldconfig
 
 %files
