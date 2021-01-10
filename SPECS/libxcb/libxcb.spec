@@ -17,7 +17,7 @@ Source1:    pthread-stubs.pc.in
 
 BuildRequires:  libtool
 BuildRequires:  libxslt
-BuildRequires:  pkgconfig
+BuildRequires:  pkg-config
 BuildRequires:  pkgconfig(xau) >= 0.99.2
 BuildRequires:  pkgconfig(xcb-proto) >= 1.13
 BuildRequires:  pkgconfig(xorg-macros) >= 1.18
@@ -30,7 +30,35 @@ threading support, and extensibility.
 
 %package devel
 Summary:    Development files for %{name}
+
 Requires:   %{name}%{?_isa} = %{version}-%{release}
+
+Provides: pkgconfig(pthread-stubs) = %{version}-%{release}
+Provides: pkgconfig(xcb) = %{version}-%{release}
+Provides: pkgconfig(xcb-composite) = %{version}-%{release}
+Provides: pkgconfig(xcb-damage) = %{version}-%{release}
+Provides: pkgconfig(xcb-dpms) = %{version}-%{release}
+Provides: pkgconfig(xcb-dri2) = %{version}-%{release}
+Provides: pkgconfig(xcb-dri3) = %{version}-%{release}
+Provides: pkgconfig(xcb-glx) = %{version}-%{release}
+Provides: pkgconfig(xcb-present) = %{version}-%{release}
+Provides: pkgconfig(xcb-randr) = %{version}-%{release}
+Provides: pkgconfig(xcb-record) = %{version}-%{release}
+Provides: pkgconfig(xcb-render) = %{version}-%{release}
+Provides: pkgconfig(xcb-res) = %{version}-%{release}
+Provides: pkgconfig(xcb-screensaver) = %{version}-%{release}
+Provides: pkgconfig(xcb-shape) = %{version}-%{release}
+Provides: pkgconfig(xcb-shm) = %{version}-%{release}
+Provides: pkgconfig(xcb-sync) = %{version}-%{release}
+Provides: pkgconfig(xcb-xf86dri) = %{version}-%{release}
+Provides: pkgconfig(xcb-xfixes) = %{version}-%{release}
+Provides: pkgconfig(xcb-xinerama) = %{version}-%{release}
+Provides: pkgconfig(xcb-xinput) = %{version}-%{release}
+Provides: pkgconfig(xcb-xkb) = %{version}-%{release}
+Provides: pkgconfig(xcb-xselinux) = %{version}-%{release}
+Provides: pkgconfig(xcb-xtest) = %{version}-%{release}
+Provides: pkgconfig(xcb-xv) = %{version}-%{release}
+Provides: pkgconfig(xcb-xvmc)  = %{version}-%{release}
 
 %description devel
 The %{name}-devel package contains libraries and header files for developing
@@ -49,8 +77,7 @@ autoreconf -v -f --install
     --enable-xkb \
     --enable-xinput \
     --disable-xprint \
-    --disable-silent-rules \
-    --with_doxygen=no
+    --disable-silent-rules
 
 # Remove rpath from libtool (extra insurance if autoreconf is ever dropped)
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -65,9 +92,9 @@ sed 's,@libdir@,%{_libdir},;s,@prefix@,%{_prefix},;s,@exec_prefix@,%{_exec_prefi
 
 find $RPM_BUILD_ROOT -name '*.la' -delete
 
-%ldconfig_post
+%post -p /sbin/ldconfig
 
-%ldconfig_postun
+%postun -p /sbin/ldconfig
 
 %files
 %{_libdir}/libxcb-composite.so.0*
@@ -107,6 +134,8 @@ find $RPM_BUILD_ROOT -name '*.la' -delete
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Removed the "*-doc" subpackage to remove BRs on "doxygen" and "graphviz".
+- Added explicit "Provides" for "pkgconfig(*)".
+- Removed the "%%ldconfig_post(un)" macros.
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.13.1-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
