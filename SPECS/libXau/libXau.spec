@@ -38,7 +38,6 @@ X.Org X11 libXau development package
 
 %prep
 %setup -q
-#patch0 -p1 -b .local
 
 %build
 autoreconf -v --install --force
@@ -50,14 +49,13 @@ make %{?_smp_mflags}
 
 make install DESTDIR=%{buildroot} INSTALL="install -p"
 
-# We intentionally don't ship *.la files
 find %{buildroot} -type f -name "*.la" -delete -print
 
 %check
 make check
 
-%ldconfig_post
-%ldconfig_postun
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %license COPYING
@@ -76,6 +74,7 @@ make check
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Added explicit "Provides" for "pkgconfig(xau)".
+- Removed the "%%ldconfig_post(un)" macros.
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.9-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
