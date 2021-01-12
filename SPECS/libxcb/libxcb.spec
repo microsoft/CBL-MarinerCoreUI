@@ -7,7 +7,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://xcb.freedesktop.org/
 Source0:        https://xcb.freedesktop.org/dist/%{name}-%{version}.tar.bz2
-# This is stolen straight from the pthread-stubs source:
+# This is taken straight from the pthread-stubs source:
 # http://cgit.freedesktop.org/xcb/pthread-stubs/blob/?id=6900598192bacf5fd9a34619b11328f746a5956d
 # we don't need the library because glibc has working pthreads, but we need
 # the pkgconfig file so libs that link against libxcb know this...
@@ -135,8 +135,8 @@ rm -r %{buildroot}/usr/share/doc/libxcb/tutorial
 * Thu Jan 07 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.13.1-6
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
-- Removed the "*-doc" subpackage to remove BRs on "doxygen" and "graphviz".
 - Added explicit "Provides" for "pkgconfig(*)".
+- Removed the "*-doc" subpackage to remove BRs on "doxygen" and "graphviz".
 - Removed the "%%ldconfig_post(un)" macros.
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.13.1-5
