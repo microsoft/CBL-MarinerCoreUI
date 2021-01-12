@@ -1,5 +1,3 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
 %ifnarch s390x
 %global with_hardware 1
 %global with_vdpau 1
@@ -54,8 +52,10 @@ Name:           mesa
 Summary:        Mesa graphics libraries
 %global ver 20.2.6
 Version:        %{lua:ver = string.gsub(rpm.expand("%{ver}"), "-", "~"); print(ver)}
-Release:        1%{?dist}
-License:        MIT
+Release:        2%{?dist}
+License:        BSD
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
 URL:            http://www.mesa3d.org
 
 Source0:        https://mesa.freedesktop.org/archive/%{name}-%{ver}.tar.xz
@@ -581,6 +581,10 @@ popd
 %endif
 
 %changelog
+* Tue Jan 12 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 20.2.6-2
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+
 * Thu Dec 17 2020 Pete Walter <pwalter@fedoraproject.org> - 20.2.6-1
 - Update to 20.2.6
 
