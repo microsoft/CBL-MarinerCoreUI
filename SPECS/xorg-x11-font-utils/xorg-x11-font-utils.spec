@@ -40,6 +40,7 @@ Provides:       mkfontdir = %{mkfontdir}
 Provides:       mkfontscale = %{mkfontscale}
 Provides:       font-util = %{font_util}
 Provides:       font-utils = %{epoch}:%{version}-%{release}
+Provides:       pkgconfig(fontutil) = %{epoch}:%{version}-%{release}
 Provides:       ucs2any = %{font_util}
 
 %description
@@ -118,6 +119,7 @@ find %{buildroot} -name bdftruncate\* -print0 | xargs -0 rm -f
 * Thu Jan 07 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1:7.5-48
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
 
 * Wed Dec 16 2020 Peter Hutterer <peter.hutterer@redhat.com> 1:7.5-47
 - fonttosfnt 1.2.1
