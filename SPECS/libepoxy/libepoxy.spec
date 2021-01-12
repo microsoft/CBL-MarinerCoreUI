@@ -1,33 +1,35 @@
-Summary: epoxy runtime library
-Name: libepoxy
-Version: 1.5.5
-Release: 2%{?dist}
-License: MIT
+Summary:        epoxy runtime library
+Name:           libepoxy
+Version:        1.5.5
+Release:        2%{?dist}
+License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL: https://github.com/anholt/libepoxy
-Source0: %{url}/releases/download/%{version}/%{name}-%{version}.tar.xz
+URL:            https://github.com/anholt/libepoxy
+Source0:        %{url}/releases/download/%{version}/%{name}-%{version}.tar.xz
 
-BuildRequires: meson
-BuildRequires: gcc
-BuildRequires: pkgconfig(gl)
-BuildRequires: pkgconfig(egl)
-BuildRequires: libGL-devel
-BuildRequires: libEGL-devel
-BuildRequires: libX11-devel
-BuildRequires: pkgconfig(glesv2)
-BuildRequires: python3
-BuildRequires: xorg-x11-server-Xvfb mesa-dri-drivers
+BuildRequires:  gcc
+BuildRequires:  libEGL-devel
+BuildRequires:  libGL-devel
+BuildRequires:  libX11-devel
+BuildRequires:  mesa-dri-drivers
+BuildRequires:  meson
+BuildRequires:  pkg-config
+BuildRequires:  python3
+BuildRequires:  xorg-x11-server-Xvfb
+BuildRequires:  pkgconfig(egl)
+BuildRequires:  pkgconfig(gl)
+BuildRequires:  pkgconfig(glesv2)
 
 %description
 A library for handling OpenGL function pointer management.
 
 %package devel
-Summary: Development files for libepoxy
+Summary:        Development files for libepoxy
 
-Provides: pkgconfig(epoxy) = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Provides:       pkgconfig(epoxy) = %{version}-%{release}
 
 %description devel
 This package contains libraries and header files for
@@ -173,4 +175,3 @@ xvfb-run -d -s "-screen 0 640x480x24" ninja -C %{_vpath_builddir} test || \
 
 * Thu Mar 27 2014 Dave Airlie <airlied@redhat.com> 1.2-0.1.20140307gitd4ad80f
 - initial git snapshot
-
