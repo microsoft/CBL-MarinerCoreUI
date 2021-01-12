@@ -9,17 +9,18 @@ URL:            https://github.com/anholt/libepoxy
 Source0:        %{url}/releases/download/%{version}/%{name}-%{version}.tar.xz
 
 BuildRequires:  gcc
-BuildRequires:  libEGL-devel
-BuildRequires:  libGL-devel
+#BuildRequires:  libEGL-devel
+#BuildRequires:  libGL-devel
 BuildRequires:  libX11-devel
-BuildRequires:  mesa-dri-drivers
+BuildRequires:  marinerui-rpm-macros
+#BuildRequires:  mesa-dri-drivers
 BuildRequires:  meson
 BuildRequires:  pkg-config
 BuildRequires:  python3
-BuildRequires:  xorg-x11-server-Xvfb
-BuildRequires:  pkgconfig(egl)
-BuildRequires:  pkgconfig(gl)
-BuildRequires:  pkgconfig(glesv2)
+#BuildRequires:  xorg-x11-server-Xvfb
+#BuildRequires:  pkgconfig(egl)
+#BuildRequires:  pkgconfig(gl)
+#BuildRequires:  pkgconfig(glesv2)
 
 %description
 A library for handling OpenGL function pointer management.
@@ -67,6 +68,7 @@ xvfb-run -d -s "-screen 0 640x480x24" ninja -C %{_vpath_builddir} test || \
 * Mon Jan 11 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.5.5-1
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
+- Added BR for 'marinerui-rpm-macros'.
 - Added explicit "Provides" for "pkgconfig(*)".
 
 * Tue Jan 05 2021 Kalev Lember <klember@redhat.com> - 1.5.5-1
