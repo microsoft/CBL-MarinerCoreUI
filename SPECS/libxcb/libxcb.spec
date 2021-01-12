@@ -71,12 +71,13 @@ sed -i 's/pthread-stubs //' configure.ac
 # autoreconf -f needed to expunge rpaths
 autoreconf -v -f --install
 %configure \
+    --disable-silent-rules \
     --disable-static \
-    --enable-selinux \
-    --enable-xkb \
-    --enable-xinput \
     --disable-xprint \
-    --disable-silent-rules
+    --enable-devel-docs=no \
+    --enable-selinux \
+    --enable-xinput \
+    --enable-xkb
 
 # Remove rpath from libtool (extra insurance if autoreconf is ever dropped)
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -90,6 +91,9 @@ sed 's,@libdir@,%{_libdir},;s,@prefix@,%{_prefix},;s,@exec_prefix@,%{_exec_prefi
     > %{buildroot}%{_libdir}/pkgconfig/pthread-stubs.pc
 
 find %{buildroot} -type f -name "*.la" -delete -print
+
+# Removing docs generated despite the "--enable-devel-docs=no" switch.
+rm -r %{buildroot}/usr/share/doc/libxcb/tutorial
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig

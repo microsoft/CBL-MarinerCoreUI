@@ -19,6 +19,7 @@ Patch0001:      xcb-proto-1.13-python39.patch
 BuildRequires:  python3-devel
 
 Requires:       pkg-config
+Requires:       python3-xml
 
 Provides:       pkgconfig(xcb-proto) = %{version}-%{release}
 
@@ -53,6 +54,7 @@ the protocol.
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Added explicit "Provides" for "pkgconfig(xcb-proto)".
+- Added missing "Requires" for "python3-xml".
 - Added definition for the 'python3_sitelib' macro, if not present.
 
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.13-14
