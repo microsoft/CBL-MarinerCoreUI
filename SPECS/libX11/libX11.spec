@@ -1,55 +1,59 @@
-Summary: Core X11 protocol client library
-Name: libX11
-Version: 1.6.12
-Release: 4%{?dist}
-License: MIT
-Vendor:       Microsoft Corporation
-Distribution: Mariner
-URL: http://www.x.org
+Summary:        Core X11 protocol client library
+Name:           libX11
+Version:        1.6.12
+Release:        4%{?dist}
+License:        MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL:            https://www.x.org
+Source0:        https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
 
-Source0: https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
-
-Patch2: dont-forward-keycode-0.patch
+Patch2:         dont-forward-keycode-0.patch
 # diff from https://gitlab.freedesktop.org/xorg/lib/libx11/-/merge_requests/53
-Patch3: libX11-race-condition.patch
+Patch3:         libX11-race-condition.patch
 
-BuildRequires: make
-BuildRequires: xorg-x11-util-macros >= 1.11
-BuildRequires: pkgconfig(xproto) >= 7.0.15
-BuildRequires: xorg-x11-xtrans-devel >= 1.0.3-4
-BuildRequires: libxcb-devel >= 1.2
-BuildRequires: pkgconfig(xau) pkgconfig(xdmcp)
-BuildRequires: perl(Pod::Usage)
+BuildRequires:  libxcb-devel >= 1.2
+BuildRequires:  make
+BuildRequires:  pkg-config
+BuildRequires:  xorg-x11-util-macros >= 1.11
+BuildRequires:  xorg-x11-xtrans-devel >= 1.0.3-4
+BuildRequires:  perl(Pod::Usage)
+BuildRequires:  pkgconfig(xau)
+BuildRequires:  pkgconfig(xdmcp)
+BuildRequires:  pkgconfig(xproto) >= 7.0.15
 
-Requires: %{name}-common >= %{version}-%{release}
+Requires:       %{name}-common >= %{version}-%{release}
 
 %description
 Core X11 protocol client library.
 
 %package common
-Summary: Common data for libX11
-BuildArch: noarch
+Summary:        Common data for libX11
+
+BuildArch:      noarch
 
 %description common
 libX11 common data
 
 %package devel
-Summary: Development files for %{name}
-Requires: %{name} = %{version}-%{release}
-Requires: %{name}-xcb = %{version}-%{release}
+Summary:        Development files for %{name}
+
+Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}-xcb = %{version}-%{release}
 
 %description devel
 X.Org X11 libX11 development package
 
 %package xcb
-Summary: XCB interop for libX11
-Conflicts: %{name} < %{version}-%{release}
+Summary:        XCB interop for libX11
+
+Conflicts:      %{name} < %{version}-%{release}
 
 %description xcb
 libX11/libxcb interoperability library
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q
 %patch2 -p1 -b .dont-forward-keycode-0
 %patch3 -p1 -b .race-condition
 
@@ -60,19 +64,19 @@ autoreconf -v --install --force
 make %{?_smp_mflags}
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
+make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 # create/own compose cache dir
-mkdir -p $RPM_BUILD_ROOT/var/cache/libX11/compose
+mkdir -p %{buildroot}%{_var}/cache/libX11/compose
 
 # We intentionally don't ship *.la files
-find $RPM_BUILD_ROOT -type f -name '*.la' -delete
+find %{buildroot} -type f -name "*.la" -delete -print
 
 # FIXME: Don't install Xcms.txt - find out why upstream still ships this.
-find $RPM_BUILD_ROOT -name 'Xcms.txt' -delete
+find %{buildroot} -name 'Xcms.txt' -delete
 
 # FIXME package these properly
-rm -rf $RPM_BUILD_ROOT%{_docdir}
+rm -rf %{buildroot}%{_docdir}
 
 %check
 make %{?_smp_mflags} check
@@ -89,11 +93,12 @@ make %{?_smp_mflags} check
 %{_libdir}/libX11-xcb.so.1.0.0
 
 %files common
-%doc AUTHORS COPYING README.md NEWS
+%license COPYING
+%doc AUTHORS README.md NEWS
 %{_datadir}/X11/locale/
 %{_datadir}/X11/XErrorDB
-%dir /var/cache/libX11
-%dir /var/cache/libX11/compose
+%dir %{_var}/cache/libX11
+%dir %{_var}/cache/libX11/compose
 
 %files devel
 %{_includedir}/X11/ImUtil.h
