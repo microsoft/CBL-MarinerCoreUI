@@ -3,45 +3,44 @@
 %global mkfontdir 1.0.7
 %global mkfontscale 1.1.3
 %global font_util 1.3.1
-
 # Must be kept in sync with xorg-x11-fonts!
 %global _x11fontdir %{_datadir}/X11/fonts
-
-Summary:    X.Org X11 font utilities
-Name:       xorg-x11-font-utils
-Epoch:      1
-Version:    7.5
-Release:    48%{?dist}
-License:    MIT
-URL:        https://www.x.org
-
-Source0:    https://www.x.org/pub/individual/app/bdftopcf-%{bdftopcf}.tar.bz2
-Source1:    https://www.x.org/pub/individual/app/fonttosfnt-%{fonttosfnt}.tar.bz2
-Source2:    https://www.x.org/pub/individual/app/mkfontdir-%{mkfontdir}.tar.bz2
-Source3:    https://www.x.org/pub/individual/app/mkfontscale-%{mkfontscale}.tar.bz2
-Source4:    https://www.x.org/pub/individual/font/font-util-%{font_util}.tar.bz2
+Summary:        X.Org X11 font utilities
+Name:           xorg-x11-font-utils
+Version:        7.5
+Release:        48%{?dist}
+Epoch:          1
+License:        MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL:            https://www.x.org
+Source0:        https://www.x.org/pub/individual/app/bdftopcf-%{bdftopcf}.tar.bz2
+Source1:        https://www.x.org/pub/individual/app/fonttosfnt-%{fonttosfnt}.tar.bz2
+Source2:        https://www.x.org/pub/individual/app/mkfontdir-%{mkfontdir}.tar.bz2
+Source3:        https://www.x.org/pub/individual/app/mkfontscale-%{mkfontscale}.tar.bz2
+Source4:        https://www.x.org/pub/individual/font/font-util-%{font_util}.tar.bz2
 # helper script used in post for xorg-x11-fonts
-Source5:    xorg-x11-fonts-update-dirs
-Source6:    xorg-x11-fonts-update-dirs.1
+Source5:        xorg-x11-fonts-update-dirs
+Source6:        xorg-x11-fonts-update-dirs.1
 
-Patch0:     mkfontscale-examine-all-encodings.patch
+Patch0:         mkfontscale-examine-all-encodings.patch
 
-BuildRequires:  make
 BuildRequires:  libtool
+BuildRequires:  make
+BuildRequires:  pkg-config
+BuildRequires:  zlib-devel
 BuildRequires:  pkgconfig(fontenc)
 BuildRequires:  pkgconfig(freetype2)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xorg-macros) >= 1.8
-BuildRequires:  zlib-devel
 
-Provides:   bdftopcf = %{bdftopcf}
-Provides:   fonttosfnt = %{fonttosfnt}
-Provides:   mkfontdir = %{mkfontdir}
-Provides:   mkfontscale = %{mkfontscale}
-Provides:   font-util = %{font_util}
-
-Provides:   font-utils = %{epoch}:%{version}-%{release}
-Provides:   ucs2any = %{font_util}
+Provides:       bdftopcf = %{bdftopcf}
+Provides:       fonttosfnt = %{fonttosfnt}
+Provides:       mkfontdir = %{mkfontdir}
+Provides:       mkfontscale = %{mkfontscale}
+Provides:       font-util = %{font_util}
+Provides:       font-utils = %{epoch}:%{version}-%{release}
+Provides:       ucs2any = %{font_util}
 
 %description
 X.Org X11 font utilities required for font installation, conversion, and
@@ -88,12 +87,12 @@ done
     done
 }
 
-install -m 744 %{SOURCE5} $RPM_BUILD_ROOT%{_bindir}/xorg-x11-fonts-update-dirs
-sed -i "s:@DATADIR@:%{_datadir}:" $RPM_BUILD_ROOT%{_bindir}/xorg-x11-fonts-update-dirs
+install -m 744 %{SOURCE5} %{buildroot}%{_bindir}/xorg-x11-fonts-update-dirs
+sed -i "s:@DATADIR@:%{_datadir}:" %{buildroot}%{_bindir}/xorg-x11-fonts-update-dirs
 
-install -m 744 -p -D %{SOURCE6} $RPM_BUILD_ROOT%{_mandir}/man1/xorg-x11-fonts-update-dirs.1
+install -m 744 -p -D %{SOURCE6} %{buildroot}%{_mandir}/man1/xorg-x11-fonts-update-dirs.1
 
-find $RPM_BUILD_ROOT -name bdftruncate\* -print0 | xargs -0 rm -f
+find %{buildroot} -name bdftruncate\* -print0 | xargs -0 rm -f
 
 %files
 %doc README-* COPYING-bdftopcf COPYING-[c-z]*
