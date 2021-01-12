@@ -29,165 +29,155 @@
 
 %global pkgname xorg-server
 
-Summary:      X.Org X11 X server
-Name:         xorg-x11-server
-Version:      1.20.10
-Release:      2%{?dist}
-License:      MIT
-Vendor:       Microsoft Corporation
-Distribution: Mariner
-URL:          https://www.x.org
-
-Source0:   https://www.x.org/pub/individual/xserver/%{pkgname}-%{version}.tar.bz2
-Source1:   gitignore
-
-Source4:   10-quirks.conf
-
-Source10:   xserver.pamd
-
+Summary:        X.Org X11 X server
+Name:           xorg-x11-server
+Version:        1.20.10
+Release:        2%{?dist}
+License:        MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL:            https://www.x.org
+Source0:        https://www.x.org/pub/individual/xserver/%{pkgname}-%{version}.tar.bz2
+Source1:        gitignore
+Source4:        10-quirks.conf
+Source10:       xserver.pamd
 # for requires generation in drivers
-Source30: xserver-sdk-abi-requires.release
-Source31: xserver-sdk-abi-requires.git
-
+Source30:       xserver-sdk-abi-requires.release
+Source31:       xserver-sdk-abi-requires.git
 # maintainer convenience script
-Source40: driver-abi-rebuild.sh
+Source40:       driver-abi-rebuild.sh
 
 # From Debian use intel ddx driver only for gen4 and older chipsets
-Patch1: 06_use-intel-only-on-pre-gen4.diff
+Patch1:         06_use-intel-only-on-pre-gen4.diff
 # Default to xf86-video-modesetting on GeForce 8 and newer
-Patch2: 0001-xfree86-use-modesetting-driver-by-default-on-GeForce.patch
-
+Patch2:         0001-xfree86-use-modesetting-driver-by-default-on-GeForce.patch
 # Default to va_gl on intel i965 as we use the modesetting drv there
 # va_gl should probably just be the default everywhere ?
-Patch3: 0001-xf86-dri2-Use-va_gl-as-vdpau_driver-for-Intel-i965-G.patch
-
+Patch3:         0001-xf86-dri2-Use-va_gl-as-vdpau_driver-for-Intel-i965-G.patch
 # Submitted upstream, but not going anywhere
-Patch5: 0001-autobind-GPUs-to-the-screen.patch
-
+Patch5:         0001-autobind-GPUs-to-the-screen.patch
 # because the display-managers are not ready yet, do not upstream
-Patch6: 0001-Fedora-hack-Make-the-suid-root-wrapper-always-start-.patch
-
+Patch6:         0001-Fedora-hack-Make-the-suid-root-wrapper-always-start-.patch
 # Backports from current stable "server-1.20-branch":
 # <empty>
-
 # Backports from "master" upstream:
 # <empty>
-
 # Backported Xwayland randr resolution change emulation support
-Patch501: 0001-dix-Add-GetCurrentClient-helper.patch
-Patch502: 0002-xwayland-Add-wp_viewport-wayland-extension-support.patch
-Patch503: 0003-xwayland-Use-buffer_damage-instead-of-surface-damage.patch
-Patch504: 0004-xwayland-Add-fake-output-modes-to-xrandr-output-mode.patch
-Patch505: 0005-xwayland-Use-RandR-1.2-interface-rev-2.patch
-Patch506: 0006-xwayland-Add-per-client-private-data.patch
-Patch507: 0007-xwayland-Add-support-for-storing-per-client-per-outp.patch
-Patch508: 0008-xwayland-Add-support-for-randr-resolution-change-emu.patch
-Patch509: 0009-xwayland-Add-xwlRRModeToDisplayMode-helper-function.patch
-Patch510: 0010-xwayland-Add-xwlVidModeGetCurrentRRMode-helper-to-th.patch
-Patch511: 0011-xwayland-Add-vidmode-mode-changing-emulation-support.patch
-Patch512: 0012-xwayland-xwl_window_should_enable_viewport-Add-extra.patch
-Patch513: 0013-xwayland-Set-_XWAYLAND_RANDR_EMU_MONITOR_RECTS-prope.patch
-Patch514: 0014-xwayland-Cache-client-id-for-the-window-manager-clie.patch
-Patch515: 0015-xwayland-Reuse-viewport-instead-of-recreating.patch
-Patch516: 0016-xwayland-Recurse-on-finding-the-none-wm-owner.patch
-Patch517: 0017-xwayland-Make-window_get_none_wm_owner-return-a-Wind.patch
-Patch518: 0018-xwayland-Check-emulation-on-client-toplevel-resize.patch
-Patch519: 0019-xwayland-Also-check-resolution-change-emulation-when.patch
-Patch520: 0020-xwayland-Also-hook-screen-s-MoveWindow-method.patch
-Patch521: 0021-xwayland-Fix-emulated-modes-not-being-removed-when-s.patch
-Patch522: 0022-xwayland-Call-xwl_window_check_resolution_change_emu.patch
-Patch523: 0023-xwayland-Fix-setting-of-_XWAYLAND_RANDR_EMU_MONITOR_.patch
-Patch524: 0024-xwayland-Remove-unnecessary-xwl_window_is_toplevel-c.patch
-Patch525: 0025-xwayland-Make-window_get_client_toplevel-non-recursi.patch
+Patch501:       0001-dix-Add-GetCurrentClient-helper.patch
+Patch502:       0002-xwayland-Add-wp_viewport-wayland-extension-support.patch
+Patch503:       0003-xwayland-Use-buffer_damage-instead-of-surface-damage.patch
+Patch504:       0004-xwayland-Add-fake-output-modes-to-xrandr-output-mode.patch
+Patch505:       0005-xwayland-Use-RandR-1.2-interface-rev-2.patch
+Patch506:       0006-xwayland-Add-per-client-private-data.patch
+Patch507:       0007-xwayland-Add-support-for-storing-per-client-per-outp.patch
+Patch508:       0008-xwayland-Add-support-for-randr-resolution-change-emu.patch
+Patch509:       0009-xwayland-Add-xwlRRModeToDisplayMode-helper-function.patch
+Patch510:       0010-xwayland-Add-xwlVidModeGetCurrentRRMode-helper-to-th.patch
+Patch511:       0011-xwayland-Add-vidmode-mode-changing-emulation-support.patch
+Patch512:       0012-xwayland-xwl_window_should_enable_viewport-Add-extra.patch
+Patch513:       0013-xwayland-Set-_XWAYLAND_RANDR_EMU_MONITOR_RECTS-prope.patch
+Patch514:       0014-xwayland-Cache-client-id-for-the-window-manager-clie.patch
+Patch515:       0015-xwayland-Reuse-viewport-instead-of-recreating.patch
+Patch516:       0016-xwayland-Recurse-on-finding-the-none-wm-owner.patch
+Patch517:       0017-xwayland-Make-window_get_none_wm_owner-return-a-Wind.patch
+Patch518:       0018-xwayland-Check-emulation-on-client-toplevel-resize.patch
+Patch519:       0019-xwayland-Also-check-resolution-change-emulation-when.patch
+Patch520:       0020-xwayland-Also-hook-screen-s-MoveWindow-method.patch
+Patch521:       0021-xwayland-Fix-emulated-modes-not-being-removed-when-s.patch
+Patch522:       0022-xwayland-Call-xwl_window_check_resolution_change_emu.patch
+Patch523:       0023-xwayland-Fix-setting-of-_XWAYLAND_RANDR_EMU_MONITOR_.patch
+Patch524:       0024-xwayland-Remove-unnecessary-xwl_window_is_toplevel-c.patch
+Patch525:       0025-xwayland-Make-window_get_client_toplevel-non-recursi.patch
 
-BuildRequires: make
-BuildRequires: systemtap-sdt-devel
-
-BuildRequires: git
-BuildRequires: automake
-BuildRequires: autoconf
-BuildRequires: libtool
-BuildRequires: pkg-config
-BuildRequires: xorg-x11-util-macros >= 1.17
-
-BuildRequires: xorg-x11-proto-devel >= 7.7-10
+BuildRequires:  audit-devel
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  bison
 #BuildRequires: xorg-x11-font-utils >= 7.2-11
-
-BuildRequires: dbus-devel
-BuildRequires: systemd-devel
-#BuildRequires: libepoxy-devel
-BuildRequires: xorg-x11-xtrans-devel >= 1.3.2
-BuildRequires: libXau-devel
-#BuildRequires: libXfont2-devel libxkbfile-devel libXres-devel
-#BuildRequires: libfontenc-devel libXtst-devel libXdmcp-devel
-BuildRequires: libX11-devel
-#BuildRequires: libXext-devel
-#BuildRequires: libXinerama-devel libXi-devel
-
-BuildRequires: wayland-devel
-BuildRequires: wayland-protocols-devel
-#BuildRequires: pkgconfig(wayland-eglstream-protocols) <- Provided by "egl-wayland-devel".
-BuildRequires: pkgconfig(wayland-client) >= 1.3.0
-#BuildRequires: pkgconfig(epoxy) <- Provided by "libepoxy-devel".
-#BuildRequires: pkgconfig(xshmfence) >= 1.1
-#BuildRequires: libXv-devel
-#BuildRequires: pixman-devel >= 0.30.0
-BuildRequires: libpciaccess-devel >= 0.13.1
-BuildRequires: openssl-devel
-BuildRequires: bison
-BuildRequires: flex
-BuildRequires: flex-devel
+BuildRequires:  dbus-devel
+BuildRequires:  flex
+BuildRequires:  flex-devel
+BuildRequires:  git
+BuildRequires:  kernel-headers
+#BuildRequires: libXfont2-devel
+#BuildRequires: libxkbfile-devel
+#BuildRequires: libXres-devel
+#BuildRequires: libfontenc-devel
+#BuildRequires: libXtst-devel
+#BuildRequires: libXdmcp-devel
+BuildRequires:  libX11-devel
+BuildRequires:  libXau-devel
 #BuildRequires: mesa-libGL-devel >= 9.2
 #BuildRequires: mesa-libEGL-devel
 #BuildRequires: mesa-libgbm-devel
 # XXX silly...
-BuildRequires: libdrm-devel >= 2.4.0
-BuildRequires: kernel-headers
-
-BuildRequires: audit-devel
-BuildRequires: libselinux-devel >= 2.0.86-1
+BuildRequires:  libdrm-devel >= 2.4.0
+#BuildRequires: pkgconfig(epoxy) <- Provided by "libepoxy-devel".
+#BuildRequires: pkgconfig(xshmfence) >= 1.1
+#BuildRequires: libXv-devel
+#BuildRequires: pixman-devel >= 0.30.0
+BuildRequires:  libpciaccess-devel >= 0.13.1
+BuildRequires:  libselinux-devel >= 2.0.86-1
+BuildRequires:  libtool
+BuildRequires:  make
+BuildRequires:  openssl-devel
+BuildRequires:  pkg-config
+BuildRequires:  systemd-devel
+BuildRequires:  systemtap-sdt-devel
+#BuildRequires: libXext-devel
+#BuildRequires: libXinerama-devel libXi-devel
+BuildRequires:  wayland-devel
+BuildRequires:  wayland-protocols-devel
+BuildRequires:  xorg-x11-proto-devel >= 7.7-10
+BuildRequires:  xorg-x11-util-macros >= 1.17
+#BuildRequires: libepoxy-devel
+BuildRequires:  xorg-x11-xtrans-devel >= 1.3.2
+#BuildRequires: pkgconfig(wayland-eglstream-protocols) <- Provided by "egl-wayland-devel".
+BuildRequires:  pkgconfig(wayland-client) >= 1.3.0
 #BuildRequires: libudev-devel
-
-#BuildRequires: pkgconfig(xcb-aux) pkgconfig(xcb-image) pkgconfig(xcb-icccm)
-#BuildRequires: pkgconfig(xcb-keysyms) pkgconfig(xcb-renderutil)
+#BuildRequires: pkgconfig(xcb-aux)
+#BuildRequires: pkgconfig(xcb-image)
+#BuildRequires: pkgconfig(xcb-icccm)
+#BuildRequires: pkgconfig(xcb-keysyms)
+#BuildRequires: pkgconfig(xcb-renderutil)
 
 %description
 X.Org X11 X server
 
-
 %package common
-Summary: Xorg server common files
-Requires: pixman >= 0.30.0
-Requires: xkeyboard-config xkbcomp
+Summary:        Xorg server common files
+
+Requires:       pixman >= 0.30.0
+Requires:       xkbcomp
+Requires:       xkeyboard-config
 
 %description common
 Common files shared among all X servers.
 
-
 %package Xorg
-Summary: Xorg X server
-Provides: Xorg = %{version}-%{release}
-Provides: Xserver = %{version}-%{release}
+Summary:        Xorg X server
+
+Requires:       libEGL
+Requires:       system-setup-keyboard
+Requires:       xorg-x11-drv-libinput
+Requires:       xorg-x11-server-common >= %{version}-%{release}
+Provides:       Xorg = %{version}-%{release}
+Provides:       Xserver = %{version}-%{release}
 # HdG: This should be moved to the wrapper package once the wrapper gets
 # its own sub-package:
-Provides: xorg-x11-server-wrapper = %{version}-%{release}
-%if %{stable_abi}
-Provides: xserver-abi(ansic-%{ansic_major}) = %{ansic_minor}
-Provides: xserver-abi(videodrv-%{videodrv_major}) = %{videodrv_minor}
-Provides: xserver-abi(xinput-%{xinput_major}) = %{xinput_minor}
-Provides: xserver-abi(extension-%{extension_major}) = %{extension_minor}
-%endif
-Obsoletes: xorg-x11-glamor < %{version}-%{release}
-Provides: xorg-x11-glamor = %{version}-%{release}
-Obsoletes: xorg-x11-drv-modesetting < %{version}-%{release}
-Provides: xorg-x11-drv-modesetting = %{version}-%{release}
+Provides:       xorg-x11-server-wrapper = %{version}-%{release}
+Obsoletes:      xorg-x11-glamor < %{version}-%{release}
+Provides:       xorg-x11-glamor = %{version}-%{release}
+Obsoletes:      xorg-x11-drv-modesetting < %{version}-%{release}
+Provides:       xorg-x11-drv-modesetting = %{version}-%{release}
 # Dropped from F25
-Obsoletes: xorg-x11-drv-vmmouse < 13.1.0-4
-
-Requires: xorg-x11-server-common >= %{version}-%{release}
-Requires: system-setup-keyboard
-Requires: xorg-x11-drv-libinput
-Requires: libEGL
+Obsoletes:      xorg-x11-drv-vmmouse < 13.1.0-4
+%if %{stable_abi}
+Provides:       xserver-abi(ansic-%{ansic_major}) = %{ansic_minor}
+Provides:       xserver-abi(videodrv-%{videodrv_major}) = %{videodrv_minor}
+Provides:       xserver-abi(xinput-%{xinput_major}) = %{xinput_minor}
+Provides:       xserver-abi(extension-%{extension_major}) = %{extension_minor}
+%endif
 
 %description Xorg
 X.org X11 is an open source implementation of the X Window System.  It
@@ -195,32 +185,33 @@ provides the basic low level functionality which full fledged
 graphical user interfaces (GUIs) such as GNOME and KDE are designed
 upon.
 
-
 %package Xwayland
-Summary: Wayland X Server
-Requires: xorg-x11-server-common >= %{version}-%{release}
-Requires: libEGL
+Summary:        Wayland X Server
+
+Requires:       libEGL
+Requires:       xorg-x11-server-common >= %{version}-%{release}
 
 %description Xwayland
 Xwayland is an X server for running X clients under Wayland.
 
-
 %package devel
-Summary: SDK for X server driver module development
-Requires: xorg-x11-util-macros
-Requires: xorg-x11-proto-devel
-Requires: libXfont2-devel
-Requires: pkgconfig pixman-devel libpciaccess-devel
-Provides: xorg-x11-server-static = %{version}-%{release}
-Obsoletes: xorg-x11-glamor-devel < %{version}-%{release}
-Provides: xorg-x11-glamor-devel = %{version}-%{release}
+Summary:        SDK for X server driver module development
+
+Requires:       libXfont2-devel
+Requires:       libpciaccess-devel
+Requires:       pixman-devel
+Requires:       pkg-config
+Requires:       xorg-x11-proto-devel
+Requires:       xorg-x11-util-macros
+Provides:       xorg-x11-server-static = %{version}-%{release}
+Obsoletes:      xorg-x11-glamor-devel < %{version}-%{release}
+Provides:       xorg-x11-glamor-devel = %{version}-%{release}
 
 %description devel
 The SDK package provides the developmental files which are necessary for
 developing X server driver modules, and for compiling driver modules
 outside of the standard X11 source code tree.  Developers writing video
 drivers, input drivers, or other X modules should install this package.
-
 
 %prep
 %autosetup -N -n %{pkgname}-%{version}
@@ -256,11 +247,11 @@ test `getminor extension` == %{extension_minor}
 
 %build
 
-export CFLAGS="$RPM_OPT_FLAGS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1"
-export CXXFLAGS="$RPM_OPT_FLAGS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1"
-export LDFLAGS="$RPM_LD_FLAGS -specs=/usr/lib/rpm/redhat/redhat-hardened-ld"
+export CFLAGS="%{optflags} -specs=%{_lib}/rpm/redhat/redhat-hardened-cc1"
+export CXXFLAGS="%{optflags} -specs=%{_lib}/rpm/redhat/redhat-hardened-cc1"
+export LDFLAGS="$RPM_LD_FLAGS -specs=%{_lib}/rpm/redhat/redhat-hardened-ld"
 
-%global default_font_path "catalogue:/etc/X11/fontpath.d,built-ins"
+%global default_font_path "catalogue:%{_sysconfdir}/X11/fontpath.d,built-ins"
 
 autoreconf -f -v --install || exit 1
 
@@ -288,46 +279,39 @@ make V=1 %{?_smp_mflags}
 %install
 %make_install
 
-mkdir -p $RPM_BUILD_ROOT%{_libdir}/xorg/modules/{drivers,input}
+mkdir -p %{buildroot}%{_libdir}/xorg/modules/{drivers,input}
 
-mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/pam.d
-install -m 644 %{SOURCE10} $RPM_BUILD_ROOT%{_sysconfdir}/pam.d/xserver
+mkdir -p %{buildroot}%{_sysconfdir}/pam.d
+install -m 644 %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/xserver
 
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/X11/xorg.conf.d
-install -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/X11/xorg.conf.d
+mkdir -p %{buildroot}%{_datadir}/X11/xorg.conf.d
+install -m 644 %{SOURCE4} %{buildroot}%{_datadir}/X11/xorg.conf.d
 
 # make sure the (empty) /etc/X11/xorg.conf.d is there, system-setup-keyboard
 # relies on it more or less.
-mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/X11/xorg.conf.d
+mkdir -p %{buildroot}%{_sysconfdir}/X11/xorg.conf.d
 
-install -m 755 %{SOURCE30} $RPM_BUILD_ROOT%{_bindir}/xserver-sdk-abi-requires
+install -m 755 %{SOURCE30} %{buildroot}%{_bindir}/xserver-sdk-abi-requires
 
 # Remove unwanted files/dirs
 {
-    find $RPM_BUILD_ROOT -type f -name '*.la' | xargs rm -f -- || :
+find %{buildroot} -type f -name "*.la" -delete -print
 }
 
 
 %files common
-%doc COPYING
+%license COPYING
 %{_mandir}/man1/Xserver.1*
 %{_libdir}/xorg/protocol.txt
 %dir %{_localstatedir}/lib/xkb
 %{_localstatedir}/lib/xkb/README.compiled
-
-%if 1
-%global Xorgperms %attr(4755, root, root)
-%else
-# disable until module loading is audited
-%global Xorgperms %attr(0711,root,root) %caps(cap_sys_admin,cap_sys_rawio,cap_dac_override=pe)
-%endif
 
 %files Xorg
 %config %attr(0644,root,root) %{_sysconfdir}/pam.d/xserver
 %{_bindir}/X
 %{_bindir}/Xorg
 %{_libexecdir}/Xorg
-%{Xorgperms} %{_libexecdir}/Xorg.wrap
+%attr(4755, root, root) %{_libexecdir}/Xorg.wrap
 %{_bindir}/cvt
 %{_bindir}/gtf
 %dir %{_libdir}/xorg
@@ -367,14 +351,13 @@ install -m 755 %{SOURCE30} $RPM_BUILD_ROOT%{_bindir}/xserver-sdk-abi-requires
 %{_bindir}/Xwayland
 
 %files devel
-%doc COPYING
+%license COPYING
 #{_docdir}/xorg-server
 %{_bindir}/xserver-sdk-abi-requires
 %{_libdir}/pkgconfig/xorg-server.pc
 %dir %{_includedir}/xorg
 %{_includedir}/xorg/*.h
 %{_datadir}/aclocal/xorg-server.m4
-
 
 %changelog
 * Tue Jan 05 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.20.10-2
