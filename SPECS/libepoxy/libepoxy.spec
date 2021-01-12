@@ -1,8 +1,10 @@
 Summary: epoxy runtime library
 Name: libepoxy
 Version: 1.5.5
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
 URL: https://github.com/anholt/libepoxy
 Source0: %{url}/releases/download/%{version}/%{name}-%{version}.tar.xz
 
@@ -22,6 +24,9 @@ A library for handling OpenGL function pointer management.
 
 %package devel
 Summary: Development files for libepoxy
+
+Provides: pkgconfig(epoxy) = %{version}-%{release}
+
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description devel
@@ -57,6 +62,11 @@ xvfb-run -d -s "-screen 0 640x480x24" ninja -C %{_vpath_builddir} test || \
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Mon Jan 11 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.5.5-1
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
+
 * Tue Jan 05 2021 Kalev Lember <klember@redhat.com> - 1.5.5-1
 - Update to 1.5.5
 
