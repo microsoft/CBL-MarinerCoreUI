@@ -17,9 +17,7 @@ BuildRequires:  make
 BuildRequires:  pkg-config
 BuildRequires:  xorg-x11-util-macros >= 1.11
 BuildRequires:  xorg-x11-xtrans-devel >= 1.0.3-4
-BuildRequires:  perl(Pod::Usage)
 BuildRequires:  pkgconfig(xau)
-BuildRequires:  pkgconfig(xdmcp)
 BuildRequires:  pkgconfig(xproto) >= 7.0.15
 
 Requires:       %{name}-common >= %{version}-%{release}
@@ -40,6 +38,9 @@ Summary:        Development files for %{name}
 
 Requires:       %{name} = %{version}-%{release}
 Requires:       %{name}-xcb = %{version}-%{release}
+
+Provides:       pkgconfig(x11) = %{version}-%{release}
+Provides:       pkgconfig(x11-xcb) = %{version}-%{release}
 
 %description devel
 X.Org X11 libX11 development package
@@ -75,7 +76,7 @@ find %{buildroot} -type f -name "*.la" -delete -print
 # FIXME: Don't install Xcms.txt - find out why upstream still ships this.
 find %{buildroot} -name 'Xcms.txt' -delete
 
-# FIXME package these properly
+# Removing unpublished documentation.
 rm -rf %{buildroot}%{_docdir}
 
 %check
@@ -125,6 +126,8 @@ make %{?_smp_mflags} check
 * Thu Jan 07 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.6.12-4
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
+- Removed unused BR on 'pkgconfig(xdmcp)' and 'perl(Pod::Usage)'.
 
 * Mon Nov 09 2020 Peter Hutterer <peter.hutterer@redhat.com> 1.6.12-3
 - Fix a race-condition in poll_for_response (#1758384)
