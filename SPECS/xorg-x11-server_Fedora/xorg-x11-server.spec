@@ -110,16 +110,18 @@ BuildRequires: libtool
 BuildRequires: pkg-config
 BuildRequires: xorg-x11-util-macros >= 1.17
 
-#BuildRequires: xorg-x11-proto-devel >= 7.7-10
+BuildRequires: xorg-x11-proto-devel >= 7.7-10
 #BuildRequires: xorg-x11-font-utils >= 7.2-11
 
 BuildRequires: dbus-devel
 BuildRequires: systemd-devel
 #BuildRequires: libepoxy-devel
-#BuildRequires: xorg-x11-xtrans-devel >= 1.3.2
-#BuildRequires: libXfont2-devel libXau-devel libxkbfile-devel libXres-devel
+BuildRequires: xorg-x11-xtrans-devel >= 1.3.2
+BuildRequires: libXau-devel
+#BuildRequires: libXfont2-devel libxkbfile-devel libXres-devel
 #BuildRequires: libfontenc-devel libXtst-devel libXdmcp-devel
-#BuildRequires: libX11-devel libXext-devel
+BuildRequires: libX11-devel
+#BuildRequires: libXext-devel
 #BuildRequires: libXinerama-devel libXi-devel
 
 BuildRequires: wayland-devel
