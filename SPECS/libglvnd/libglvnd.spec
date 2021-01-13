@@ -1,5 +1,3 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
 #global commit0 f92208be88dd06a70b6f79a1cb95571e2762a9ec
 #global shortcommit0 %%(c=%%{commit0}; echo ${c:0:7})
 
@@ -9,12 +7,13 @@ Distribution:   Mariner
 
 Name:           libglvnd
 Version:        1.3.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 # Provide an upgrade path from the negativo17.org pkgs which have Epoch 1
 Epoch:          1
 Summary:        The GL Vendor-Neutral Dispatch library
-
-License:        MIT
+License:        MIT AND GPLv3+
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
 URL:            https://github.com/NVIDIA/libglvnd
 Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 #Source0:        %%{url}/archive/%%{commit0}.tar.gz#/%%{name}-%%{shortcommit0}.tar.gz
@@ -75,6 +74,12 @@ Provides:       mesa-khr-devel = %{epoch}:%{version}-%{release}
 Provides:       mesa-khr-devel%{?_isa} = %{epoch}:%{version}-%{release}
 Provides:       libGLES-devel = %{epoch}:%{version}-%{release}
 Provides:       libGLES-devel%{?_isa} = %{epoch}:%{version}-%{release}
+Provides: pkgconfig(egl) = %{version}-%{release}
+Provides: pkgconfig(gl) = %{version}-%{release}
+Provides: pkgconfig(glesv1_cm) = %{version}-%{release}
+Provides: pkgconfig(glesv2) = %{version}-%{release}
+Provides: pkgconfig(glx) = %{version}-%{release}
+Provides: pkgconfig(opengl)  = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -266,6 +271,11 @@ xvfb-run -s '-screen 0 640x480x24' -d make check V=1 || \
 
 
 %changelog
+* Thu Jan 07 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1:1.3.2-3
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1:1.3.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
