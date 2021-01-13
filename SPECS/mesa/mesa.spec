@@ -38,10 +38,6 @@
 %global with_radeonsi 1
 %endif
 
-%ifnarch %{x86}
-%global with_asm 1
-%endif
-
 %ifarch %{valgrind_arches}
 %bcond_without valgrind
 %else
@@ -325,31 +321,30 @@ cp %{SOURCE1} docs/
 %define _lto_cflags %{nil}
 
 %meson \
-  -Dplatforms=x11,wayland,drm,surfaceless \
-  -Ddri3=true \
+  -Dplatforms=x11,wayland \
+  -Ddri3=enabled \
   -Ddri-drivers=%{?dri_drivers} \
 %if 0%{?with_hardware}
   -Dgallium-drivers=swrast,virgl,r300,nouveau%{?with_iris:,iris}%{?with_vmware:,svga}%{?with_radeonsi:,radeonsi,r600}%{?with_freedreno:,freedreno}%{?with_etnaviv:,etnaviv}%{?with_tegra:,tegra}%{?with_vc4:,vc4}%{?with_v3d:,v3d}%{?with_kmsro:,kmsro}%{?with_lima:,lima}%{?with_panfrost:,panfrost} \
 %else
   -Dgallium-drivers=swrast,virgl \
 %endif
-  -Dgallium-vdpau=%{?with_vdpau:true}%{!?with_vdpau:false} \
-  -Dgallium-xvmc=false \
+  -Dgallium-vdpau=%{?with_vdpau:enabled}%{!?with_vdpau:disabled} \
+  -Dgallium-xvmc=disabled \
   -Dgallium-omx=%{?with_omx:bellagio}%{!?with_omx:disabled} \
-  -Dgallium-va=%{?with_vaapi:true}%{!?with_vaapi:false} \
-  -Dgallium-xa=%{?with_xa:true}%{!?with_xa:false} \
+  -Dgallium-va=%{?with_vaapi:enabled}%{!?with_vaapi:disabled} \
+  -Dgallium-xa=%{?with_xa:enabled}%{!?with_xa:disabled} \
   -Dgallium-nine=%{?with_nine:true}%{!?with_nine:false} \
   -Dgallium-opencl=%{?with_opencl:icd}%{!?with_opencl:disabled} \
   -Dvulkan-drivers=%{?vulkan_drivers} \
   -Dshared-glapi=true \
-  -Dgles1=false \
-  -Dgles2=true \
+  -Dgles1=disabled \
+  -Dgles2=enabled \
   -Dopengl=true \
-  -Dgbm=true \
+  -Dgbm=enabled \
   -Dglx=dri \
-  -Degl=true \
+  -Degl=enabled \
   -Dglvnd=true \
-  -Dasm=%{?with_asm:true}%{!?with_asm:false} \
   -Dllvm=true \
   -Dshared-llvm=true \
   -Dvalgrind=%{?with_valgrind:true}%{!?with_valgrind:false} \
@@ -593,6 +588,7 @@ cp %{SOURCE1} .
 - License verified.
 - Added a "LICENSE.PTR" source clarifying the project's license.
 - Added BR for 'marinerui-rpm-macros'.
+- Fixed deprecated config options.
 - Removed unused BRs and packages since we only build for AMD64 and ARM64.
 - Removed support for "Bellagio OpenMAX IL" (commented out "with_omx 1").
 - Removed support for VDPAU (commented out "with_vdpau 1").
