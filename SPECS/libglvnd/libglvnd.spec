@@ -21,10 +21,6 @@ BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xext)
 BuildRequires:  xorg-x11-server-Xvfb
 
-%if (0%{?rhel} && 0%{?rhel} <= 6)
-BuildRequires:  autoconf268
-%endif
-
 %description
 libglvnd is an implementation of the vendor-neutral dispatch layer for
 arbitrating OpenGL API calls between multiple vendors on a per-screen basis.
@@ -121,11 +117,7 @@ libGL and libGLX are the common dispatch interface for the GLX API.
 
 %prep
 %autosetup -p1
-%if 0%{?rhel} == 6
-autoreconf268 -vif
-%else
 autoreconf -vif
-%endif
 
 %build
 export PYTHON=%{__python3}
@@ -221,6 +213,7 @@ xvfb-run -s '-screen 0 640x480x24' -d make check V=1 || \
 - License verified.
 - Added explicit "Provides" for "pkgconfig(*)".
 - Removed unused conditionals for the "_without_mesa_glvnd_default" macro and the macro itself.
+- Removed the "rhel" macro, unnecessary for CBL-Mariner.
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1:1.3.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
