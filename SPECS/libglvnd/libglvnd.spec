@@ -18,7 +18,6 @@ BuildRequires:  libtool
 BuildRequires:  pkg-config
 BuildRequires:  python3-libxml2
 BuildRequires:  python3-xml
-#BuildRequires:  python3-rpm-macros
 #BuildRequires:  xorg-x11-server-Xvfb
 BuildRequires:  pkgconfig(glproto)
 BuildRequires:  pkgconfig(x11)
