@@ -1,9 +1,11 @@
 %ifnarch s390x
+# Enabled for Fedora, disabled for CBL-Mariner as currently not needed.
+%global with_vdpau 0
+%global with_omx 0
+
 %global with_hardware 1
-%global with_vdpau 1
 %global with_vaapi 1
 %global with_nine 1
-%global with_omx 1
 %global with_opencl 1
 %global base_drivers nouveau,r100,r200
 %endif
@@ -590,6 +592,8 @@ cp %{SOURCE1} .
 - License verified.
 - Added a "LICENSE.PTR" source clarifying the project's license.
 - Removed unused BRs and packages since we only build for AMD64 and ARM64.
+- Removed support for "Bellagio OpenMAX IL" (set "with_omx" to "0").
+- Removed support for VDPAU (set "with_vdpau" to "0").
 
 * Thu Dec 17 2020 Pete Walter <pwalter@fedoraproject.org> - 20.2.6-1
 - Update to 20.2.6
