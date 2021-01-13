@@ -22,6 +22,9 @@ X.Org X11 libfontenc runtime library
 
 %package devel
 Summary: X.Org X11 libfontenc development package
+
+Provides: pkgconfig(fontenc) = %{version}-%{release}
+
 Requires: %{name} = %{version}-%{release}
 
 %description devel
