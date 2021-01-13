@@ -77,6 +77,7 @@ BuildRequires:  kernel-headers
 # We only check for the minimum version of pkgconfig(libdrm) needed so that the
 # SRPMs for each arch still have the same build dependencies. See:
 # https://bugzilla.redhat.com/show_bug.cgi?id=1859515
+BuildRequires:  marinerui-rpm-macros
 BuildRequires:  pkgconfig(libdrm) >= 2.4.97
 BuildRequires:  pkgconfig(expat)
 BuildRequires:  pkgconfig(zlib) >= 1.2.3
@@ -591,6 +592,7 @@ cp %{SOURCE1} .
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Added a "LICENSE.PTR" source clarifying the project's license.
+- Added BR for 'marinerui-rpm-macros'.
 - Removed unused BRs and packages since we only build for AMD64 and ARM64.
 - Removed support for "Bellagio OpenMAX IL" (set "with_omx" to "0").
 - Removed support for VDPAU (set "with_vdpau" to "0").
