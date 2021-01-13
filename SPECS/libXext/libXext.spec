@@ -1,23 +1,13 @@
-%global tarball libXext
-#global gitdate 20130524
-%global gitversion dfe6e1f3b
-
 Summary: X.Org X11 libXext runtime library
 Name: libXext
 Version: 1.3.4
-Release: 5%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
+Release: 5%{?dist}
 License: MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL: https://www.x.org
 
-%if 0%{?gitdate}
-Source0:    %{tarball}-%{gitdate}.tar.bz2
-Source1:    make-git-snapshot.sh
-Source2:    commitid
-%else
 Source0: https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
-%endif
 
 Requires: libX11 >= 1.5.99.902
 
@@ -43,7 +33,7 @@ Requires: %{name} = %{version}-%{release}
 X.Org X11 libXext development package
 
 %prep
-%setup -q -n %{tarball}-%{?gitdate:%{gitdate}}%{!?gitdate:%{version}}
+%autosetup
 
 %build
 autoreconf -v --install --force
