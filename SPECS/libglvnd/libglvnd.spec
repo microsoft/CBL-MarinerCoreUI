@@ -1,42 +1,45 @@
+Summary:        The GL Vendor-Neutral Dispatch library
 Name:           libglvnd
 Version:        1.3.2
 Release:        3%{?dist}
 # Provide an upgrade path from the negativo17.org pkgs which have Epoch 1
 Epoch:          1
-Summary:        The GL Vendor-Neutral Dispatch library
 License:        MIT AND GPLv3+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://github.com/NVIDIA/libglvnd
 Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
+
 Patch0:         libglvnd-python3.patch
 Patch1:         0001-glx-Add-another-fallback-library-name.patch
 
-BuildRequires:  libtool
 BuildRequires:  gcc
-BuildRequires:  python3-rpm-macros
+BuildRequires:  libtool
+BuildRequires:  pkg-config
 BuildRequires:  python3-libxml2
+BuildRequires:  python3-rpm-macros
+BuildRequires:  xorg-x11-server-Xvfb
 BuildRequires:  pkgconfig(glproto)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xext)
-BuildRequires:  xorg-x11-server-Xvfb
 
 %description
 libglvnd is an implementation of the vendor-neutral dispatch layer for
 arbitrating OpenGL API calls between multiple vendors on a per-screen basis.
 
-
 %package        devel
 Summary:        Development files for %{name}
+
 Requires:       %{name}%{?_isa} = %{epoch}:%{version}-%{release}
-Requires:       %{name}-opengl%{?_isa} = %{epoch}:%{version}-%{release}
+Requires:       %{name}-core-devel%{?_isa} = %{epoch}:%{version}-%{release}
+Requires:       %{name}-egl%{?_isa} = %{epoch}:%{version}-%{release}
 Requires:       %{name}-gles%{?_isa} = %{epoch}:%{version}-%{release}
 Requires:       %{name}-glx%{?_isa} = %{epoch}:%{version}-%{release}
-Requires:       %{name}-egl%{?_isa} = %{epoch}:%{version}-%{release}
-Requires:       %{name}-core-devel%{?_isa} = %{epoch}:%{version}-%{release}
+Requires:       %{name}-opengl%{?_isa} = %{epoch}:%{version}-%{release}
 # Required by any glx.h users.
 Requires:       libX11-devel%{?_isa}
 # We might split into more sub-packages
+
 Obsoletes:      mesa-libGLES-devel < 19.3.0~rc1
 Provides:       mesa-libGLES-devel = %{epoch}:%{version}-%{release}
 Provides:       mesa-libGLES-devel%{?_isa} = %{epoch}:%{version}-%{release}
@@ -45,17 +48,16 @@ Provides:       mesa-khr-devel = %{epoch}:%{version}-%{release}
 Provides:       mesa-khr-devel%{?_isa} = %{epoch}:%{version}-%{release}
 Provides:       libGLES-devel = %{epoch}:%{version}-%{release}
 Provides:       libGLES-devel%{?_isa} = %{epoch}:%{version}-%{release}
-Provides: pkgconfig(egl) = %{version}-%{release}
-Provides: pkgconfig(gl) = %{version}-%{release}
-Provides: pkgconfig(glesv1_cm) = %{version}-%{release}
-Provides: pkgconfig(glesv2) = %{version}-%{release}
-Provides: pkgconfig(glx) = %{version}-%{release}
-Provides: pkgconfig(opengl) = %{version}-%{release}
+Provides:       pkgconfig(egl) = %{version}-%{release}
+Provides:       pkgconfig(gl) = %{version}-%{release}
+Provides:       pkgconfig(glesv1_cm) = %{version}-%{release}
+Provides:       pkgconfig(glesv2) = %{version}-%{release}
+Provides:       pkgconfig(glx) = %{version}-%{release}
+Provides:       pkgconfig(opengl) = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
-
 
 %package        core-devel
 Summary:        Core development files for %{name}
@@ -66,20 +68,21 @@ to build against the %{name} headers but does not link against any of
 its libraries (and, initially, has file conflicts with them). If you are
 not Mesa you almost certainly want %{name}-devel instead.
 
-
 %package        opengl
 Summary:        OpenGL support for libglvnd
+
 Requires:       %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description    opengl
 libOpenGL is the common dispatch interface for the workstation OpenGL API.
 
-
 %package        gles
 Summary:        GLES support for libglvnd
+
 Requires:       %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 # mesa is the default EGL implementation provider
 Requires:       mesa-libEGL%{?_isa} >= 13.0.4-1
+
 Obsoletes:      mesa-libGLES < 19.3.0~rc1
 Provides:       mesa-libGLES = %{version}-%{release}
 Provides:       mesa-libGLES%{?_isa} = %{version}-%{release}
@@ -89,38 +92,38 @@ Provides:       libGLES%{?_isa} = %{version}-%{release}
 %description    gles
 libGLESv[12] are the common dispatch interface for the GLES API.
 
-
 %package        egl
 Summary:        EGL support for libglvnd
+
 Requires:       %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 # mesa is the default EGL implementation provider
 Requires:       mesa-libEGL%{?_isa} >= 13.0.4-1
+
 Provides:       libEGL = %{version}-%{release}
 Provides:       libEGL%{?_isa} = %{version}-%{release}
-
 
 %description    egl
 libEGL are the common dispatch interface for the EGL API.
 
-
 %package        glx
 Summary:        GLX support for libglvnd
+
 Requires:       %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 # mesa is the default GL implementation provider
 Requires:       mesa-libGL%{?_isa} >= 13.0.4-1
+
 Provides:       libGL = %{version}-%{release}
 Provides:       libGL%{?_isa} = %{version}-%{release}
 
 %description    glx
 libGL and libGLX are the common dispatch interface for the GLX API.
 
-
 %prep
 %autosetup -p1
 autoreconf -vif
 
 %build
-export PYTHON=%{__python3}
+export PYTHON=python3
 #Prefer asm and tls for x86* and ppc64*
 #armhfp and aarch64 fallback to asm and tsd
 #Others arches fallback to pure-c and tls.
@@ -134,7 +137,7 @@ export PYTHON=%{__python3}
 
 %install
 %make_install INSTALL="install -p"
-find %{buildroot} -name '*.la' -delete
+find %{buildroot} -type f -name "*.la" -delete -print
 
 # Create directory layout
 mkdir -p %{buildroot}%{_sysconfdir}/glvnd/egl_vendor.d/
@@ -205,7 +208,6 @@ xvfb-run -s '-screen 0 640x480x24' -d make check V=1 || \
 %{_libdir}/pkgconfig/gl*.pc
 %{_libdir}/pkgconfig/egl.pc
 %{_libdir}/pkgconfig/opengl.pc
-
 
 %changelog
 * Thu Jan 07 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1:1.3.2-3
