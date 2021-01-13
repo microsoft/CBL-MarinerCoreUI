@@ -4,8 +4,10 @@
 Summary: X.Org X11 libfontenc runtime library
 Name: libfontenc
 Version: 1.1.3
-Release: 13%{?dist}
+Release: 14%{?dist}
 License: MIT
+Vendor:       Microsoft Corporation
+Distribution: Mariner
 URL: http://www.x.org
 Source0: ftp://ftp.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
 
@@ -53,6 +55,10 @@ find $RPM_BUILD_ROOT -type f -name '*.la' | xargs rm -f -- || :
 %{_libdir}/pkgconfig/fontenc.pc
 
 %changelog
+* Tue Jan 12 2021 Vinicius Jarina <vinja@microsoft.com> - 1.1.3-14
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.3-13
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
