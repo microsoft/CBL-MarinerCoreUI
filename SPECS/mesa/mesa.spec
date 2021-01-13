@@ -50,23 +50,23 @@
 
 Name:           mesa
 Summary:        Mesa graphics libraries
-%global ver 20.2.6
-Version:        %{lua:ver = string.gsub(rpm.expand("%{ver}"), "-", "~"); print(ver)}
+Version:        20.2.6
 Release:        2%{?dist}
 License:        BSD
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            http://www.mesa3d.org
 
-Source0:        https://mesa.freedesktop.org/archive/%{name}-%{ver}.tar.xz
+Source0:        https://mesa.freedesktop.org/archive/%{name}-%{version}.tar.xz
 # src/gallium/auxiliary/postprocess/pp_mlaa* have an ... interestingly worded license.
 # Source1 contains email correspondence clarifying the license terms.
 # Fedora opts to ignore the optional part of clause 2 and treat that code as 2 clause BSD.
+# CBL-Mariner is taking the same approach.
 Source1:        Mesa-MLAA-License-Clarification-Email.txt
+Source2:        LICENSE.PTR
 
 BuildRequires:  meson >= 0.45
 BuildRequires:  gcc
-BuildRequires:  gcc-c++
 BuildRequires:  gettext
 
 %if 0%{?with_hardware}
@@ -312,7 +312,7 @@ Requires:       vulkan-devel
 Headers for development with the Vulkan API.
 
 %prep
-%autosetup -n %{name}-%{ver} -p1
+%autosetup -n %{name}-%{version} -p1
 cp %{SOURCE1} docs/
 
 %build
@@ -379,7 +379,11 @@ for i in libOSMesa*.so libGL.so ; do
 done
 popd
 
+# Adding license information
+cp %{SOURCE1} .
+
 %files filesystem
+%license LICENSE.PTR
 %doc docs/Mesa-MLAA-License-Clarification-Email.txt
 %dir %{_libdir}/dri
 %if 0%{?with_hardware}
@@ -584,6 +588,8 @@ popd
 * Tue Jan 12 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 20.2.6-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
+- Added a "LICENSE.PTR" source clarifying the project's license.
+- Removed unused BRs and packages since we only build for AMD64 and ARM64.
 
 * Thu Dec 17 2020 Pete Walter <pwalter@fedoraproject.org> - 20.2.6-1
 - Update to 20.2.6
