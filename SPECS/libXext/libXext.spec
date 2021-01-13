@@ -1,5 +1,3 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
 %global tarball libXext
 #global gitdate 20130524
 %global gitversion dfe6e1f3b
@@ -7,16 +5,18 @@ Distribution:   Mariner
 Summary: X.Org X11 libXext runtime library
 Name: libXext
 Version: 1.3.4
-Release: 4%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
+Release: 5%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
 License: MIT
-URL: http://www.x.org
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL: https://www.x.org
 
 %if 0%{?gitdate}
 Source0:    %{tarball}-%{gitdate}.tar.bz2
 Source1:    make-git-snapshot.sh
 Source2:    commitid
 %else
-Source0: http://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
+Source0: https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
 %endif
 
 Requires: libX11 >= 1.5.99.902
@@ -34,6 +34,9 @@ X.Org X11 libXext runtime library
 
 %package devel
 Summary: X.Org X11 libXext development package
+
+Provides: pkgconfig(xext) = %{version}-%{release}
+
 Requires: %{name} = %{version}-%{release}
 
 %description devel
@@ -85,10 +88,14 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 %{_includedir}/X11/extensions/xtestext1.h
 %{_libdir}/libXext.so
 %{_libdir}/pkgconfig/xext.pc
-#%dir %{_mandir}/man3x
 %{_mandir}/man3/*.3*
 
 %changelog
+* Wed Jan 13 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.3.4-5
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.4-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
