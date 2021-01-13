@@ -337,7 +337,7 @@ cp %{SOURCE1} docs/
   -Dgallium-nine=%{?with_nine:true}%{!?with_nine:false} \
   -Dgallium-opencl=%{?with_opencl:icd}%{!?with_opencl:disabled} \
   -Dvulkan-drivers=%{?vulkan_drivers} \
-  -Dshared-glapi=true \
+  -Dshared-glapi=enabled \
   -Dgles1=disabled \
   -Dgles2=enabled \
   -Dopengl=true \
