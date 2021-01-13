@@ -1,11 +1,11 @@
 %ifnarch s390x
 # Enabled for Fedora, disabled for CBL-Mariner as currently not needed.
+%global with_hardware 0
 %global with_omx 0
 %global with_opencl 0
 %global with_vaapi 0
 %global with_vdpau 0
 
-%global with_hardware 1
 %global with_nine 1
 %global base_drivers nouveau,r100,r200
 %endif
@@ -596,6 +596,7 @@ cp %{SOURCE1} .
 - Removed support for VDPAU (set "with_vdpau" to "0").
 - Removed support for VA-API (set "with_vaapi" to "0").
 - Removed support for OpenCL (set "with_opencl" to "0").
+- Removed support for extended hardware (set "with_hardware" to "0").
 
 * Thu Dec 17 2020 Pete Walter <pwalter@fedoraproject.org> - 20.2.6-1
 - Update to 20.2.6
