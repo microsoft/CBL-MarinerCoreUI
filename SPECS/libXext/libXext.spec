@@ -1,33 +1,34 @@
-Summary: X.Org X11 libXext runtime library
-Name: libXext
-Version: 1.3.4
-Release: 5%{?dist}
-License: MIT
+Summary:        X.Org X11 libXext runtime library
+Name:           libXext
+Version:        1.3.4
+Release:        5%{?dist}
+License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL: https://www.x.org
+URL:            https://www.x.org
+Source0:        https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
 
-Source0: https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libX11-devel >= 1.5.99.902
+BuildRequires:  libXau-devel
+BuildRequires:  libtool
+BuildRequires:  pkg-config
+BuildRequires:  xmlto
+BuildRequires:  xorg-x11-proto-devel >= 7.4-23
+BuildRequires:  xorg-x11-util-macros
 
-Requires: libX11 >= 1.5.99.902
-
-BuildRequires: autoconf automake libtool
-BuildRequires: xorg-x11-proto-devel >= 7.4-23
-BuildRequires: libX11-devel >= 1.5.99.902
-BuildRequires: libXau-devel
-BuildRequires: xorg-x11-util-macros
-BuildRequires: autoconf automake libtool pkgconfig
-BuildRequires: xmlto
+Requires:       libX11 >= 1.5.99.902
 
 %description
 X.Org X11 libXext runtime library
 
 %package devel
-Summary: X.Org X11 libXext development package
+Summary:        X.Org X11 libXext development package
 
-Provides: pkgconfig(xext) = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
-Requires: %{name} = %{version}-%{release}
+Provides:       pkgconfig(xext) = %{version}-%{release}
 
 %description devel
 X.Org X11 libXext development package
@@ -41,21 +42,21 @@ autoreconf -v --install --force
 make %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=%{buildroot}
 
 # We intentionally don't ship *.la files
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+find %{buildroot} -type f -name "*.la" -delete -print
 
 # do this with %%doc below
-rm -rf $RPM_BUILD_ROOT%{_docdir}
+rm -rf %{buildroot}%{_docdir}
 
 %ldconfig_post
 %ldconfig_postun
 
 %files
-%doc AUTHORS COPYING
+%license COPYING
+%doc AUTHORS
 %{_libdir}/libXext.so.6
 %{_libdir}/libXext.so.6.4.0
 
