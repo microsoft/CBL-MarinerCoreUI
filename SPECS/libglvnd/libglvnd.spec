@@ -157,27 +157,37 @@ xvfb-run -s '-screen 0 640x480x24' -d make check V=1 || \
 %endif
 
 
-%ldconfig_scriptlets
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
+
 %files
 %doc README.md
 %dir %{_sysconfdir}/glvnd/
 %dir %{_datadir}/glvnd/
 %{_libdir}/libGLdispatch.so.0*
 
-%ldconfig_scriptlets opengl
+%post opengl -p /sbin/ldconfig
+%postun opengl -p /sbin/ldconfig
+
 %files opengl
 %{_libdir}/libOpenGL.so.0*
 
-%ldconfig_scriptlets gles
+%post gles -p /sbin/ldconfig
+%postun gles -p /sbin/ldconfig
+
 %files gles
 %{_libdir}/libGLES*.so.*
 
-%ldconfig_scriptlets glx
+%post glx -p /sbin/ldconfig
+%postun glx -p /sbin/ldconfig
+
 %files glx
 %{_libdir}/libGL.so.*
 %{_libdir}/libGLX.so.*
 
-%ldconfig_scriptlets egl
+%post egl -p /sbin/ldconfig
+%postun egl -p /sbin/ldconfig
+
 %files egl
 %dir %{_sysconfdir}/glvnd/egl_vendor.d/
 %dir %{_datadir}/glvnd/egl_vendor.d/
@@ -217,6 +227,7 @@ xvfb-run -s '-screen 0 640x480x24' -d make check V=1 || \
 - Added explicit "Provides" for "pkgconfig(*)".
 - Removed unused conditionals for the "_without_mesa_glvnd_default" macro and the macro itself.
 - Removed the "rhel" macro, unnecessary for CBL-Mariner.
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1:1.3.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
