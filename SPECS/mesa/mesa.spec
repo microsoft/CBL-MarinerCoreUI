@@ -84,23 +84,23 @@ BuildRequires:  pkgconfig(wayland-client) >= 1.11
 BuildRequires:  pkgconfig(wayland-server) >= 1.11
 BuildRequires:  pkgconfig(wayland-egl-backend) >= 3
 BuildRequires:  pkgconfig(x11)
-BuildRequires:  pkgconfig(xext)
-BuildRequires:  pkgconfig(xdamage) >= 1.1
-BuildRequires:  pkgconfig(xfixes)
+#BuildRequires:  pkgconfig(xext)
+#BuildRequires:  pkgconfig(xdamage) >= 1.1
+#BuildRequires:  pkgconfig(xfixes)
 BuildRequires:  pkgconfig(xcb-glx) >= 1.8.1
-BuildRequires:  pkgconfig(xxf86vm)
+#BuildRequires:  pkgconfig(xxf86vm)
 BuildRequires:  pkgconfig(xcb)
 BuildRequires:  pkgconfig(x11-xcb)
 BuildRequires:  pkgconfig(xcb-dri2) >= 1.8
 BuildRequires:  pkgconfig(xcb-dri3)
 BuildRequires:  pkgconfig(xcb-present)
 BuildRequires:  pkgconfig(xcb-sync)
-BuildRequires:  pkgconfig(xshmfence) >= 1.1
+#BuildRequires:  pkgconfig(xshmfence) >= 1.1
 BuildRequires:  pkgconfig(dri2proto) >= 2.8
 BuildRequires:  pkgconfig(glproto) >= 1.4.14
 BuildRequires:  pkgconfig(xcb-xfixes)
 BuildRequires:  pkgconfig(xcb-randr)
-BuildRequires:  pkgconfig(xrandr) >= 1.3
+#BuildRequires:  pkgconfig(xrandr) >= 1.3
 BuildRequires:  bison
 BuildRequires:  flex
 %if 0%{?with_vdpau}
@@ -113,7 +113,7 @@ BuildRequires:  pkgconfig(libva) >= 0.38.0
 BuildRequires:  pkgconfig(libomxil-bellagio)
 %endif
 BuildRequires:  pkgconfig(libelf)
-BuildRequires:  pkgconfig(libglvnd) >= 1.3.2
+#BuildRequires:  pkgconfig(libglvnd) >= 1.3.2
 BuildRequires:  llvm-devel >= 7.0.0
 %if 0%{?with_opencl}
 BuildRequires:  clang-devel
