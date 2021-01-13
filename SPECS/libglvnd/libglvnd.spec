@@ -50,7 +50,7 @@ Provides: pkgconfig(gl) = %{version}-%{release}
 Provides: pkgconfig(glesv1_cm) = %{version}-%{release}
 Provides: pkgconfig(glesv2) = %{version}-%{release}
 Provides: pkgconfig(glx) = %{version}-%{release}
-Provides: pkgconfig(opengl)  = %{version}-%{release}
+Provides: pkgconfig(opengl) = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -81,10 +81,10 @@ Requires:       %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 # mesa is the default EGL implementation provider
 Requires:       mesa-libEGL%{?_isa} >= 13.0.4-1
 Obsoletes:      mesa-libGLES < 19.3.0~rc1
-Provides:       mesa-libGLES
-Provides:       mesa-libGLES%{?_isa}
-Provides:       libGLES
-Provides:       libGLES%{?_isa}
+Provides:       mesa-libGLES = %{version}-%{release}
+Provides:       mesa-libGLES%{?_isa} = %{version}-%{release}
+Provides:       libGLES = %{version}-%{release}
+Provides:       libGLES%{?_isa} = %{version}-%{release}
 
 %description    gles
 libGLESv[12] are the common dispatch interface for the GLES API.
@@ -95,8 +95,8 @@ Summary:        EGL support for libglvnd
 Requires:       %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 # mesa is the default EGL implementation provider
 Requires:       mesa-libEGL%{?_isa} >= 13.0.4-1
-Provides:       libEGL
-Provides:       libEGL%{?_isa}
+Provides:       libEGL = %{version}-%{release}
+Provides:       libEGL%{?_isa} = %{version}-%{release}
 
 
 %description    egl
@@ -108,8 +108,8 @@ Summary:        GLX support for libglvnd
 Requires:       %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 # mesa is the default GL implementation provider
 Requires:       mesa-libGL%{?_isa} >= 13.0.4-1
-Provides:       libGL
-Provides:       libGL%{?_isa}
+Provides:       libGL = %{version}-%{release}
+Provides:       libGL%{?_isa} = %{version}-%{release}
 
 %description    glx
 libGL and libGLX are the common dispatch interface for the GLX API.
