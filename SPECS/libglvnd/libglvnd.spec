@@ -17,11 +17,11 @@ BuildRequires:  gcc
 BuildRequires:  libtool
 BuildRequires:  pkg-config
 BuildRequires:  python3-libxml2
-BuildRequires:  python3-rpm-macros
-BuildRequires:  xorg-x11-server-Xvfb
+#BuildRequires:  python3-rpm-macros
+#BuildRequires:  xorg-x11-server-Xvfb
 BuildRequires:  pkgconfig(glproto)
 BuildRequires:  pkgconfig(x11)
-BuildRequires:  pkgconfig(xext)
+#BuildRequires:  pkgconfig(xext)
 
 %description
 libglvnd is an implementation of the vendor-neutral dispatch layer for
