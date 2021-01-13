@@ -1,7 +1,7 @@
 %ifnarch s390x
 # Enabled for Fedora, disabled for CBL-Mariner as currently not needed.
 # %%global with_hardware 1
-%global with_omx 0
+# %%global with_omx 1
 %global with_opencl 0
 %global with_vaapi 0
 %global with_vdpau 0
@@ -594,7 +594,7 @@ cp %{SOURCE1} .
 - Added a "LICENSE.PTR" source clarifying the project's license.
 - Added BR for 'marinerui-rpm-macros'.
 - Removed unused BRs and packages since we only build for AMD64 and ARM64.
-- Removed support for "Bellagio OpenMAX IL" (set "with_omx" to "0").
+- Removed support for "Bellagio OpenMAX IL" (commented out "with_omx 1").
 - Removed support for VDPAU (set "with_vdpau" to "0").
 - Removed support for VA-API (set "with_vaapi" to "0").
 - Removed support for OpenCL (set "with_opencl" to "0").
