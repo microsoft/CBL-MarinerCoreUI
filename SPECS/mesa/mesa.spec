@@ -5,8 +5,7 @@
 # %%global with_opencl 1
 # %%global with_vaapi 1
 # %%global with_vdpau 1
-
-%global with_nine 1
+# %%global with_nine 1
 %global base_drivers nouveau,r100,r200
 %endif
 
@@ -600,6 +599,7 @@ cp %{SOURCE1} .
 - Removed support for OpenCL (commented out "with_opencl 1").
 - Removed support for extended hardware (commented out "with_hardware 1").
 - Removed support for XA state tracker (commented out "with_xa 1").
+- Removed support for Direct3D 9 state tracker (commented out "with_nine 1").
 
 * Thu Dec 17 2020 Pete Walter <pwalter@fedoraproject.org> - 20.2.6-1
 - Update to 20.2.6
