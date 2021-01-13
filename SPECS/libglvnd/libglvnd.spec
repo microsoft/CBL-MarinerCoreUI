@@ -1,6 +1,3 @@
-#global commit0 f92208be88dd06a70b6f79a1cb95571e2762a9ec
-#global shortcommit0 %%(c=%%{commit0}; echo ${c:0:7})
-
 %if 0%{?el6}
 %global _without_mesa_glvnd_default 1
 %endif
@@ -16,7 +13,6 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://github.com/NVIDIA/libglvnd
 Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
-#Source0:        %%{url}/archive/%%{commit0}.tar.gz#/%%{name}-%%{shortcommit0}.tar.gz
 Patch0:         libglvnd-python3.patch
 Patch1:         0001-glx-Add-another-fallback-library-name.patch
 
@@ -150,7 +146,7 @@ libGL and libGLX are the common dispatch interface for the GLX API.
 
 
 %prep
-%autosetup -p1 -n %{name}-%{?commit0}%{?!commit0:%{version}}
+%autosetup -p1
 %if 0%{?rhel} == 6
 autoreconf268 -vif
 %else
