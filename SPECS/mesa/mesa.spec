@@ -11,10 +11,12 @@
 %endif
 
 %ifarch %{ix86} x86_64
+# Enabled for Fedora, disabled for CBL-Mariner as currently not needed.
+# %%global with_xa     1
+
 %global platform_drivers ,i915,i965
 %global with_iris   1
 %global with_vmware 1
-%global with_xa     1
 %global vulkan_drivers intel,amd
 %else
 %ifnarch s390x
@@ -23,6 +25,9 @@
 %endif
 
 %ifarch %{arm} aarch64
+# Enabled for Fedora, disabled for CBL-Mariner as currently not needed.
+# %%global with_xa     1
+
 %global with_etnaviv   1
 %global with_freedreno 1
 %global with_kmsro     1
@@ -31,7 +36,6 @@
 %global with_tegra     1
 %global with_vc4       1
 %global with_v3d       1
-%global with_xa        1
 %endif
 
 %ifnarch %{arm} s390x
@@ -594,7 +598,8 @@ cp %{SOURCE1} .
 - Removed support for VDPAU (commented out "with_vdpau 1").
 - Removed support for VA-API (commented out "with_vaapi 1").
 - Removed support for OpenCL (commented out "with_opencl 1").
-- Removed support for extended hardware (commented out "with_hardware 0").
+- Removed support for extended hardware (commented out "with_hardware 1").
+- Removed support for XA state tracker (commented out "with_xa 1").
 
 * Thu Dec 17 2020 Pete Walter <pwalter@fedoraproject.org> - 20.2.6-1
 - Update to 20.2.6
