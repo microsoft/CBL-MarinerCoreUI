@@ -4,7 +4,7 @@
 # %%global with_omx 1
 # %%global with_opencl 1
 # %%global with_vaapi 1
-%global with_vdpau 0
+# %%global with_vdpau 1
 
 %global with_nine 1
 %global base_drivers nouveau,r100,r200
@@ -595,7 +595,7 @@ cp %{SOURCE1} .
 - Added BR for 'marinerui-rpm-macros'.
 - Removed unused BRs and packages since we only build for AMD64 and ARM64.
 - Removed support for "Bellagio OpenMAX IL" (commented out "with_omx 1").
-- Removed support for VDPAU (set "with_vdpau" to "0").
+- Removed support for VDPAU (commented out "with_vdpau 1").
 - Removed support for VA-API (commented out "with_vaapi 1").
 - Removed support for OpenCL (commented out "with_opencl 1").
 - Removed support for extended hardware (commented out "with_hardware 0").
