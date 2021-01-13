@@ -210,7 +210,7 @@ xvfb-run -s '-screen 0 640x480x24' -d make check V=1 || \
 %{_libdir}/pkgconfig/opengl.pc
 
 %changelog
-* Thu Jan 07 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1:1.3.2-3
+* Wed Jan 13 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1:1.3.2-3
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Added explicit "Provides" for "pkgconfig(*)".
