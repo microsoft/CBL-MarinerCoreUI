@@ -1,7 +1,3 @@
-%if 0%{?el6}
-%global _without_mesa_glvnd_default 1
-%endif
-
 Name:           libglvnd
 Version:        1.3.2
 Release:        3%{?dist}
@@ -28,23 +24,6 @@ BuildRequires:  xorg-x11-server-Xvfb
 %if (0%{?rhel} && 0%{?rhel} <= 6)
 BuildRequires:  autoconf268
 %endif
-
-%{?_without_mesa_glvnd_default:
-%if (0%{?rhel} && 0%{?rhel} <= 6)
-
-%{?filter_setup:
-%filter_provides_in %{_libdir}/%{name}
-%filter_requires_in %{_libdir}/%{name}
-%filter_setup
-}
-
-%else
-
-%global __provides_exclude_from %{_libdir}/%{name}
-%global __requires_exclude_from %{_libdir}/%{name}
-
-%endif
-}
 
 %description
 libglvnd is an implementation of the vendor-neutral dispatch layer for
@@ -103,7 +82,6 @@ libOpenGL is the common dispatch interface for the workstation OpenGL API.
 %package        gles
 Summary:        GLES support for libglvnd
 Requires:       %{name}%{?_isa} = %{epoch}:%{version}-%{release}
-%{!?_without_mesa_glvnd_default:
 # mesa is the default EGL implementation provider
 Requires:       mesa-libEGL%{?_isa} >= 13.0.4-1
 Obsoletes:      mesa-libGLES < 19.3.0~rc1
@@ -111,7 +89,6 @@ Provides:       mesa-libGLES
 Provides:       mesa-libGLES%{?_isa}
 Provides:       libGLES
 Provides:       libGLES%{?_isa}
-}
 
 %description    gles
 libGLESv[12] are the common dispatch interface for the GLES API.
@@ -120,12 +97,11 @@ libGLESv[12] are the common dispatch interface for the GLES API.
 %package        egl
 Summary:        EGL support for libglvnd
 Requires:       %{name}%{?_isa} = %{epoch}:%{version}-%{release}
-%{!?_without_mesa_glvnd_default:
 # mesa is the default EGL implementation provider
 Requires:       mesa-libEGL%{?_isa} >= 13.0.4-1
 Provides:       libEGL
 Provides:       libEGL%{?_isa}
-}
+
 
 %description    egl
 libEGL are the common dispatch interface for the EGL API.
@@ -134,12 +110,10 @@ libEGL are the common dispatch interface for the EGL API.
 %package        glx
 Summary:        GLX support for libglvnd
 Requires:       %{name}%{?_isa} = %{epoch}:%{version}-%{release}
-%{!?_without_mesa_glvnd_default:
 # mesa is the default GL implementation provider
 Requires:       mesa-libGL%{?_isa} >= 13.0.4-1
 Provides:       libGL
 Provides:       libGL%{?_isa}
-}
 
 %description    glx
 libGL and libGLX are the common dispatch interface for the GLX API.
@@ -169,15 +143,6 @@ export PYTHON=%{__python3}
 %install
 %make_install INSTALL="install -p"
 find %{buildroot} -name '*.la' -delete
-
-%{?_without_mesa_glvnd_default:
-# Avoid conflict with mesa-libGL
-mkdir -p %{buildroot}%{_libdir}/%{name}/
-for l in libEGL libGL libGLESv1_CM libGLESv2 libGLX; do
-  mv %{buildroot}%{_libdir}/${l}.so* \
-    %{buildroot}%{_libdir}/%{name}/
-done
-}
 
 # Create directory layout
 mkdir -p %{buildroot}%{_sysconfdir}/glvnd/egl_vendor.d/
@@ -209,21 +174,12 @@ xvfb-run -s '-screen 0 640x480x24' -d make check V=1 || \
 
 %ldconfig_scriptlets gles
 %files gles
-%if 0%{?_without_mesa_glvnd_default}
-%{_libdir}/%{name}/libGLES*.so.*
-%else
 %{_libdir}/libGLES*.so.*
-%endif
 
 %ldconfig_scriptlets glx
 %files glx
-%if 0%{?_without_mesa_glvnd_default}
-%{_libdir}/%{name}/libGL.so.*
-%{_libdir}/%{name}/libGLX.so.*
-%else
 %{_libdir}/libGL.so.*
 %{_libdir}/libGLX.so.*
-%endif
 
 %ldconfig_scriptlets egl
 %files egl
@@ -233,11 +189,7 @@ xvfb-run -s '-screen 0 640x480x24' -d make check V=1 || \
 %dir %{_sysconfdir}/egl/egl_external_platform.d/
 %dir %{_datadir}/egl/
 %dir %{_datadir}/egl/egl_external_platform.d/
-%if 0%{?_without_mesa_glvnd_default}
-%{_libdir}/%{name}/libEGL*.so.*
-%else
 %{_libdir}/libEGL*.so.*
-%endif
 
 %files core-devel
 %dir %{_includedir}/glvnd/
@@ -258,9 +210,6 @@ xvfb-run -s '-screen 0 640x480x24' -d make check V=1 || \
 %{_includedir}/GLES3/*.h
 %{_includedir}/KHR/*.h
 %{_libdir}/lib*.so
-%if 0%{?_without_mesa_glvnd_default}
-%{_libdir}/%{name}/lib*.so
-%endif
 %{_libdir}/pkgconfig/gl*.pc
 %{_libdir}/pkgconfig/egl.pc
 %{_libdir}/pkgconfig/opengl.pc
@@ -271,6 +220,7 @@ xvfb-run -s '-screen 0 640x480x24' -d make check V=1 || \
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Added explicit "Provides" for "pkgconfig(*)".
+- Removed unused conditionals for the "_without_mesa_glvnd_default" macro and the macro itself.
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1:1.3.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
