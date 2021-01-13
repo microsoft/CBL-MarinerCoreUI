@@ -87,7 +87,7 @@ BuildRequires:  pkgconfig(wayland-client) >= 1.11
 BuildRequires:  pkgconfig(wayland-server) >= 1.11
 BuildRequires:  pkgconfig(wayland-egl-backend) >= 3
 BuildRequires:  pkgconfig(x11)
-#BuildRequires:  pkgconfig(xext)
+BuildRequires:  pkgconfig(xext)
 #BuildRequires:  pkgconfig(xdamage) >= 1.1
 #BuildRequires:  pkgconfig(xfixes)
 BuildRequires:  pkgconfig(xcb-glx) >= 1.8.1
@@ -116,7 +116,7 @@ BuildRequires:  pkgconfig(libva) >= 0.38.0
 BuildRequires:  pkgconfig(libomxil-bellagio)
 %endif
 BuildRequires:  pkgconfig(libelf)
-#BuildRequires:  pkgconfig(libglvnd) >= 1.3.2
+BuildRequires:  pkgconfig(libglvnd) >= 1.3.2
 BuildRequires:  llvm-devel >= 7.0.0
 %if 0%{?with_opencl}
 BuildRequires:  clang-devel
