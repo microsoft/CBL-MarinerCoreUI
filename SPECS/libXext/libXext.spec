@@ -51,8 +51,8 @@ find %{buildroot} -type f -name "*.la" -delete -print
 # do this with %%doc below
 rm -rf %{buildroot}%{_docdir}
 
-%ldconfig_post
-%ldconfig_postun
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %license COPYING
@@ -86,6 +86,7 @@ rm -rf %{buildroot}%{_docdir}
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Added explicit "Provides" for "pkgconfig(*)".
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.4-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
