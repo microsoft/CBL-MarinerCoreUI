@@ -1,10 +1,9 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
 Name:           libxshmfence
 Version:        1.3
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        X11 shared memory fences
-
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
 License:        MIT
 URL:            https://www.x.org/
 Source0:        https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
@@ -12,7 +11,6 @@ Source0:        https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{ve
 # upstream tarball has broken libtool because libtool is never not broken
 BuildRequires:  autoconf automake libtool xorg-x11-util-macros
 BuildRequires:  pkgconfig(xproto)
-#Requires:       
 
 %description
 Shared memory fences for X11, as used in DRI3.
@@ -20,6 +18,8 @@ Shared memory fences for X11, as used in DRI3.
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+
+Provides:       pkgconfig(xshmfence) = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -37,8 +37,8 @@ make %{?_smp_mflags}
 %make_install
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
-%ldconfig_post
-%ldconfig_postun
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %doc
@@ -51,6 +51,12 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/*.so
 
 %changelog
+* Thu Jan 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.3-8
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.3-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
