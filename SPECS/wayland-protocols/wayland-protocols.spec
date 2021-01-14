@@ -23,6 +23,8 @@ wayland-protocols.
 %package devel
 Summary:        Wayland protocols that add functionality not available in the core protocol
 
+Provides:       pkgconfig(wayland-protocols) = %{version}-%{release}
+
 %description devel
 wayland-protocols contains Wayland protocols that add functionality not
 available in the Wayland core protocol. Such protocols either adds
@@ -49,6 +51,7 @@ wayland-protocols.
 * Thu Dec 10 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.20-3
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
 
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.20-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
