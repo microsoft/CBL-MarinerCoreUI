@@ -88,8 +88,8 @@ BuildRequires:  pkgconfig(wayland-client) >= 1.11
 #BuildRequires:  pkgconfig(wayland-egl-backend) >= 3
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xext)
-#BuildRequires:  pkgconfig(xdamage) >= 1.1
-#BuildRequires:  pkgconfig(xfixes)
+BuildRequires:  pkgconfig(xdamage) >= 1.1
+BuildRequires:  pkgconfig(xfixes)
 BuildRequires:  pkgconfig(xcb-glx) >= 1.8.1
 #BuildRequires:  pkgconfig(xxf86vm)
 BuildRequires:  pkgconfig(xcb)
