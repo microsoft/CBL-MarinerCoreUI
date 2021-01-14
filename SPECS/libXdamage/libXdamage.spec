@@ -1,11 +1,11 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
 Summary: X Damage extension library
 Name: libXdamage
 Version: 1.1.5
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: MIT
-URL: http://www.x.org
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL: https://www.x.org
 
 Source0: https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
 
@@ -20,6 +20,8 @@ X.Org X11 libXdamage runtime library.
 %package devel
 Summary: Development files for %{name}
 Requires: %{name} = %{version}-%{release}
+
+Provides: pkgconfig(xdamage) = %{version}-%{release}
 
 %description devel
 X.Org X11 libXdamage development package.
@@ -40,8 +42,8 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 # We intentionally don't ship *.la files
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
-%ldconfig_post
-%ldconfig_postun
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %doc AUTHORS COPYING README.md ChangeLog
@@ -54,6 +56,12 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/pkgconfig/xdamage.pc
 
 %changelog
+* Thu Jan 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.5-4
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.5-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
