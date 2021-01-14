@@ -1,40 +1,43 @@
 %global tarball libXfixes
 #global gitdate 20130524
 %global gitversion c480fe327
-
-Summary: X Fixes library
-Name: libXfixes
-Version: 5.0.3
-Release: 13%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
-License: MIT
+Summary:        X Fixes library
+Name:           libXfixes
+Version:        5.0.3
+Release:        13%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
+License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL: https://www.x.org
-
+URL:            https://www.x.org
 %if 0%{?gitdate}
-Source0:    %{tarball}-%{gitdate}.tar.bz2
-Source1:    make-git-snapshot.sh
-Source2:    commitid
+Source0:        %{tarball}-%{gitdate}.tar.bz2
+Source1:        make-git-snapshot.sh
+Source2:        commitid
 %else
-Source0: https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
+Source0:        https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
 %endif
 
-Requires: libX11 >= 1.6
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libX11-devel >= 1.5.99.902
+BuildRequires:  libtool
+BuildRequires:  pkg-config
+BuildRequires:  xorg-x11-util-macros
+BuildRequires:  pkgconfig(fixesproto)
+BuildRequires:  pkgconfig(xext)
 
-BuildRequires: xorg-x11-util-macros
-BuildRequires: autoconf automake libtool
-BuildRequires: pkgconfig(fixesproto) pkgconfig(xext)
-BuildRequires: libX11-devel >= 1.5.99.902
+Requires:       libX11 >= 1.6
 
 %description
 X Fixes library.
 
 %package devel
-Summary: Development files for %{name}
-Requires: %{name} = %{version}-%{release}
-Requires: pkg-config
+Summary:        Development files for %{name}
 
-Provides: pkgconfig(xfixes) = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
+Requires:       pkg-config
+
+Provides:       pkgconfig(xfixes) = %{version}-%{release}
 
 %description devel
 libXfixes development package
@@ -48,18 +51,18 @@ autoreconf -v --install --force
 make V=1 %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
+make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 # We intentionally don't ship *.la files
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+find %{buildroot} -type f -name "*.la" -delete -print
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
-%doc AUTHORS COPYING README
+%license COPYING
+%doc AUTHORS README
 %{_libdir}/libXfixes.so.3
 %{_libdir}/libXfixes.so.3.1.0
 
