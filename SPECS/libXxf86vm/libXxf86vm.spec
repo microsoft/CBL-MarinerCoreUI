@@ -1,39 +1,42 @@
 %global tarball libXxf86vm
 #global gitdate 20130524
 %global gitversion 4c4123441
-
-Summary: X.Org X11 libXxf86vm runtime library
-Name: libXxf86vm
-Version: 1.1.4
-Release: 15%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
-License: MIT
+Summary:        X.Org X11 libXxf86vm runtime library
+Name:           libXxf86vm
+Version:        1.1.4
+Release:        15%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
+License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL: https://www.x.org
-
+URL:            https://www.x.org
 %if 0%{?gitdate}
-Source0:    %{tarball}-%{gitdate}.tar.bz2
-Source1:    make-git-snapshot.sh
-Source2:    commitid
+Source0:        %{tarball}-%{gitdate}.tar.bz2
+Source1:        make-git-snapshot.sh
+Source2:        commitid
 %else
-Source0: http://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
+Source0:        http://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
 %endif
 
-Requires: libX11 >= 1.5.99.902
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libX11-devel >= 1.5.99.902
+BuildRequires:  libtool
+BuildRequires:  pkg-config
+BuildRequires:  xorg-x11-util-macros
+BuildRequires:  pkgconfig(xext)
+BuildRequires:  pkgconfig(xf86vidmodeproto)
 
-BuildRequires: xorg-x11-util-macros
-BuildRequires: autoconf automake libtool
-BuildRequires: pkgconfig(xext) pkgconfig(xf86vidmodeproto)
-BuildRequires: libX11-devel >= 1.5.99.902
+Requires:       libX11 >= 1.5.99.902
 
 %description
 X.Org X11 libXxf86vm runtime library
 
 %package devel
-Summary: X.Org X11 libXxf86vm development package
-Requires: %{name} = %{version}-%{release}
+Summary:        X.Org X11 libXxf86vm development package
 
-Provides:   pkgconfig(xxf86vm) = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
+
+Provides:       pkgconfig(xxf86vm) = %{version}-%{release}
 
 %description devel
 X.Org X11 libXxf86vm development package
@@ -47,15 +50,16 @@ autoreconf -v --install --force
 make %{?_smp_mflags}
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
-find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+make install DESTDIR=%{buildroot} INSTALL="install -p"
+find %{buildroot} -type f -name "*.la" -delete -print
 
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
-%doc README COPYING
+%license COPYING
+%doc README
 %{_libdir}/libXxf86vm.so.1
 %{_libdir}/libXxf86vm.so.1.0.0
 
