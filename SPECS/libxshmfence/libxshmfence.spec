@@ -1,15 +1,19 @@
+Summary:        X11 shared memory fences
 Name:           libxshmfence
 Version:        1.3
 Release:        8%{?dist}
-Summary:        X11 shared memory fences
+License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-License:        MIT
 URL:            https://www.x.org/
 Source0:        https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
 
 # upstream tarball has broken libtool because libtool is never not broken
-BuildRequires:  autoconf automake libtool xorg-x11-util-macros
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
+BuildRequires:  pkg-config
+BuildRequires:  xorg-x11-util-macros
 BuildRequires:  pkgconfig(xproto)
 
 %description
@@ -17,6 +21,7 @@ Shared memory fences for X11, as used in DRI3.
 
 %package        devel
 Summary:        Development files for %{name}
+
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 Provides:       pkgconfig(xshmfence) = %{version}-%{release}
@@ -35,7 +40,7 @@ make %{?_smp_mflags}
 
 %install
 %make_install
-find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+find %{buildroot} -type f -name "*.la" -delete -print
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -110,4 +115,3 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 * Wed Nov 06 2013 Adam Jackson <ajax@redhat.com> 1.0-1
 - Initial packaging
-
