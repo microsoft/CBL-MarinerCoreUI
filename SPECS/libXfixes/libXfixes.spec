@@ -64,7 +64,7 @@ find %{buildroot} -type f -name "*.la" -delete -print
 %{_mandir}/man3/Xfixes.3*
 
 %changelog
-* Thu Jan 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 5.0.3-12
+* Thu Jan 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 5.0.3-13
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Added explicit "Provides" for "pkgconfig(*)".
