@@ -1,21 +1,12 @@
-%global tarball libXxf86vm
-#global gitdate 20130524
-%global gitversion 4c4123441
 Summary:        X.Org X11 libXxf86vm runtime library
 Name:           libXxf86vm
 Version:        1.1.4
-Release:        15%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
+Release:        15%{?dist}
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://www.x.org
-%if 0%{?gitdate}
-Source0:        %{tarball}-%{gitdate}.tar.bz2
-Source1:        make-git-snapshot.sh
-Source2:        commitid
-%else
 Source0:        http://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
-%endif
 
 BuildRequires:  autoconf
 BuildRequires:  automake
@@ -42,7 +33,7 @@ Provides:       pkgconfig(xxf86vm) = %{version}-%{release}
 X.Org X11 libXxf86vm development package
 
 %prep
-%setup -q -n %{tarball}-%{?gitdate:%{gitdate}}%{!?gitdate:%{version}}
+%autosetup
 
 %build
 autoreconf -v --install --force
