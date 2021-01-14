@@ -1,5 +1,3 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
 %global tarball libXxf86vm
 #global gitdate 20130524
 %global gitversion 4c4123441
@@ -7,9 +5,11 @@ Distribution:   Mariner
 Summary: X.Org X11 libXxf86vm runtime library
 Name: libXxf86vm
 Version: 1.1.4
-Release: 14%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
+Release: 15%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
 License: MIT
-URL: http://www.x.org
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL: https://www.x.org
 
 %if 0%{?gitdate}
 Source0:    %{tarball}-%{gitdate}.tar.bz2
@@ -33,6 +33,8 @@ X.Org X11 libXxf86vm runtime library
 Summary: X.Org X11 libXxf86vm development package
 Requires: %{name} = %{version}-%{release}
 
+Provides:   pkgconfig(xxf86vm) = %{version}-%{release}
+
 %description devel
 X.Org X11 libXxf86vm development package
 
@@ -49,8 +51,8 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
-%ldconfig_post
-%ldconfig_postun
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %doc README COPYING
@@ -64,6 +66,12 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_includedir}/X11/extensions/xf86vmode.h
 
 %changelog
+* Thu Jan 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.4-15
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.4-14
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
