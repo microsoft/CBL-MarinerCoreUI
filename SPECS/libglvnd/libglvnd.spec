@@ -51,12 +51,12 @@ Provides:       mesa-khr-devel = %{epoch}:%{version}-%{release}
 Provides:       mesa-khr-devel%{?_isa} = %{epoch}:%{version}-%{release}
 Provides:       libGLES-devel = %{epoch}:%{version}-%{release}
 Provides:       libGLES-devel%{?_isa} = %{epoch}:%{version}-%{release}
-Provides:       pkgconfig(egl) = %{version}-%{release}
-Provides:       pkgconfig(gl) = %{version}-%{release}
-Provides:       pkgconfig(glesv1_cm) = %{version}-%{release}
-Provides:       pkgconfig(glesv2) = %{version}-%{release}
-Provides:       pkgconfig(glx) = %{version}-%{release}
-Provides:       pkgconfig(opengl) = %{version}-%{release}
+Provides:       pkgconfig(egl) = %{epoch}:%{version}-%{release}
+Provides:       pkgconfig(gl) = %{epoch}:%{version}-%{release}
+Provides:       pkgconfig(glesv1_cm) = %{epoch}:%{version}-%{release}
+Provides:       pkgconfig(glesv2) = %{epoch}:%{version}-%{release}
+Provides:       pkgconfig(glx) = %{epoch}:%{version}-%{release}
+Provides:       pkgconfig(opengl) = %{epoch}:%{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -64,6 +64,8 @@ developing applications that use %{name}.
 
 %package        core-devel
 Summary:        Core development files for %{name}
+
+Provides:       pkgconfig(libglvnd) = %{epoch}:%{version}-%{release}
 
 %description core-devel
 The %{name}-core-devel package is a bootstrap trick for Mesa, which wants
@@ -87,10 +89,10 @@ Requires:       %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 Requires:       mesa-libEGL%{?_isa} >= 13.0.4-1
 
 Obsoletes:      mesa-libGLES < 19.3.0~rc1
-Provides:       mesa-libGLES = %{version}-%{release}
-Provides:       mesa-libGLES%{?_isa} = %{version}-%{release}
-Provides:       libGLES = %{version}-%{release}
-Provides:       libGLES%{?_isa} = %{version}-%{release}
+Provides:       mesa-libGLES = %{epoch}:%{version}-%{release}
+Provides:       mesa-libGLES%{?_isa} = %{epoch}:%{version}-%{release}
+Provides:       libGLES = %{epoch}:%{version}-%{release}
+Provides:       libGLES%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description    gles
 libGLESv[12] are the common dispatch interface for the GLES API.
@@ -102,8 +104,8 @@ Requires:       %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 # mesa is the default EGL implementation provider
 Requires:       mesa-libEGL%{?_isa} >= 13.0.4-1
 
-Provides:       libEGL = %{version}-%{release}
-Provides:       libEGL%{?_isa} = %{version}-%{release}
+Provides:       libEGL = %{epoch}:%{version}-%{release}
+Provides:       libEGL%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description    egl
 libEGL are the common dispatch interface for the EGL API.
@@ -115,8 +117,8 @@ Requires:       %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 # mesa is the default GL implementation provider
 Requires:       mesa-libGL%{?_isa} >= 13.0.4-1
 
-Provides:       libGL = %{version}-%{release}
-Provides:       libGL%{?_isa} = %{version}-%{release}
+Provides:       libGL = %{epoch}:%{version}-%{release}
+Provides:       libGL%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description    glx
 libGL and libGLX are the common dispatch interface for the GLX API.
