@@ -11,11 +11,10 @@ Distribution: Mariner
 URL: http://www.x.org
 Source0: ftp://ftp.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
 
-BuildRequires: pkgconfig
+BuildRequires: pkg-config
 BuildRequires: xorg-x11-util-macros
 BuildRequires: xorg-x11-proto-devel
 BuildRequires: zlib-devel
-BuildRequires: xorg-x11-font-utils
 
 %description
 X.Org X11 libfontenc runtime library
@@ -44,8 +43,8 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 # Remove all libtool archives (*.la)
 find $RPM_BUILD_ROOT -type f -name '*.la' | xargs rm -f -- || :
 
-%ldconfig_post
-%ldconfig_postun
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %doc COPYING README ChangeLog
