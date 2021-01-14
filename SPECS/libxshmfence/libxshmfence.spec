@@ -8,7 +8,6 @@ Distribution:   Mariner
 URL:            https://www.x.org/
 Source0:        https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
 
-# upstream tarball has broken libtool because libtool is never not broken
 BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  libtool
