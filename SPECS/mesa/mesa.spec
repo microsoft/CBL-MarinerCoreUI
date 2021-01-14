@@ -98,7 +98,7 @@ BuildRequires:  pkgconfig(xcb-dri2) >= 1.8
 BuildRequires:  pkgconfig(xcb-dri3)
 BuildRequires:  pkgconfig(xcb-present)
 BuildRequires:  pkgconfig(xcb-sync)
-#BuildRequires:  pkgconfig(xshmfence) >= 1.1
+BuildRequires:  pkgconfig(xshmfence) >= 1.1
 BuildRequires:  pkgconfig(dri2proto) >= 2.8
 BuildRequires:  pkgconfig(glproto) >= 1.4.14
 BuildRequires:  pkgconfig(xcb-xfixes)
