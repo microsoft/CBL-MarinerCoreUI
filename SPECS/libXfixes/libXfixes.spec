@@ -1,21 +1,12 @@
-%global tarball libXfixes
-#global gitdate 20130524
-%global gitversion c480fe327
 Summary:        X Fixes library
 Name:           libXfixes
 Version:        5.0.3
-Release:        13%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
+Release:        13%{?dist}
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://www.x.org
-%if 0%{?gitdate}
-Source0:        %{tarball}-%{gitdate}.tar.bz2
-Source1:        make-git-snapshot.sh
-Source2:        commitid
-%else
 Source0:        https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
-%endif
 
 BuildRequires:  autoconf
 BuildRequires:  automake
@@ -43,7 +34,7 @@ Provides:       pkgconfig(xfixes) = %{version}-%{release}
 libXfixes development package
 
 %prep
-%setup -q -n %{tarball}-%{?gitdate:%{gitdate}}%{!?gitdate:%{version}}
+%autosetup
 
 %build
 autoreconf -v --install --force
