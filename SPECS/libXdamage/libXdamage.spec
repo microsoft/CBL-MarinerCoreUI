@@ -1,27 +1,30 @@
-Summary: X Damage extension library
-Name: libXdamage
-Version: 1.1.5
-Release: 4%{?dist}
-License: MIT
+Summary:        X Damage extension library
+Name:           libXdamage
+Version:        1.1.5
+Release:        4%{?dist}
+License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL: https://www.x.org
+URL:            https://www.x.org
+Source0:        https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
 
-Source0: https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
-
-BuildRequires: xorg-x11-util-macros
-BuildRequires: autoconf automake libtool
-BuildRequires: pkgconfig(xfixes)
-BuildRequires: pkgconfig(damageproto) >= 1.1.0
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
+BuildRequires:  pkg-config
+BuildRequires:  xorg-x11-util-macros
+BuildRequires:  pkgconfig(damageproto) >= 1.1.0
+BuildRequires:  pkgconfig(xfixes)
 
 %description
 X.Org X11 libXdamage runtime library.
 
 %package devel
-Summary: Development files for %{name}
-Requires: %{name} = %{version}-%{release}
+Summary:        Development files for %{name}
 
-Provides: pkgconfig(xdamage) = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
+
+Provides:       pkgconfig(xdamage) = %{version}-%{release}
 
 %description devel
 X.Org X11 libXdamage development package.
@@ -35,18 +38,18 @@ autoreconf -v --install --force
 make V=1 %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
+make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 # We intentionally don't ship *.la files
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+find %{buildroot} -type f -name "*.la" -delete -print
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
-%doc AUTHORS COPYING README.md ChangeLog
+%license COPYING
+%doc AUTHORS README.md ChangeLog
 %{_libdir}/libXdamage.so.1
 %{_libdir}/libXdamage.so.1.1.0
 
