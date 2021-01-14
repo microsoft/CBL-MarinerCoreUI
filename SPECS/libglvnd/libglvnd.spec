@@ -22,10 +22,6 @@ BuildRequires:  pkgconfig(glproto)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xext)
 
-%if %{with_check}
-BuildRequires:  xorg-x11-server-Xvfb
-%endif
-
 %description
 libglvnd is an implementation of the vendor-neutral dispatch layer for
 arbitrating OpenGL API calls between multiple vendors on a per-screen basis.
@@ -51,12 +47,12 @@ Provides:       mesa-khr-devel = %{epoch}:%{version}-%{release}
 Provides:       mesa-khr-devel%{?_isa} = %{epoch}:%{version}-%{release}
 Provides:       libGLES-devel = %{epoch}:%{version}-%{release}
 Provides:       libGLES-devel%{?_isa} = %{epoch}:%{version}-%{release}
-Provides:       pkgconfig(egl) = %{epoch}:%{version}-%{release}
-Provides:       pkgconfig(gl) = %{epoch}:%{version}-%{release}
-Provides:       pkgconfig(glesv1_cm) = %{epoch}:%{version}-%{release}
-Provides:       pkgconfig(glesv2) = %{epoch}:%{version}-%{release}
-Provides:       pkgconfig(glx) = %{epoch}:%{version}-%{release}
-Provides:       pkgconfig(opengl) = %{epoch}:%{version}-%{release}
+Provides:       pkgconfig(egl) = %{version}-%{release}
+Provides:       pkgconfig(gl) = %{version}-%{release}
+Provides:       pkgconfig(glesv1_cm) = %{version}-%{release}
+Provides:       pkgconfig(glesv2) = %{version}-%{release}
+Provides:       pkgconfig(glx) = %{version}-%{release}
+Provides:       pkgconfig(opengl) = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -65,7 +61,7 @@ developing applications that use %{name}.
 %package        core-devel
 Summary:        Core development files for %{name}
 
-Provides:       pkgconfig(libglvnd) = %{epoch}:%{version}-%{release}
+Provides:       pkgconfig(libglvnd) = %{version}-%{release}
 
 %description core-devel
 The %{name}-core-devel package is a bootstrap trick for Mesa, which wants
@@ -152,8 +148,7 @@ mkdir -p %{buildroot}%{_datadir}/egl/egl_external_platform.d/
 
 
 %check
-export DO_X11_TESTS=1
-xvfb-run -s '-screen 0 640x480x24' -d make check V=1 || \
+make check V=1 || \
 %ifarch s390x ppc64
     :
 %else
@@ -232,7 +227,7 @@ xvfb-run -s '-screen 0 640x480x24' -d make check V=1 || \
 - Removed unused conditionals for the "_without_mesa_glvnd_default" macro and the macro itself.
 - Removed the "rhel" macro, unnecessary for CBL-Mariner.
 - Replaced ldconfig scriptlets with explicit calls to ldconfig.
-- Separating BR on 'xorg-x11-server-Xvfb' to be only necessary for test runs.
+- Skipping package tests with dependency on X11 to remove the 'xorg-x11-server-Xvfb' BR.
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1:1.3.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
