@@ -30,7 +30,7 @@ BuildRequires:  make
 BuildRequires:  pkg-config
 BuildRequires:  zlib-devel
 BuildRequires:  pkgconfig(fontenc)
-BuildRequires:  pkgconfig(freetype2)
+BuildRequires:  freetype-devel
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xorg-macros) >= 1.8
 
@@ -120,6 +120,7 @@ find %{buildroot} -name bdftruncate\* -print0 | xargs -0 rm -f
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Added explicit "Provides" for "pkgconfig(*)".
+- Switched BR "pkgconfig(freetype2)" to "freetype-devel" available from core CBL-Mariner.
 
 * Wed Dec 16 2020 Peter Hutterer <peter.hutterer@redhat.com> 1:7.5-47
 - fonttosfnt 1.2.1
