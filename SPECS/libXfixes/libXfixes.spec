@@ -1,5 +1,3 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
 %global tarball libXfixes
 #global gitdate 20130524
 %global gitversion c480fe327
@@ -7,16 +5,18 @@ Distribution:   Mariner
 Summary: X Fixes library
 Name: libXfixes
 Version: 5.0.3
-Release: 12%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
+Release: 13%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
 License: MIT
-URL: http://www.x.org
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL: https://www.x.org
 
 %if 0%{?gitdate}
 Source0:    %{tarball}-%{gitdate}.tar.bz2
 Source1:    make-git-snapshot.sh
 Source2:    commitid
 %else
-Source0: http://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
+Source0: https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
 %endif
 
 Requires: libX11 >= 1.6
@@ -32,7 +32,9 @@ X Fixes library.
 %package devel
 Summary: Development files for %{name}
 Requires: %{name} = %{version}-%{release}
-Requires: pkgconfig
+Requires: pkg-config
+
+Provides: pkgconfig(xfixes) = %{version}-%{release}
 
 %description devel
 libXfixes development package
@@ -53,8 +55,8 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 # We intentionally don't ship *.la files
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
-%ldconfig_post
-%ldconfig_postun
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %doc AUTHORS COPYING README
@@ -68,6 +70,12 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_mandir}/man3/Xfixes.3*
 
 %changelog
+* Thu Jan 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 5.0.3-12
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 5.0.3-12
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
