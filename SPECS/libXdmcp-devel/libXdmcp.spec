@@ -1,8 +1,10 @@
 Summary: X Display Manager Control Protocol library
 Name: libXdmcp
 Version: 1.1.3
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: MIT
+Vendor:       Microsoft Corporation
+Distribution: Mariner
 URL: http://www.x.org
 
 Source0: https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
@@ -17,6 +19,9 @@ X Display Manager Control Protocol library.
 
 %package devel
 Summary: Development files for %{name}
+
+Provides: pkgconfig(xdmcp) = %{version}-%{release}
+
 Requires: %{name} = %{version}-%{release}
 
 %description devel
@@ -41,8 +46,8 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 # manual fixup later
 rm -rf $RPM_BUILD_ROOT%{_docdir}
 
-%ldconfig_post
-%ldconfig_postun
+%post -p /sbin/ldconfig
+%ldconfig_postun	%postun -p /sbin/ldconfig
 
 %files
 %doc AUTHORS COPYING ChangeLog Wraphelp.README.crypto
@@ -56,6 +61,10 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 %{_libdir}/pkgconfig/xdmcp.pc
 
 %changelog
+* Tue Jan 14 2021 Vinicius Jarina <vinja@microsoft.com> - 1.1.3-5
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.3-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
