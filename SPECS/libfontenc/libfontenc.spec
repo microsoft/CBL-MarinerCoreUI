@@ -1,30 +1,29 @@
 # Must be kept in sync with xorg-x11-fonts !
 %define _x11fontdir		%{_datadir}/X11/fonts
+Summary:        X.Org X11 libfontenc runtime library
+Name:           libfontenc
+Version:        1.1.3
+Release:        14%{?dist}
+License:        MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL:            https://www.x.org
+Source0:        ftp://ftp.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
 
-Summary: X.Org X11 libfontenc runtime library
-Name: libfontenc
-Version: 1.1.3
-Release: 14%{?dist}
-License: MIT
-Vendor:       Microsoft Corporation
-Distribution: Mariner
-URL: http://www.x.org
-Source0: ftp://ftp.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
-
-BuildRequires: pkg-config
-BuildRequires: xorg-x11-util-macros
-BuildRequires: xorg-x11-proto-devel
-BuildRequires: zlib-devel
+BuildRequires:  pkg-config
+BuildRequires:  xorg-x11-proto-devel
+BuildRequires:  xorg-x11-util-macros
+BuildRequires:  zlib-devel
 
 %description
 X.Org X11 libfontenc runtime library
 
 %package devel
-Summary: X.Org X11 libfontenc development package
+Summary:        X.Org X11 libfontenc development package
 
-Provides: pkgconfig(fontenc) = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
-Requires: %{name} = %{version}-%{release}
+Provides:       pkgconfig(fontenc) = %{version}-%{release}
 
 %description devel
 X.Org X11 libfontenc development package
@@ -33,21 +32,22 @@ X.Org X11 libfontenc development package
 %setup -q
 
 %build
-export CFLAGS="$RPM_OPT_FLAGS -Os"
+export CFLAGS="%{optflags} -Os"
 %configure --disable-static --with-fontrootdir=%{_x11fontdir}
 make %{?_smp_mflags}
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
+make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 # Remove all libtool archives (*.la)
-find $RPM_BUILD_ROOT -type f -name '*.la' | xargs rm -f -- || :
+find %{buildroot} -type f -name "*.la" -delete -print
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
-%doc COPYING README ChangeLog
+%license COPYING
+%doc README ChangeLog
 %{_libdir}/libfontenc.so.1
 %{_libdir}/libfontenc.so.1.0.0
 
@@ -60,6 +60,7 @@ find $RPM_BUILD_ROOT -type f -name '*.la' | xargs rm -f -- || :
 * Tue Jan 12 2021 Vinicius Jarina <vinja@microsoft.com> - 1.1.3-14
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.3-13
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
