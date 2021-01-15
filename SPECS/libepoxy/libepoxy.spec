@@ -9,18 +9,17 @@ URL:            https://github.com/anholt/libepoxy
 Source0:        %{url}/releases/download/%{version}/%{name}-%{version}.tar.xz
 
 BuildRequires:  gcc
-#BuildRequires:  libEGL-devel
-#BuildRequires:  libGL-devel
+BuildRequires:  libEGL-devel
+BuildRequires:  libGL-devel
 BuildRequires:  libX11-devel
 BuildRequires:  marinerui-rpm-macros
-#BuildRequires:  mesa-dri-drivers
+BuildRequires:  mesa-dri-drivers
 BuildRequires:  meson
 BuildRequires:  pkg-config
 BuildRequires:  python3
-#BuildRequires:  xorg-x11-server-Xvfb
-#BuildRequires:  pkgconfig(egl)
-#BuildRequires:  pkgconfig(gl)
-#BuildRequires:  pkgconfig(glesv2)
+BuildRequires:  pkgconfig(egl)
+BuildRequires:  pkgconfig(gl)
+BuildRequires:  pkgconfig(glesv2)
 
 %description
 A library for handling OpenGL function pointer management.
@@ -47,12 +46,13 @@ developing applications that use %{name}.
 %meson_install
 
 %check
-# this should be %%meson_test but the macro expands with a bajillion
+# This should be %%meson_test but the macro expands with a multiple
 # embedded newlines for no obvious reason
-xvfb-run -d -s "-screen 0 640x480x24" ninja -C %{_vpath_builddir} test || \
+ninja -C %{_vpath_builddir} test || \
     (cat %{_vpath_builddir}/meson-logs/testlog.txt ; exit 1)
 
-%ldconfig_scriptlets
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %license COPYING
@@ -70,6 +70,8 @@ xvfb-run -d -s "-screen 0 640x480x24" ninja -C %{_vpath_builddir} test || \
 - License verified.
 - Added BR for 'marinerui-rpm-macros'.
 - Added explicit "Provides" for "pkgconfig(*)".
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
+- Skipping package tests with dependency on X11 to remove the 'xorg-x11-server-Xvfb' BR.
 
 * Tue Jan 05 2021 Kalev Lember <klember@redhat.com> - 1.5.5-1
 - Update to 1.5.5
