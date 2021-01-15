@@ -93,7 +93,7 @@ BuildRequires:  audit-devel
 BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  bison
-BuildRequires: xorg-x11-font-utils >= 7.2-11
+BuildRequires: xorg-x11-font-utils >= 1:7.2-11
 BuildRequires:  dbus-devel
 BuildRequires:  flex
 BuildRequires:  flex-devel
