@@ -103,7 +103,7 @@ BuildRequires:  pkgconfig(dri2proto) >= 2.8
 BuildRequires:  pkgconfig(glproto) >= 1.4.14
 BuildRequires:  pkgconfig(xcb-xfixes)
 BuildRequires:  pkgconfig(xcb-randr)
-#BuildRequires:  pkgconfig(xrandr) >= 1.3
+BuildRequires:  pkgconfig(xrandr) >= 1.3
 BuildRequires:  bison
 BuildRequires:  flex
 %if 0%{?with_vdpau}
