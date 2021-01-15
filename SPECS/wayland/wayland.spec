@@ -27,6 +27,11 @@ applications, X servers (rootless or fullscreen) or other display servers.
 Summary:        Development files for %{name}
 
 Provides:       pkgconfig(wayland-client) = %{version}-%{release}
+Provides:       pkgconfig(wayland-cursor) = %{version}-%{release}
+Provides:       pkgconfig(wayland-egl) = %{version}-%{release}
+Provides:       pkgconfig(wayland-egl-backend) = %{version}-%{release}
+Provides:       pkgconfig(wayland-scanner) = %{version}-%{release}
+Provides:       pkgconfig(wayland-server)  = %{version}-%{release}
 
 Requires:       libwayland-client%{?_isa} = %{version}-%{release}
 Requires:       libwayland-cursor%{?_isa} = %{version}-%{release}
