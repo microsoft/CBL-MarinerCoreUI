@@ -1,28 +1,31 @@
-Summary: X.Org X11 libXrender runtime library
-Name: libXrender
-Version: 0.9.10
-Release: 13%{?dist}
-License: MIT
+Summary:        X.Org X11 libXrender runtime library
+Name:           libXrender
+Version:        0.9.10
+Release:        13%{?dist}
+License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL: https://www.x.org
-Source0: https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
+URL:            https://www.x.org
+Source0:        https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
 
-Requires: libX11 >= 1.5.99.902
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libX11-devel >= 1.5.99.902
+BuildRequires:  libtool
+BuildRequires:  pkg-config
+BuildRequires:  xorg-x11-util-macros
 
-BuildRequires: xorg-x11-util-macros
-BuildRequires: autoconf automake libtool
-BuildRequires: pkgconfig
-BuildRequires: libX11-devel >= 1.5.99.902
+Requires:       libX11 >= 1.5.99.902
 
 %description
 X.Org X11 libXrender runtime library
 
 %package devel
-Summary: X.Org X11 libXrender development package
-Requires: %{name} = %{version}-%{release}
+Summary:        X.Org X11 libXrender development package
 
-Provides: pkgconfig(xrender) = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
+
+Provides:       pkgconfig(xrender) = %{version}-%{release}
 
 %description devel
 X.Org X11 libXrender development package
@@ -36,20 +39,20 @@ autoreconf -v --install --force
 make %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=%{buildroot}
 # undo this, we'll add it ourselves in %%doc
-rm $RPM_BUILD_ROOT/%{_docdir}/*/libXrender.txt
+rm %{buildroot}/%{_docdir}/*/libXrender.txt
 
 # We intentionally don't ship *.la files
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+find %{buildroot} -type f -name "*.la" -delete -print
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
-%doc AUTHORS COPYING
+%license COPYING
+%doc AUTHORS
 %{_libdir}/libXrender.so.1
 %{_libdir}/libXrender.so.1.3.0
 
