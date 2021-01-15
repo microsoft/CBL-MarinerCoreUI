@@ -81,11 +81,11 @@ BuildRequires:  pkgconfig(libdrm) >= 2.4.97
 BuildRequires:  pkgconfig(expat)
 BuildRequires:  pkgconfig(zlib) >= 1.2.3
 BuildRequires:  pkgconfig(libselinux)
-#BuildRequires:  pkgconfig(wayland-scanner)
+BuildRequires:  pkgconfig(wayland-scanner)
 BuildRequires:  pkgconfig(wayland-protocols) >= 1.8
 BuildRequires:  pkgconfig(wayland-client) >= 1.11
-#BuildRequires:  pkgconfig(wayland-server) >= 1.11
-#BuildRequires:  pkgconfig(wayland-egl-backend) >= 3
+BuildRequires:  pkgconfig(wayland-server) >= 1.11
+BuildRequires:  pkgconfig(wayland-egl-backend) >= 3
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xext)
 BuildRequires:  pkgconfig(xdamage) >= 1.1
