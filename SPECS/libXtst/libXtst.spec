@@ -5,8 +5,10 @@
 Summary: X.Org X11 libXtst runtime library
 Name: libXtst
 Version: 1.2.3
-Release: 12%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
+Release: 13%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
 License: MIT
+Vendor:       Microsoft Corporation
+Distribution: Mariner
 URL: http://www.x.org
 
 %if 0%{?gitdate}
@@ -32,6 +34,9 @@ X.Org X11 libXtst runtime library
 
 %package devel
 Summary: X.Org X11 libXtst development package
+
+Provides: pkgconfig(libXtst) = %{version}-%{release}
+
 Requires: %{name}%{?_isa} = %{version}-%{release}
 Requires: libXi-devel%{?_isa}
 
@@ -57,8 +62,8 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
 rm -rf $RPM_BUILD_ROOT%{_docdir}
 
-%ldconfig_post
-%ldconfig_postun
+%post -p /sbin/ldconfig
+%ldconfig_postun	%postun -p /sbin/ldconfig
 
 %files
 %doc COPYING
@@ -73,6 +78,10 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 %{_mandir}/man3/XTest*.3*
 
 %changelog
+* Thu Jan 14 2021 Vinicius Jarina <vinja@microsoft.com> - 1.2.3-12
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.3-12
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
