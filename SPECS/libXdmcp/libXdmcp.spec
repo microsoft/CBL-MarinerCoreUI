@@ -1,28 +1,29 @@
-Summary: X Display Manager Control Protocol library
-Name: libXdmcp
-Version: 1.1.3
-Release: 5%{?dist}
-License: MIT
-Vendor:       Microsoft Corporation
-Distribution: Mariner
-URL: http://www.x.org
+Summary:        X Display Manager Control Protocol library
+Name:           libXdmcp
+Version:        1.1.3
+Release:        5%{?dist}
+License:        MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL:            https://www.x.org
+Source0:        https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
 
-Source0: https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
-
-BuildRequires: xorg-x11-util-macros
-BuildRequires: autoconf automake libtool
-BuildRequires: xorg-x11-proto-devel
-BuildRequires: xmlto
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
+BuildRequires:  xmlto
+BuildRequires:  xorg-x11-proto-devel
+BuildRequires:  xorg-x11-util-macros
 
 %description
 X Display Manager Control Protocol library.
 
 %package devel
-Summary: Development files for %{name}
+Summary:        Development files for %{name}
 
-Provides: pkgconfig(xdmcp) = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
-Requires: %{name} = %{version}-%{release}
+Provides:       pkgconfig(xdmcp) = %{version}-%{release}
 
 %description devel
 libXdmcp development package.
@@ -36,21 +37,21 @@ autoreconf -v --install --force
 make V=1 %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
+make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 # We intentionally don't ship *.la files
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+find %{buildroot} -type f -name "*.la" -delete -print
 
 # manual fixup later
-rm -rf $RPM_BUILD_ROOT%{_docdir}
+rm -rf %{buildroot}%{_docdir}
 
 %post -p /sbin/ldconfig
-%ldconfig_postun	%postun -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
-%doc AUTHORS COPYING ChangeLog Wraphelp.README.crypto
+%license COPYING
+%doc AUTHORS ChangeLog Wraphelp.README.crypto
 %{_libdir}/libXdmcp.so.6
 %{_libdir}/libXdmcp.so.6.0.0
 
@@ -61,7 +62,7 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 %{_libdir}/pkgconfig/xdmcp.pc
 
 %changelog
-* Tue Jan 14 2021 Vinicius Jarina <vinja@microsoft.com> - 1.1.3-5
+* Thu Jan 14 2021 Vinicius Jarina <vinja@microsoft.com> - 1.1.3-5
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 
