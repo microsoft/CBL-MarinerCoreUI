@@ -1,5 +1,3 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
 %global tarball libXrandr
 #global gitdate 20130524
 %global gitversion c90f74497
@@ -7,9 +5,11 @@ Distribution:   Mariner
 Summary: X.Org X11 libXrandr runtime library
 Name: libXrandr
 Version: 1.5.2
-Release: 4%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
+Release: 5%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
 License: MIT
-URL: http://www.x.org
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL: https://www.x.org
 
 %if 0%{?gitdate}
 Source0:    %{tarball}-%{gitdate}.tar.bz2
@@ -36,6 +36,8 @@ X.Org X11 libXrandr runtime library
 Summary: X.Org X11 libXrandr development package
 Requires: %{name} = %{version}-%{release}
 
+Provides: pkgconfig(xrandr) = %{version}-%{release}
+
 %description devel
 X.Org X11 libXrandr development package
 
@@ -54,8 +56,8 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
-%ldconfig_post
-%ldconfig_postun
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %doc AUTHORS COPYING
@@ -66,10 +68,15 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_includedir}/X11/extensions/Xrandr.h
 %{_libdir}/libXrandr.so
 %{_libdir}/pkgconfig/xrandr.pc
-#%dir %{_mandir}/man3x
 %{_mandir}/man3/*.3*
 
 %changelog
+* Thu Jan 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.5.2-5
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.5.2-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
