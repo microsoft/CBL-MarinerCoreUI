@@ -408,12 +408,14 @@ popd
 %{_includedir}/EGL/eglmesaext.h
 %{_includedir}/EGL/eglextchromium.h
 
-%ldconfig_scriptlets libglapi
+%post libglapi -p /sbin/ldconfig
+%postun libglapi -p /sbin/ldconfig
 %files libglapi
 %{_libdir}/libglapi.so.0
 %{_libdir}/libglapi.so.0.*
 
-%ldconfig_scriptlets libOSMesa
+%post libOSMesa -p /sbin/ldconfig
+%postun libOSMesa -p /sbin/ldconfig
 %files libOSMesa
 %{_libdir}/libOSMesa.so.8*
 %files libOSMesa-devel
@@ -422,7 +424,8 @@ popd
 %{_libdir}/libOSMesa.so
 %{_libdir}/pkgconfig/osmesa.pc
 
-%ldconfig_scriptlets libgbm
+%post libgbm -p /sbin/ldconfig
+%postun libgbm -p /sbin/ldconfig
 %files libgbm
 %{_libdir}/libgbm.so.1
 %{_libdir}/libgbm.so.1.*
@@ -432,7 +435,8 @@ popd
 %{_libdir}/pkgconfig/gbm.pc
 
 %if 0%{?with_xa}
-%ldconfig_scriptlets libxatracker
+%post libxatracker -p /sbin/ldconfig
+%postun libxatracker -p /sbin/ldconfig
 %files libxatracker
 %if 0%{?with_hardware}
 %{_libdir}/libxatracker.so.2
@@ -450,7 +454,8 @@ popd
 %endif
 
 %if 0%{?with_opencl}
-%ldconfig_scriptlets libOpenCL
+%post libOpenCL -p /sbin/ldconfig
+%postun libOpenCL -p /sbin/ldconfig
 %files libOpenCL
 %{_libdir}/libMesaOpenCL.so.*
 %{_sysconfdir}/OpenCL/vendors/mesa.icd
@@ -598,6 +603,7 @@ popd
 - Removed support for extended hardware (commented out "with_hardware 1").
 - Removed support for XA state tracker (commented out "with_xa 1").
 - Removed support for Direct3D 9 state tracker (commented out "with_nine 1").
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
 
 * Thu Dec 17 2020 Pete Walter <pwalter@fedoraproject.org> - 20.2.6-1
 - Update to 20.2.6
