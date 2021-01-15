@@ -145,7 +145,7 @@ Obsoletes:      mesa-dri-filesystem < %{?epoch:%{epoch}:}%{version}-%{release}
 %package libGL
 Summary:        Mesa libGL runtime libraries
 Requires:       %{name}-libglapi%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
-#Requires:       libglvnd-glx%{?_isa} >= 1:1.3.2
+Requires:       libglvnd-glx%{?_isa} >= 1:1.3.2
 
 %description libGL
 %{summary}.
@@ -163,7 +163,7 @@ Recommends:     gl-manpages
 
 %package libEGL
 Summary:        Mesa libEGL runtime libraries
-#Requires:       libglvnd-egl%{?_isa} >= 1:1.3.2
+Requires:       libglvnd-egl%{?_isa} >= 1:1.3.2
 
 %description libEGL
 %{summary}.
@@ -477,18 +477,21 @@ popd
 %files dri-drivers
 %dir %{_datadir}/drirc.d
 %{_datadir}/drirc.d/00-mesa-defaults.conf
-%if 0%{?with_hardware}
-%{_libdir}/dri/radeon_dri.so
-%{_libdir}/dri/r200_dri.so
+%{_libdir}/dri/kms_swrast_dri.so
 %{_libdir}/dri/nouveau_vieux_dri.so
+%{_libdir}/dri/r200_dri.so
+%{_libdir}/dri/radeon_dri.so
+%{_libdir}/dri/swrast_dri.so
+%{_libdir}/dri/virtio_gpu_dri.so
+%if 0%{?with_hardware}
+%dir %{_libdir}/gallium-pipe
 %{_libdir}/dri/r300_dri.so
+%{_libdir}/gallium-pipe/*.so
 %if 0%{?with_radeonsi}
 %{_libdir}/dri/r600_dri.so
 %{_libdir}/dri/radeonsi_dri.so
 %endif
 %ifarch %{ix86} x86_64
-%{_libdir}/dri/i915_dri.so
-%{_libdir}/dri/i965_dri.so
 %{_libdir}/dri/iris_dri.so
 %endif
 %ifarch %{arm} aarch64
@@ -530,10 +533,6 @@ popd
 %{_libdir}/dri/radeonsi_drv_video.so
 %endif
 %endif
-%if 0%{?with_hardware}
-%dir %{_libdir}/gallium-pipe
-%{_libdir}/gallium-pipe/*.so
-%endif
 %if 0%{?with_kmsro}
 %{_libdir}/dri/armada-drm_dri.so
 %{_libdir}/dri/exynos_dri.so
@@ -549,9 +548,10 @@ popd
 %{_libdir}/dri/st7735r_dri.so
 %{_libdir}/dri/sun4i-drm_dri.so
 %endif
-%{_libdir}/dri/kms_swrast_dri.so
-%{_libdir}/dri/swrast_dri.so
-%{_libdir}/dri/virtio_gpu_dri.so
+%ifarch %{ix86} x86_64
+%{_libdir}/dri/i915_dri.so
+%{_libdir}/dri/i965_dri.so
+%endif
 
 %if 0%{?with_hardware}
 %if 0%{?with_omx}
@@ -570,22 +570,18 @@ popd
 %endif
 
 %files vulkan-drivers
-%if 0%{?with_hardware}
-%ifarch %{ix86} x86_64
-%{_libdir}/libvulkan_intel.so
-%{_datadir}/vulkan/icd.d/intel_icd.*.json
-%endif
+%{_libdir}/libVkLayer_MESA_device_select.so
 %{_libdir}/libvulkan_radeon.so
 %{_datadir}/vulkan/icd.d/radeon_icd.*.json
-%{_libdir}/libVkLayer_MESA_device_select.so
 %{_datadir}/vulkan/implicit_layer.d/VkLayer_MESA_device_select.json
+%ifarch %{ix86} x86_64
+%{_datadir}/vulkan/icd.d/intel_icd.*.json
+%{_libdir}/libvulkan_intel.so
 %endif
 
 %files vulkan-devel
-%if 0%{?with_hardware}
 %ifarch %{ix86} x86_64
 %{_includedir}/vulkan/vulkan_intel.h
-%endif
 %endif
 
 %changelog
@@ -604,6 +600,7 @@ popd
 - Removed support for XA state tracker (commented out "with_xa 1").
 - Removed support for Direct3D 9 state tracker (commented out "with_nine 1").
 - Replaced ldconfig scriptlets with explicit calls to ldconfig.
+- Updated the files included with the current set of macros.
 
 * Thu Dec 17 2020 Pete Walter <pwalter@fedoraproject.org> - 20.2.6-1
 - Update to 20.2.6
