@@ -1,48 +1,41 @@
-%global tarball libXrandr
-#global gitdate 20130524
-%global gitversion c90f74497
-
-Summary: X.Org X11 libXrandr runtime library
-Name: libXrandr
-Version: 1.5.2
-Release: 5%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
-License: MIT
+Summary:        X.Org X11 libXrandr runtime library
+Name:           libXrandr
+Version:        1.5.2
+Release:        5%{?dist}
+License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL: https://www.x.org
+URL:            https://www.x.org
+Source0:        https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
 
-%if 0%{?gitdate}
-Source0:    %{tarball}-%{gitdate}.tar.bz2
-Source1:    make-git-snapshot.sh
-Source2:    commitid
-%else
-Source0: https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
-%endif
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
+BuildRequires:  pkg-config
+BuildRequires:  xorg-x11-proto-devel
+BuildRequires:  xorg-x11-util-macros
+BuildRequires:  pkgconfig(randrproto) >= 1.5.0
+BuildRequires:  pkgconfig(x11) >= 1.6.0
+BuildRequires:  pkgconfig(xext)
+BuildRequires:  pkgconfig(xrender)
 
-Requires: libX11 >= 1.6.0
-
-BuildRequires: xorg-x11-util-macros
-BuildRequires: autoconf automake libtool
-BuildRequires: xorg-x11-proto-devel
-BuildRequires: pkgconfig(randrproto) >= 1.5.0
-BuildRequires: pkgconfig(xrender)
-BuildRequires: pkgconfig(xext)
-BuildRequires: pkgconfig(x11) >= 1.6.0
+Requires:       libX11 >= 1.6.0
 
 %description
 X.Org X11 libXrandr runtime library
 
 %package devel
-Summary: X.Org X11 libXrandr development package
-Requires: %{name} = %{version}-%{release}
+Summary:        X.Org X11 libXrandr development package
 
-Provides: pkgconfig(xrandr) = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
+
+Provides:       pkgconfig(xrandr) = %{version}-%{release}
 
 %description devel
 X.Org X11 libXrandr development package
 
 %prep
-%setup -q -n %{tarball}-%{?gitdate:%{gitdate}}%{!?gitdate:%{version}}
+%autosetup
 
 %build
 autoreconf -v --install --force
@@ -50,17 +43,17 @@ autoreconf -v --install --force
 make %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=%{buildroot}
 
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+find %{buildroot} -type f -name "*.la" -delete -print
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
-%doc AUTHORS COPYING
+%license COPYING
+%doc AUTHORS
 %{_libdir}/libXrandr.so.2
 %{_libdir}/libXrandr.so.2.2.0
 
@@ -271,7 +264,6 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 - Updated libXrandr to version 0.99.2 from X11R7 RC2
 - Changed 'Conflicts: XFree86-devel, xorg-x11-devel' to 'Obsoletes'
 - Changed 'Conflicts: XFree86-libs, xorg-x11-libs' to 'Obsoletes'
-
 
 * Mon Oct 24 2005 Mike A. Harris <mharris@redhat.com> 0.99.1-1
 - Updated libXrandr to version 0.99.1 from X11R7 RC1
