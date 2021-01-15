@@ -1,23 +1,12 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
-%global tarball libXrender
-#global gitdate 20130524
-%global gitversion 786f78fd8
-
 Summary: X.Org X11 libXrender runtime library
 Name: libXrender
 Version: 0.9.10
-Release: 12%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
+Release: 13%{?dist}
 License: MIT
-URL: http://www.x.org
-
-%if 0%{?gitdate}
-Source0:    %{tarball}-%{gitdate}.tar.bz2
-Source1:    make-git-snapshot.sh
-Source2:    commitid
-%else
-Source0: http://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
-%endif
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL: https://www.x.org
+Source0: https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
 
 Requires: libX11 >= 1.5.99.902
 
@@ -33,11 +22,13 @@ X.Org X11 libXrender runtime library
 Summary: X.Org X11 libXrender development package
 Requires: %{name} = %{version}-%{release}
 
+Provides: pkgconfig(xrender) = %{version}-%{release}
+
 %description devel
 X.Org X11 libXrender development package
 
 %prep
-%setup -q -n %{tarball}-%{?gitdate:%{gitdate}}%{!?gitdate:%{version}}
+%autosetup
 
 %build
 autoreconf -v --install --force
@@ -54,8 +45,8 @@ rm $RPM_BUILD_ROOT/%{_docdir}/*/libXrender.txt
 # We intentionally don't ship *.la files
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
-%ldconfig_post
-%ldconfig_postun
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %doc AUTHORS COPYING
@@ -69,6 +60,12 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/pkgconfig/xrender.pc
 
 %changelog
+* Thu Jan 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.9.10-13
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.10-12
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
