@@ -316,6 +316,7 @@ Headers for development with the Vulkan API.
 %prep
 %autosetup -n %{name}-%{version} -p1
 cp %{SOURCE1} docs/
+cp %{SOURCE2} .
 
 %build
 # We've gotten a report that enabling LTO for mesa breaks some games. See
@@ -379,9 +380,6 @@ for i in libOSMesa*.so libGL.so ; do
     eu-findtextrel $i && exit 1
 done
 popd
-
-# Adding license information
-cp %{SOURCE1} .
 
 %files filesystem
 %license LICENSE.PTR
