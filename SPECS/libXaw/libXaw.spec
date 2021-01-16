@@ -1,31 +1,43 @@
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 
-Summary: X Athena Widget Set
-Name: libXaw
-Version: 1.0.13
-Release: 16%{?dist}
-License: MIT
+Summary:        X Athena Widget Set
+Name:           libXaw
+Version:        1.0.13
+Release:        16%{?dist}
+License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL: https://www.x.org
+URL:            https://www.x.org
+Source0:        https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
 
-Source0: https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
-
-BuildRequires: autoconf automake libtool
-BuildRequires: pkgconfig(xproto) pkgconfig(x11) pkgconfig(xt)
-BuildRequires: pkgconfig(xmu) pkgconfig(xpm) pkgconfig(xext)
-BuildRequires: xorg-x11-util-macros xmlto lynx
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
+BuildRequires:  lynx
+BuildRequires:  pkg-config
+BuildRequires:  xmlto
+BuildRequires:  xorg-x11-util-macros
+BuildRequires:  pkgconfig(x11)
+BuildRequires:  pkgconfig(xext)
+BuildRequires:  pkgconfig(xmu)
+BuildRequires:  pkgconfig(xpm)
+BuildRequires:  pkgconfig(xproto)
+BuildRequires:  pkgconfig(xt)
 
 %description
 Xaw is a widget set based on the X Toolkit Intrinsics (Xt) Library.
 
 %package devel
-Summary: Development files for %{name}
-Requires: %{name} = %{version}-%{release}
-Requires: pkgconfig
-Requires: pkgconfig(xproto) pkgconfig(xmu) pkgconfig(xt) pkgconfig(xpm)
+Summary:        Development files for %{name}
 
-Provides:    pkgconfig(xaw7) = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
+Requires:       pkg-config
+Requires:       pkgconfig(xmu)
+Requires:       pkgconfig(xpm)
+Requires:       pkgconfig(xproto)
+Requires:       pkgconfig(xt)
+
+Provides:       pkgconfig(xaw7) = %{version}-%{release}
 
 %description devel
 X.Org X11 libXaw development package
@@ -35,37 +47,36 @@ X.Org X11 libXaw development package
 
 %build
 autoreconf -v --install --force
-export CFLAGS="$RPM_OPT_FLAGS -Os"
+export CFLAGS="%{optflags} -Os"
 %configure \
         --docdir=%{_pkgdocdir} \
-        --disable-xaw8 --disable-static \
+        --disable-xaw8 \
+        --disable-static \
         --disable-xaw6 \
-        --without-fop --without-xmlto
+        --without-fop \
+        --without-xmlto
 make %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
-install -pm 644 COPYING README ChangeLog $RPM_BUILD_ROOT%{_pkgdocdir}
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+make install DESTDIR=%{buildroot} INSTALL="install -p"
+find %{buildroot} -type f -name "*.la" -delete -print
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
-%dir %{_pkgdocdir}
-%{_pkgdocdir}/ChangeLog
-%{_pkgdocdir}/COPYING
-%{_pkgdocdir}/README
+%license COPYING
+%doc ChangeLog README
 %{_libdir}/libXaw.so.7
 %{_libdir}/libXaw7.so.7
 %{_libdir}/libXaw7.so.7.0.0
 
 %files devel
 %dir %{_includedir}/X11/Xaw
+%dir %{_pkgdocdir}
 %{_includedir}/X11/Xaw/*.h
-# FIXME:  Is this C file really supposed to be here?
+# FIXME: Is this C file really supposed to be here?
 %{_includedir}/X11/Xaw/Template.c
 %{_libdir}/libXaw.so
 %{_libdir}/libXaw7.so
@@ -79,6 +90,7 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 - License verified.
 - Added explicit "Provides" for "pkgconfig(*)".
 - Replaced ldconfig scriptlets with explicit calls to ldconfig.
+- Using %%{_pkgdocdir} only for generated docs.
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.13-15
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
