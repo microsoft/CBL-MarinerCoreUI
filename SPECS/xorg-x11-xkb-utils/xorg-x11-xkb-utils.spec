@@ -1,5 +1,3 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
 # Component versions
 %global setxkbmap 1.3.2
 %global xkbcomp 1.4.2
@@ -10,8 +8,10 @@ Distribution:   Mariner
 Summary:    X.Org X11 xkb utilities
 Name:       xorg-x11-xkb-utils
 Version:    7.7
-Release:    33%{?dist}
+Release:    34%{?dist}
 License:    MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
 URL:        https://www.x.org
 
 Source0:    https://www.x.org/pub/individual/app/setxkbmap-%{setxkbmap}.tar.bz2
@@ -37,8 +37,10 @@ X.Org X11 xkb core utilities.
 
 %package devel
 Summary:    X.Org X11 xkb utilities development package
-Requires:   pkgconfig
+Requires:   pkg-config
 Requires:   xkbcomp
+
+Provides:   pkgconfig(xkbcomp) = %{version}-%{release}
 
 %description devel
 X.Org X11 xkb utilities development files.
@@ -110,6 +112,11 @@ popd
 %{_libdir}/pkgconfig/xkbcomp.pc
 
 %changelog
+* Fri Jan 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 7.7-34
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
+
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 7.7-33
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
