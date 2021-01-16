@@ -1,16 +1,13 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
 Summary: X.Org X11 ICE runtime library
 Name: libICE
 Version: 1.0.10
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: MIT
-URL: http://www.x.org
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL: https://www.x.org
 
 Source0: https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
-
-# Needed for pre-glibc-2.25, which at this point would mean RHEL7 but not 8
-# Patch1: 0002-Add-getentropy-emulation-through-syscall.patch
 
 BuildRequires: xorg-x11-util-macros
 BuildRequires: autoconf automake libtool
@@ -25,17 +22,20 @@ The X.Org X11 ICE (Inter-Client Exchange) runtime library.
 Summary: X.Org X11 ICE development package
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
+Provides: pkgconfig(ice) = %{version}-%{release}
+
 %description devel
 The X.Org X11 ICE (Inter-Client Exchange) development package.
 
 %prep
-%setup -q
-#patch1 -p1 -b .cve-2017-2626
+%autosetup
 
 %build
 autoreconf -v --install --force
 %configure --disable-static \
-	   --without-fop --without-xmlto
+           --without-fop \
+           --without-xmlto
+
 V=1 make %{?_smp_mflags}
 
 %install
@@ -46,22 +46,14 @@ make install DESTDIR=$RPM_BUILD_ROOT
 # We intentionally don't ship *.la files
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
-# adding to installed docs in order to avoid using %%doc magic
-for f in AUTHORS ChangeLog COPYING ; do
-    cp -p $f ${RPM_BUILD_ROOT}%{_docdir}/%{name}/${f}
-done
-
-%ldconfig_post
-%ldconfig_postun
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
+%license COPYING
+%doc AUTHORS ChangeLog
 %{_libdir}/libICE.so.6
 %{_libdir}/libICE.so.6.3.0
-# not using %%doc because of side-effect (#1001256)
-%dir %{_docdir}/%{name}
-%{_docdir}/%{name}/AUTHORS
-%{_docdir}/%{name}/ChangeLog
-%{_docdir}/%{name}/COPYING
 
 %files devel
 %{_docdir}/%{name}/*.xml
@@ -70,6 +62,14 @@ done
 %{_libdir}/pkgconfig/ice.pc
 
 %changelog
+* Sat Jan 16 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.10-5
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
+- Switching back to using "%%doc" and "%%license" macros.
+- Using the "%%license" macro instead of manually operating documentation files.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.10-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
