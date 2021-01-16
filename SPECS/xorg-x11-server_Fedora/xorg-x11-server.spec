@@ -185,6 +185,18 @@ provides the basic low level functionality which full fledged
 graphical user interfaces (GUIs) such as GNOME and KDE are designed
 upon.
 
+%package Xnest
+Summary: A nested server
+Requires: xorg-x11-server-common >= %{version}-%{release}
+Provides: Xnest
+
+%description Xnest
+Xnest is an X server which has been implemented as an ordinary
+X application.  It runs in a window just like other X applications,
+but it is an X server itself in which you can run other software.  It
+is a very useful tool for developers who wish to test their
+applications without running them on their real X server.
+
 %package Xwayland
 Summary:        Wayland X Server
 
@@ -259,6 +271,7 @@ autoreconf -f -v --install || exit 1
   --enable-install-setuid \
   --enable-libunwind=no \
   --enable-suid-wrapper \
+  --enable-xnest \
   --enable-xwayland \
   --with-builderstring="Build ID: %{name} %{version}-%{release}" \
   --with-default-font-path=%{default_font_path} \
@@ -343,6 +356,10 @@ find %{buildroot} -type f -name "*.la" -delete -print
 %dir %{_datadir}/X11/xorg.conf.d
 %{_datadir}/X11/xorg.conf.d/10-quirks.conf
 
+%files Xnest
+%{_bindir}/Xnest
+%{_mandir}/man1/Xnest.1*
+
 %files Xwayland
 %{_bindir}/Xwayland
 
@@ -359,7 +376,7 @@ find %{buildroot} -type f -name "*.la" -delete -print
 * Tue Jan 05 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.20.10-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
-- Removed following subpackages: source, Xdmx, Xephyr, Xnest, Xvfb.
+- Removed following subpackages: source, Xdmx, Xephyr, Xvfb.
 - Removed dependency on "libunwind".
 - Removed using the set of "redhat-hardened-*" compiler and linker specs.
 - Changed BuildRequires for "audit-libs-devel" to "audit-devel".
