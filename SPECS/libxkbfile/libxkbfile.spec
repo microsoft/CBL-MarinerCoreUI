@@ -1,11 +1,11 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
 Summary: X.Org X11 libxkbfile runtime library
 Name: libxkbfile
 Version: 1.1.0
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: MIT
-URL: http://www.x.org
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL: https://www.x.org
 
 Source0: https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
 
@@ -18,6 +18,8 @@ X.Org X11 libxkbfile runtime library
 %package devel
 Summary: X.Org X11 libxkbfile development package
 Requires: %{name} = %{version}-%{release}
+
+Provides: pkgconfig(xkbfile) = %{version}-%{release}
 
 %description devel
 X.Org X11 libxkbfile development package
@@ -40,8 +42,8 @@ make install DESTDIR=$RPM_BUILD_ROOT
 # We intentionally don't ship *.la files
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
-%ldconfig_post
-%ldconfig_postun
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %doc COPYING ChangeLog
@@ -59,6 +61,12 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/pkgconfig/xkbfile.pc
 
 %changelog
+* Fri Jan 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.0-5
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
