@@ -1,19 +1,18 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
 Name:           vulkan-loader
 Version:        1.2.148.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Vulkan ICD desktop loader
 
 License:        ASL 2.0
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
 URL:            https://github.com/KhronosGroup/Vulkan-Loader
 Source0:        %url/archive/sdk-%{version}.tar.gz#/Vulkan-Loader-sdk-%{version}.tar.gz       
 
 BuildRequires:  gcc
-BuildRequires:  gcc-c++
-BuildRequires:  cmake3
+BuildRequires:  cmake
 BuildRequires:  ninja-build
-BuildRequires:  python%{python3_pkgversion}-devel
+BuildRequires:  python3-devel
 BuildRequires:  vulkan-headers = 1.2.148.0
 BuildRequires:  pkgconfig(wayland-client)
 BuildRequires:  pkgconfig(wayland-cursor)
@@ -28,14 +27,6 @@ Obsoletes:      vulkan < %{version}-%{release}
 Provides:       vulkan-filesystem = %{version}-%{release}
 Obsoletes:      vulkan-filesystem < %{version}-%{release}
 
-%if 0%{?fedora} <= 27
-%ifarch x86_64 i686 
-Requires:       mesa-vulkan-drivers%{?_isa}
-%endif
-%else
-Requires:       mesa-vulkan-drivers%{?_isa}
-%endif
-
 %description
 This project provides the Khronos official Vulkan ICD desktop 
 loader for Windows, Linux, and MacOS.
@@ -44,6 +35,7 @@ loader for Windows, Linux, and MacOS.
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       vulkan-headers
+Provides:       pkgconfig(vulkan) = %{version}-%{release}
 Provides:       vulkan-devel%{?_isa} = %{version}-%{release}
 Provides:       vulkan-devel = %{version}-%{release}
 Obsoletes:      vulkan-devel < %{version}-%{release}
@@ -58,12 +50,12 @@ developing applications that use %{name}.
 
 
 %build
-%cmake3 -GNinja -DCMAKE_BUILD_TYPE=Release .
-%cmake_build
+%cmake -GNinja -DCMAKE_BUILD_TYPE=Release .
+%make_build
 
 
 %install
-%cmake_install
+%make_install
 
 # create the filesystem
 mkdir -p %{buildroot}%{_sysconfdir}/vulkan/{explicit,implicit}_layer.d/ \
@@ -71,7 +63,8 @@ mkdir -p %{buildroot}%{_sysconfdir}/vulkan/{explicit,implicit}_layer.d/ \
 %{buildroot}{%{_sysconfdir},%{_datadir}}/vulkan/icd.d
 
 
-%ldconfig_scriptlets
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 
 %files
@@ -93,6 +86,14 @@ mkdir -p %{buildroot}%{_sysconfdir}/vulkan/{explicit,implicit}_layer.d/ \
 
 
 %changelog
+* Fri Jan 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.148.1-2
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
+- Replaced 'cmake_(build|install)' macros with 'make_(build|install)'.
+- Replaced BR 'cmake3' with 'cmake'.
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
+
 * Thu Oct 08 2020 Dave Airlie <airlied@redhat.com> - 1.2.148.1-1
 - Update to 1.2.148.1 loader - fixes layer loading issue
 
