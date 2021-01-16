@@ -1,31 +1,33 @@
-Summary: X.Org X11 SM runtime library
-Name: libSM
-Version: 1.2.3
-Release: 7%{?dist}
-License: MIT
+Summary:        X.Org X11 SM runtime library
+Name:           libSM
+Version:        1.2.3
+Release:        7%{?dist}
+License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL: https://www.x.org
+URL:            https://www.x.org
+Source0:        https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
 
-Source0: https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
-
-BuildRequires: xorg-x11-util-macros
-BuildRequires: autoconf automake libtool
-BuildRequires: pkgconfig
-BuildRequires: xorg-x11-proto-devel
-BuildRequires: xorg-x11-xtrans-devel >= 1.0.3-4
-BuildRequires: libICE-devel
-BuildRequires: libuuid-devel
-BuildRequires: xmlto
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libICE-devel
+BuildRequires:  libtool
+BuildRequires:  libuuid-devel
+BuildRequires:  pkg-config
+BuildRequires:  xmlto
+BuildRequires:  xorg-x11-proto-devel
+BuildRequires:  xorg-x11-util-macros
+BuildRequires:  xorg-x11-xtrans-devel >= 1.0.3-4
 
 %description
 The X.Org X11 SM (Session Management) runtime library.
 
 %package devel
-Summary: X.Org X11 SM development package
-Requires: %{name} = %{version}-%{release}
+Summary:        X.Org X11 SM development package
 
-Provides: pkgconfig(sm) = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
+
+Provides:       pkgconfig(sm) = %{version}-%{release}
 
 %description devel
 The X.Org X11 SM (Session Management) development package.
@@ -40,21 +42,21 @@ autoreconf -v --install --force
 make %{_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=%{buildroot}
 
 # We intentionally don't ship *.la files
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+find %{buildroot} -type f -name "*.la" -delete -print
 
 # We %%doc these ourselves, later, and only the text versions
-rm -rf $RPM_BUILD_ROOT%{_docdir}
+rm -rf %{buildroot}%{_docdir}
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
-%doc AUTHORS COPYING ChangeLog
+%license COPYING
+%doc AUTHORS ChangeLog
 %{_libdir}/libSM.so.6
 %{_libdir}/libSM.so.6.*
 
