@@ -1,30 +1,33 @@
-Summary: X.Org X11 libXfont2 runtime library
-Name: libXfont2
-Version: 2.0.3
-Release: 9%{?dist}
-License: BSD AND MIT
+Summary:        X.Org X11 libXfont2 runtime library
+Name:           libXfont2
+Version:        2.0.3
+Release:        9%{?dist}
+License:        BSD AND MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL: https://www.x.org
+URL:            https://www.x.org
+Source0:        https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
 
-Source0: http://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
-
-BuildRequires: autoconf automake libtool
-BuildRequires: pkgconfig(fontsproto)
-BuildRequires: xorg-x11-util-macros
-BuildRequires: xorg-x11-xtrans-devel >= 1.0.3-3
-BuildRequires: libfontenc-devel
-BuildRequires: freetype-devel
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  freetype-devel
+BuildRequires:  libfontenc-devel
+BuildRequires:  libtool
+BuildRequires:  pkg-config
+BuildRequires:  xorg-x11-util-macros
+BuildRequires:  xorg-x11-xtrans-devel >= 1.0.3-3
+BuildRequires:  pkgconfig(fontsproto)
 
 %description
 X.Org X11 libXfont2 runtime library
 
 %package devel
-Summary: X.Org X11 libXfont2 development package
-Requires: %{name}%{?_isa} = %{version}-%{release}
-Requires: libfontenc-devel%{?_isa}
+Summary:        X.Org X11 libXfont2 development package
 
-Provides: pkgconfig(xfont2) = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       libfontenc-devel%{?_isa}
+
+Provides:       pkgconfig(xfont2) = %{version}-%{release}
 
 %description devel
 X.Org X11 libXfont development package
@@ -34,15 +37,15 @@ X.Org X11 libXfont development package
 
 %build
 autoreconf -v --install --force
-export CFLAGS="$RPM_OPT_FLAGS -Os"
+export CFLAGS="%{optflags} -Os"
 %configure --disable-static
-make %{?_smp_mflags}  
+make %{?_smp_mflags}
 
 %install
 %make_install
 
 # We intentionally don't ship *.la files
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+find %{buildroot} -type f -name "*.la" -delete -print
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -108,4 +111,3 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
 * Wed Jun 08 2016 Adam Jackson <ajax@redhat.com> - 2.0.2-1
 - Initial packaging forked from libXfont
-
