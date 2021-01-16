@@ -1,25 +1,27 @@
-Summary: X.Org X11 libxkbfile runtime library
-Name: libxkbfile
-Version: 1.1.0
-Release: 5%{?dist}
-License: MIT
+Summary:        X.Org X11 libxkbfile runtime library
+Name:           libxkbfile
+Version:        1.1.0
+Release:        5%{?dist}
+License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL: https://www.x.org
+URL:            https://www.x.org
+Source0:        https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
 
-Source0: https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
-
-BuildRequires: pkgconfig(xproto) pkgconfig(x11)
-BuildRequires: gcc
+BuildRequires:  gcc
+BuildRequires:  pkg-config
+BuildRequires:  pkgconfig(x11)
+BuildRequires:  pkgconfig(xproto)
 
 %description
 X.Org X11 libxkbfile runtime library
 
 %package devel
-Summary: X.Org X11 libxkbfile development package
-Requires: %{name} = %{version}-%{release}
+Summary:        X.Org X11 libxkbfile development package
 
-Provides: pkgconfig(xkbfile) = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
+
+Provides:       pkgconfig(xkbfile) = %{version}-%{release}
 
 %description devel
 X.Org X11 libxkbfile development package
@@ -30,23 +32,23 @@ X.Org X11 libxkbfile development package
 %build
 # FIXME: We use -fno-strict-aliasing, to work around the following bug:
 # maprules.c:1373: warning: dereferencing type-punned pointer will break strict-aliasing rules)
-export CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing"
+export CFLAGS="%{optflags} -fno-strict-aliasing"
 %configure --disable-static
 make %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=%{buildroot}
 
 # We intentionally don't ship *.la files
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+find %{buildroot} -type f -name "*.la" -delete -print
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
-%doc COPYING ChangeLog
+%license COPYING
+%doc ChangeLog
 %{_libdir}/libxkbfile.so.1
 %{_libdir}/libxkbfile.so.1.0.2
 
