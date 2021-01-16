@@ -1,14 +1,12 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
-%global __python %{__python3}
 Name:           vulkan-headers
 Version:        1.2.148.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Vulkan Header files and API registry
-
 License:        ASL 2.0
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
 URL:            https://github.com/KhronosGroup/Vulkan-Headers
-Source0:        %url/archive/sdk-%{version}.tar.gz#/Vulkan-Headers-sdk-%{version}.tar.gz
+Source0:        %url/archive/sdk-%{version}.tar.gz
 
 BuildRequires:  cmake3
 BuildArch:      noarch       
@@ -38,6 +36,10 @@ Vulkan Header files and API registry
 
 
 %changelog
+* Fri Jan 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.148.0-2
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+
 * Tue Aug 04 2020 Dave Airlie <airlied@redhat.com> - 1.2.148.0-1
 - Update to 1.2.148.0 headers
 
