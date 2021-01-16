@@ -16,11 +16,12 @@ BuildRequires:  meson
 Pixman is a pixel manipulation library for X and Cairo.
 
 %package devel
-Summary: Pixel manipulation library development package
-Requires: %{name}%{?isa} = %{version}-%{release}
-Requires: pkgconfig
+Summary:        Pixel manipulation library development package
 
-Provides: pkgconfig(pixman-1) = %{version}-%{name}
+Requires:       %{name}%{?isa} = %{version}-%{release}
+Requires:       pkg-config
+
+Provides:       pkgconfig(pixman-1) = %{version}-%{name}
 
 %description devel
 Development library for pixman.
@@ -35,7 +36,7 @@ sed -i 's/120/600/' test/meson.build
 %ifarch %{arm}
   -Diwmmxt=disabled -Diwmmxt2=false \
 %endif
-  %nil
+  %{nil}
 
 %meson_build
 
@@ -49,7 +50,7 @@ sed -i 's/120/600/' test/meson.build
 %postun -p /sbin/ldconfig
 
 %files
-%doc COPYING
+%license COPYING
 %{_libdir}/libpixman-1*.so.*
 
 %files devel
