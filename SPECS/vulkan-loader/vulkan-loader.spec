@@ -52,11 +52,11 @@ developing applications that use %{name}.
 
 %build
 %cmake -GNinja -DCMAKE_BUILD_TYPE=Release .
-%make_build
+%ninja_build
 
 
 %install
-%make_install
+%ninja_install
 
 # create the filesystem
 mkdir -p %{buildroot}%{_sysconfdir}/vulkan/{explicit,implicit}_layer.d/ \
@@ -89,7 +89,7 @@ mkdir -p %{buildroot}%{_sysconfdir}/vulkan/{explicit,implicit}_layer.d/ \
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Added explicit "Provides" for "pkgconfig(*)".
-- Replaced 'cmake_(build|install)' macros with 'make_(build|install)'.
+- Replaced 'cmake_(build|install)' macros with 'ninja_(build|install)'.
 - Replaced BR 'cmake3' with 'cmake'.
 - Replaced ldconfig scriptlets with explicit calls to ldconfig.
 
