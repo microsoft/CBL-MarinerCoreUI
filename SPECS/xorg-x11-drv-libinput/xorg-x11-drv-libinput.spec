@@ -22,7 +22,7 @@ BuildRequires:  automake
 BuildRequires:  libevdev-devel
 BuildRequires:  libinput-devel >= 0.6.0-3
 BuildRequires:  libtool
-BuildRequires:  libudev-devel
+BuildRequires:  systemd-devel
 BuildRequires:  xorg-x11-server-devel >= 1.14.0
 BuildRequires:  xorg-x11-util-macros
 
@@ -82,6 +82,7 @@ cp %{SOURCE1} %{buildroot}%{_datadir}/X11/xorg.conf.d/
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Added explicit "Provides" for "pkgconfig(*)".
+- Change BR 'libudev-devel' to 'systemd-devel', which is CBL-Mariner's equivalent.
 
 * Sat Aug 01 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.30.0-3
 - Second attempt - Rebuilt for
