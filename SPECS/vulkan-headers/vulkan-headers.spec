@@ -1,15 +1,16 @@
+Summary:        Vulkan Header files and API registry
 Name:           vulkan-headers
 Version:        1.2.148.0
 Release:        2%{?dist}
-Summary:        Vulkan Header files and API registry
 License:        ASL 2.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://github.com/KhronosGroup/Vulkan-Headers
-Source0:        %url/archive/sdk-%{version}.tar.gz
+Source0:        %{url}/archive/sdk-%{version}.tar.gz
+
+BuildArch:      noarch
 
 BuildRequires:  cmake
-BuildArch:      noarch       
 
 %description
 Vulkan Header files and API registry
@@ -33,7 +34,6 @@ Vulkan Header files and API registry
 %{_includedir}/vulkan/
 %dir %{_datadir}/vulkan/
 %{_datadir}/vulkan/registry/
-
 
 %changelog
 * Fri Jan 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.148.0-2
