@@ -1,13 +1,3 @@
-# This package is an experiment in active integration of upstream SCM with
-# Fedora packaging.  It works something like this:
-#
-# The "pristine" source is actually a git repo (with no working checkout).
-# The first step of %%prep is to check it out and switch to a "fedora" branch.
-# If you need to add a patch to the server, just do it like a normal git
-# operation, dump it with git-format-patch to a file in the standard naming
-# format, and add a PatchN: line.  If you want to push something upstream,
-# check out the master branch, pull, cherry-pick, and push.
-
 # X.org requires lazy relocations to work.
 %undefine _hardened_build
 %undefine _strict_symbol_defs_build
@@ -15,8 +5,7 @@
 %global stable_abi 1
 
 %if %{stable_abi}
-# Released ABI versions.  Have to keep these manually in sync with the
-# source because rpm is a terrible language.
+# Released ABI versions. Have to keep these manually in sync with the source.
 %global ansic_major 0
 %global ansic_minor 4
 %global videodrv_major 24
@@ -62,8 +51,10 @@ Patch5:         0001-autobind-GPUs-to-the-screen.patch
 Patch6:         0001-Fedora-hack-Make-the-suid-root-wrapper-always-start-.patch
 # Backports from current stable "server-1.20-branch":
 # <empty>
+
 # Backports from "master" upstream:
 # <empty>
+
 # Backported Xwayland randr resolution change emulation support
 Patch501:       0001-dix-Add-GetCurrentClient-helper.patch
 Patch502:       0002-xwayland-Add-wp_viewport-wayland-extension-support.patch
@@ -192,7 +183,7 @@ applications without running them on their real X server.
 
 %package Xvfb
 Summary:        A X Windows System virtual framebuffer X server
-# Re-adding 'xvfb-run.sh' requires an additional 'Requires: xorg-x11-xauth'.
+# Re-adding 'xvfb-run' requires an additional 'Requires: xorg-x11-xauth'.
 Requires:       xorg-x11-server-common >= %{version}-%{release}
 Provides:       Xvfb = %{version}-%{release}
 
