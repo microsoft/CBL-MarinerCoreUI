@@ -1,23 +1,23 @@
+Summary:        Vulkan ICD desktop loader
 Name:           vulkan-loader
 Version:        1.2.148.1
 Release:        2%{?dist}
-Summary:        Vulkan ICD desktop loader
-
 License:        ASL 2.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://github.com/KhronosGroup/Vulkan-Loader
-Source0:        %url/archive/sdk-%{version}.tar.gz#/Vulkan-Loader-sdk-%{version}.tar.gz       
+Source0:        %{url}/archive/sdk-%{version}.tar.gz
 
-BuildRequires:  gcc
 BuildRequires:  cmake
+BuildRequires:  gcc
 BuildRequires:  ninja-build
+BuildRequires:  pkg-config
 BuildRequires:  python3-devel
 BuildRequires:  vulkan-headers = 1.2.148.0
 BuildRequires:  pkgconfig(wayland-client)
 BuildRequires:  pkgconfig(wayland-cursor)
-BuildRequires:  pkgconfig(wayland-server)
 BuildRequires:  pkgconfig(wayland-egl)
+BuildRequires:  pkgconfig(wayland-server)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xrandr)
 
@@ -28,13 +28,15 @@ Provides:       vulkan-filesystem = %{version}-%{release}
 Obsoletes:      vulkan-filesystem < %{version}-%{release}
 
 %description
-This project provides the Khronos official Vulkan ICD desktop 
+This project provides the Khronos official Vulkan ICD desktop
 loader for Windows, Linux, and MacOS.
 
 %package        devel
 Summary:        Development files for %{name}
+
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       vulkan-headers
+
 Provides:       pkgconfig(vulkan) = %{version}-%{release}
 Provides:       vulkan-devel%{?_isa} = %{version}-%{release}
 Provides:       vulkan-devel = %{version}-%{release}
@@ -43,7 +45,6 @@ Obsoletes:      vulkan-devel < %{version}-%{release}
 %description    devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
-
 
 %prep
 %autosetup -n Vulkan-Loader-sdk-%{version}
@@ -66,7 +67,6 @@ mkdir -p %{buildroot}%{_sysconfdir}/vulkan/{explicit,implicit}_layer.d/ \
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
-
 %files
 %license LICENSE.txt
 %doc README.md CONTRIBUTING.md
@@ -83,7 +83,6 @@ mkdir -p %{buildroot}%{_sysconfdir}/vulkan/{explicit,implicit}_layer.d/ \
 %files devel
 %{_libdir}/pkgconfig/vulkan.pc
 %{_libdir}/*.so
-
 
 %changelog
 * Fri Jan 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.148.1-2
