@@ -139,7 +139,7 @@ Common files shared among all X servers.
 Summary:        Xorg X server
 
 Requires:       libEGL
-Requires:       system-setup-keyboard
+Requires:       systemd
 Requires:       xorg-x11-drv-libinput
 Requires:       xorg-x11-server-common >= %{version}-%{release}
 
@@ -384,6 +384,7 @@ find %{buildroot} -type f -name "*.la" -delete -print
 - Removed following subpackages: source, Xdmx, Xephyr.
 - Removed the 'xvfb-run' script from the Xvfb subpackage to avoid dependency on 'xorg-x11-xauth'.
 - Removed using the set of "redhat-hardened-*" compiler and linker specs.
+- Replacing 'Requires' on 'system-setup-keyboard' with 'systemd'.
 
 * Wed Dec  2 2020 Olivier Fourdan <ofourdan@redhat.com> - 1.20.10-1
 - xserver 1.20.10 (CVE-2020-14360, CVE-2020-25712)
