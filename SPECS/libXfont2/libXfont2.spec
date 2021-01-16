@@ -1,11 +1,11 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
 Summary: X.Org X11 libXfont2 runtime library
 Name: libXfont2
 Version: 2.0.3
-Release: 8%{?dist}
-License: MIT
-URL: http://www.x.org
+Release: 9%{?dist}
+License: BSD AND MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL: https://www.x.org
 
 Source0: http://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
 
@@ -23,6 +23,8 @@ X.Org X11 libXfont2 runtime library
 Summary: X.Org X11 libXfont2 development package
 Requires: %{name}%{?_isa} = %{version}-%{release}
 Requires: libfontenc-devel%{?_isa}
+
+Provides: pkgconfig(xfont2) = %{version}-%{release}
 
 %description devel
 X.Org X11 libXfont development package
@@ -42,8 +44,8 @@ make %{?_smp_mflags}
 # We intentionally don't ship *.la files
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
-%ldconfig_post
-%ldconfig_postun
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %license COPYING
@@ -56,6 +58,12 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/pkgconfig/xfont2.pc
 
 %changelog
+* Fri Jan 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.0.3-9
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2.0.3-8
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
