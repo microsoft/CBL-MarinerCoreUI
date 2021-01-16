@@ -5,12 +5,7 @@ Release: 5%{?dist}
 License: MIT
 URL: http://www.x.org
 
-%if 0%{?gitdate}
-Source0:    %{tarball}-%{gitdate}.tar.bz2
-Source1:    make-git-snapshot.sh
-%else
 Source0: https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
-%endif
 
 BuildRequires: autoconf automake libtool
 BuildRequires: xorg-x11-util-macros
