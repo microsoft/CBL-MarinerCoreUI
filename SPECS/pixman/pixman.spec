@@ -9,6 +9,7 @@ URL:            https://gitlab.freedesktop.org/pixman/pixman
 Source0:        https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.xz
 
 BuildRequires:  gcc
+BuildRequires:  marinerui-rpm-macros
 BuildRequires:  meson
 
 %description
@@ -62,6 +63,7 @@ sed -i 's/120/600/' test/meson.build
 * Fri Jan 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.40.0-3
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
+- Added build-time dependency on 'marinerui-rpm-macros'.
 - Added explicit "Provides" for "pkgconfig(*)".
 - Replaced ldconfig scriptlets with explicit calls to ldconfig.
 
