@@ -5,51 +5,53 @@
 %global xkbprint 1.0.4
 %global xkbutils 1.0.4
 
-Summary:    X.Org X11 xkb utilities
-Name:       xorg-x11-xkb-utils
-Version:    7.7
-Release:    34%{?dist}
-License:    MIT
+Summary:        X.Org X11 xkb utilities
+Name:           xorg-x11-xkb-utils
+Version:        7.7
+Release:        34%{?dist}
+License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL:        https://www.x.org
+URL:            https://www.x.org
+Source0:        https://www.x.org/pub/individual/app/setxkbmap-%{setxkbmap}.tar.bz2
+Source1:        https://www.x.org/pub/individual/app/xkbcomp-%{xkbcomp}.tar.bz2
+Source2:        https://www.x.org/pub/individual/app/xkbevd-%{xkbevd}.tar.bz2
+Source3:        https://www.x.org/pub/individual/app/xkbprint-%{xkbprint}.tar.bz2
+Source4:        https://www.x.org/pub/individual/app/xkbutils-%{xkbutils}.tar.bz2
 
-Source0:    https://www.x.org/pub/individual/app/setxkbmap-%{setxkbmap}.tar.bz2
-Source1:    https://www.x.org/pub/individual/app/xkbcomp-%{xkbcomp}.tar.bz2
-Source2:    https://www.x.org/pub/individual/app/xkbevd-%{xkbevd}.tar.bz2
-Source3:    https://www.x.org/pub/individual/app/xkbprint-%{xkbprint}.tar.bz2
-Source4:    https://www.x.org/pub/individual/app/xkbutils-%{xkbutils}.tar.bz2
-
-Patch0: 0001-Suppress-high-keycode-warnings-at-the-default-warnin.patch
+Patch0:         0001-Suppress-high-keycode-warnings-at-the-default-warnin.patch
 
 BuildRequires:  byacc
+BuildRequires:  pkg-config
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xaw7)
 BuildRequires:  pkgconfig(xkbfile)
 BuildRequires:  pkgconfig(xorg-macros) >= 1.8
 BuildRequires:  pkgconfig(xt)
 
-Provides:   setxkbmap = %{setxkbmap}
-Provides:   xkbcomp = %{xkbcomp}
+Provides:       setxkbmap = %{setxkbmap}
+Provides:       xkbcomp = %{xkbcomp}
 
 %description
 X.Org X11 xkb core utilities.
 
 %package devel
-Summary:    X.Org X11 xkb utilities development package
-Requires:   pkg-config
-Requires:   xkbcomp
+Summary:        X.Org X11 xkb utilities development package
 
-Provides:   pkgconfig(xkbcomp) = %{version}-%{release}
+Requires:       pkg-config
+Requires:       xkbcomp
+
+Provides:       pkgconfig(xkbcomp) = %{version}-%{release}
 
 %description devel
 X.Org X11 xkb utilities development files.
 
 %package -n xorg-x11-xkb-extras
-Summary:    X.Org X11 xkb gadgets
-Provides:   xkbevd = %{xkbevd}
-Provides:   xkbprint = %{xkbprint}
-Provides:   xkbutils = %{xkbutils}
+Summary:        X.Org X11 xkb gadgets
+
+Provides:       xkbevd = %{xkbevd}
+Provides:       xkbprint = %{xkbprint}
+Provides:       xkbutils = %{xkbutils}
 
 %description -n xorg-x11-xkb-extras
 X.Org X11 xkb gadgets.
@@ -95,7 +97,7 @@ popd
 %{_mandir}/man1/xkbcomp.1*
 
 %files -n xorg-x11-xkb-extras
-%doc xkbutils-%{xkbutils}/COPYING
+%license xkbutils-%{xkbutils}/COPYING
 %doc xkbutils-%{xkbutils}/README
 %{_bindir}/xkbbell
 %{_bindir}/xkbevd
