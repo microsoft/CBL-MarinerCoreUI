@@ -16,6 +16,7 @@ BuildRequires:  libX11-devel >= 1.6
 BuildRequires:  libtool
 BuildRequires:  pkg-config
 BuildRequires:  xorg-x11-util-macros
+BuildRequires:  pkgconfig(ice)
 BuildRequires:  pkgconfig(sm)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xproto)
@@ -107,6 +108,7 @@ find %{buildroot} -type f -name "*.la" -delete -print
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Added explicit "Provides" for "pkgconfig(*)".
+- Added missing dependency on "pkgconfig(ice)".
 - Replaced ldconfig scriptlets with explicit calls to ldconfig.
 - Using the "%%license" macro instead of manually operating documentation files.
 
