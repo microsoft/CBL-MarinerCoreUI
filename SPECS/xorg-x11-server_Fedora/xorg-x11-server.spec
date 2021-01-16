@@ -247,10 +247,6 @@ test `getminor extension` == %{extension_minor}
 
 %build
 
-export CFLAGS="%{optflags} -specs=%{_lib}/rpm/redhat/redhat-hardened-cc1"
-export CXXFLAGS="%{optflags} -specs=%{_lib}/rpm/redhat/redhat-hardened-cc1"
-export LDFLAGS="$RPM_LD_FLAGS -specs=%{_lib}/rpm/redhat/redhat-hardened-ld"
-
 %global default_font_path "catalogue:%{_sysconfdir}/X11/fontpath.d,built-ins"
 
 autoreconf -f -v --install || exit 1
@@ -365,6 +361,7 @@ find %{buildroot} -type f -name "*.la" -delete -print
 - License verified.
 - Removed following subpackages: source, Xdmx, Xephyr, Xnest, Xvfb.
 - Removed dependency on "libunwind".
+- Removed using the set of "redhat-hardened-*" compiler and linker specs.
 - Changed BuildRequires for "audit-libs-devel" to "audit-devel".
 
 * Wed Dec  2 2020 Olivier Fourdan <ofourdan@redhat.com> - 1.20.10-1
