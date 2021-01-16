@@ -1,9 +1,7 @@
-%global tarball %{name}
-
 Summary: X.Org X11 libXi runtime library
 Name: libXi
 Version: 1.7.10
-Release: 5%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
+Release: 5%{?dist}
 License: MIT
 URL: http://www.x.org
 
@@ -30,7 +28,7 @@ X.Org X11 libXi runtime library
 %package devel
 Summary: X.Org X11 libXi development package
 
-Provides: pkgconfig(Xi) = %{version}-%{release}
+Provides: pkgconfig(xi) = %{version}-%{release}
 
 Requires: %{name} = %{version}-%{release}
 # required by xi.pc
