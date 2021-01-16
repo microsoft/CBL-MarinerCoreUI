@@ -1,23 +1,13 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
-%global tarball libXt
-#global gitdate 20190424
-#global gitversion ba4ec9376
-
 Summary: X.Org X11 libXt runtime library
 Name: libXt
 Version: 1.2.0
-Release: 2%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
+Release: 3%{?dist}
 License: MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
 URL: https://www.x.org
 
-%if 0%{?gitdate}
-Source0:    %{tarball}-%{gitdate}.tar.bz2
-Source1:    make-git-snapshot.sh
-Source2:    commitid
-%else
 Source0: https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
-%endif
 
 Patch0: 0001-xt-Work-around-a-compiler-issue-with-gcc-10.patch
 
@@ -35,11 +25,13 @@ X.Org X11 libXt runtime library
 Summary: X.Org X11 libXt development package
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
+Provides: pkgconfig(xt) = %{version}-%{release}
+
 %description devel
 X.Org X11 libXt development package
 
 %prep
-%autosetup -p1 -n %{tarball}-%{?gitdate:%{gitdate}}%{!?gitdate:%{version}}
+%autosetup -p1
 
 %build
 autoreconf -v --install --force
@@ -57,19 +49,15 @@ make install DESTDIR=$RPM_BUILD_ROOT
 mkdir -p -m 0755 $RPM_BUILD_ROOT%{_datadir}/X11/app-defaults
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
-# adding to installed docs in order to avoid using %%doc magic
-cp -p COPYING ${RPM_BUILD_ROOT}%{_datadir}/doc/%{name}/COPYING
-
-%ldconfig_post
-%ldconfig_postun
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
+%license COPYING
+%doc README.md
 %{_libdir}/libXt.so.6
 %{_libdir}/libXt.so.6.0.0
 %dir %{_datadir}/X11/app-defaults
-# not using %%doc because of side-effect (#1001246)
-%dir %{_docdir}/%{name}
-%{_docdir}/%{name}/COPYING
 
 %files devel
 %{_docdir}/%{name}/*.xml
@@ -111,6 +99,13 @@ cp -p COPYING ${RPM_BUILD_ROOT}%{_datadir}/doc/%{name}/COPYING
 %{_mandir}/man3/*.3*
 
 %changelog
+* Sat Jan 16 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.0-3
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
+- Using the "%%license" macro instead of manually operating documentation files.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
