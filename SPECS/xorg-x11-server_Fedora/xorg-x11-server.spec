@@ -115,7 +115,7 @@ BuildRequires:  libdrm-devel >= 2.4.0
 BuildRequires: pkgconfig(epoxy)
 BuildRequires: pkgconfig(xshmfence) >= 1.1
 #BuildRequires: libXv-devel
-#BuildRequires: pixman-devel >= 0.30.0
+BuildRequires: pixman-devel >= 0.30.0
 BuildRequires:  libpciaccess-devel >= 0.13.1
 BuildRequires:  libselinux-devel >= 2.0.86-1
 BuildRequires:  libtool
