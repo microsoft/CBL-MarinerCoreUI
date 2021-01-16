@@ -100,7 +100,7 @@ BuildRequires:  flex-devel
 BuildRequires:  git
 BuildRequires:  kernel-headers
 #BuildRequires: libXfont2-devel
-#BuildRequires: libxkbfile-devel
+BuildRequires: libxkbfile-devel
 #BuildRequires: libXres-devel
 BuildRequires: libfontenc-devel
 #BuildRequires: libXtst-devel
