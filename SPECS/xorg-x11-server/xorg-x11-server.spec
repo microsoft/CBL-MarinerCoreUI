@@ -379,11 +379,11 @@ find %{buildroot} -type f -name "*.la" -delete -print
 * Tue Jan 05 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.20.10-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
-- Removed following subpackages: source, Xdmx, Xephyr.
+- Changed BuildRequires for "audit-libs-devel" to "audit-devel".
 - Removed dependency on "libunwind".
+- Removed following subpackages: source, Xdmx, Xephyr.
 - Removed the 'xvfb-run' script from the Xvfb subpackage to avoid dependency on 'xorg-x11-xauth'.
 - Removed using the set of "redhat-hardened-*" compiler and linker specs.
-- Changed BuildRequires for "audit-libs-devel" to "audit-devel".
 
 * Wed Dec  2 2020 Olivier Fourdan <ofourdan@redhat.com> - 1.20.10-1
 - xserver 1.20.10 (CVE-2020-14360, CVE-2020-25712)
