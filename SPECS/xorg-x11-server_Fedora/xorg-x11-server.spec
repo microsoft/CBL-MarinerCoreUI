@@ -93,41 +93,41 @@ BuildRequires:  audit-devel
 BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  bison
-BuildRequires: xorg-x11-font-utils >= 1:7.2-11
 BuildRequires:  dbus-devel
 BuildRequires:  flex
 BuildRequires:  flex-devel
 BuildRequires:  git
 BuildRequires:  kernel-headers
-BuildRequires: libXfont2-devel
-BuildRequires: libxkbfile-devel
-BuildRequires: libfontenc-devel
-BuildRequires: libXdmcp-devel
 BuildRequires:  libX11-devel
 BuildRequires:  libXau-devel
-BuildRequires: mesa-libGL-devel >= 9.2
-BuildRequires: mesa-libEGL-devel
-BuildRequires: mesa-libgbm-devel
+BuildRequires:  libXdmcp-devel
+BuildRequires:  libXext-devel
+BuildRequires:  libXfont2-devel
 BuildRequires:  libdrm-devel >= 2.4.0
-BuildRequires: pkgconfig(epoxy)
-BuildRequires: pkgconfig(xshmfence) >= 1.1
-BuildRequires: pixman-devel >= 0.30.0
+BuildRequires:  libepoxy-devel
+BuildRequires:  libfontenc-devel
 BuildRequires:  libpciaccess-devel >= 0.13.1
 BuildRequires:  libselinux-devel >= 2.0.86-1
 BuildRequires:  libtool
+BuildRequires:  libxkbfile-devel
 BuildRequires:  make
+BuildRequires:  mesa-libEGL-devel
+BuildRequires:  mesa-libGL-devel >= 9.2
+BuildRequires:  mesa-libgbm-devel
 BuildRequires:  openssl-devel
+BuildRequires:  pixman-devel >= 0.30.0
 BuildRequires:  pkg-config
 BuildRequires:  systemd-devel
 BuildRequires:  systemtap-sdt-devel
-BuildRequires: libXext-devel
 BuildRequires:  wayland-devel
 BuildRequires:  wayland-protocols-devel
+BuildRequires:  xorg-x11-font-utils >= 1:7.2-11
 BuildRequires:  xorg-x11-proto-devel >= 7.7-10
 BuildRequires:  xorg-x11-util-macros >= 1.17
-BuildRequires: libepoxy-devel
 BuildRequires:  xorg-x11-xtrans-devel >= 1.3.2
+BuildRequires:  pkgconfig(epoxy)
 BuildRequires:  pkgconfig(wayland-client) >= 1.3.0
+BuildRequires:  pkgconfig(xshmfence) >= 1.1
 
 %description
 X.Org X11 X server
@@ -149,6 +149,7 @@ Requires:       libEGL
 Requires:       system-setup-keyboard
 Requires:       xorg-x11-drv-libinput
 Requires:       xorg-x11-server-common >= %{version}-%{release}
+
 Provides:       Xorg = %{version}-%{release}
 Provides:       Xserver = %{version}-%{release}
 # HdG: This should be moved to the wrapper package once the wrapper gets
@@ -174,9 +175,11 @@ graphical user interfaces (GUIs) such as GNOME and KDE are designed
 upon.
 
 %package Xnest
-Summary: A nested server
-Requires: xorg-x11-server-common >= %{version}-%{release}
-Provides: Xnest = %{version}-%{release}
+Summary:        A nested server
+
+Requires:       xorg-x11-server-common >= %{version}-%{release}
+
+Provides:       Xnest = %{version}-%{release}
 
 %description Xnest
 Xnest is an X server which has been implemented as an ordinary
@@ -186,13 +189,12 @@ is a very useful tool for developers who wish to test their
 applications without running them on their real X server.
 
 %package Xvfb
-Summary: A X Windows System virtual framebuffer X server
+Summary:        A X Windows System virtual framebuffer X server
 # The 'xvfb-run.sh' script is removed from CBL-Mariner as opposed to what is present in Fedora 33.
 # If ever re-added, the 'License' must be updated to include GPLv2 in addition to MIT.
-License: MIT
 # Re-adding 'xvfb-run.sh' requires an additional 'Requires: xorg-x11-xauth'.
-Requires: xorg-x11-server-common >= %{version}-%{release}
-Provides: Xvfb = %{version}-%{release}
+Requires:       xorg-x11-server-common >= %{version}-%{release}
+Provides:       Xvfb = %{version}-%{release}
 
 %description Xvfb
 Xvfb (X Virtual Frame Buffer) is an X server that is able to run on
@@ -219,6 +221,7 @@ Requires:       pixman-devel
 Requires:       pkg-config
 Requires:       xorg-x11-proto-devel
 Requires:       xorg-x11-util-macros
+
 Provides:       xorg-x11-server-static = %{version}-%{release}
 Obsoletes:      xorg-x11-glamor-devel < %{version}-%{release}
 Provides:       xorg-x11-glamor-devel = %{version}-%{release}
