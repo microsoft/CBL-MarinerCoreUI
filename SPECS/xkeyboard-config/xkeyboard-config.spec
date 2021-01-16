@@ -15,17 +15,16 @@ BuildArch:      noarch
 Patch01:        0001-Fix-symbols-in-syntax-error-spurious-git-conflict-ma.patch
 
 BuildRequires:  gettext
-BuildRequires:  gettext-devel
 BuildRequires:  git
 BuildRequires:  libtool
 BuildRequires:  libxslt
 BuildRequires:  pkg-config
 BuildRequires:  xkbcomp
-BuildRequires:  perl(XML::Parser)
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(x11) >= 1.4.3
 BuildRequires:  pkgconfig(xorg-macros) >= 1.12
 BuildRequires:  pkgconfig(xproto) >= 7.0.20
+BuildRequires:  python3
 
 %description
 This package contains configuration data used by the X Keyboard Extension (XKB),
@@ -86,6 +85,8 @@ rm -f %{buildroot}%{_datadir}/X11/xkb/compiled
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Added explicit "Provides" for "pkgconfig(*)".
+- Added missing BR on 'python3'.
+- Removed BR on 'perl(XML::Parser)'.
 
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2.30-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
