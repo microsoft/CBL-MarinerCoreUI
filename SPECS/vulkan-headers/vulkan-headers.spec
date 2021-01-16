@@ -8,7 +8,7 @@ Distribution:   Mariner
 URL:            https://github.com/KhronosGroup/Vulkan-Headers
 Source0:        %url/archive/sdk-%{version}.tar.gz
 
-BuildRequires:  cmake3
+BuildRequires:  cmake
 BuildArch:      noarch       
 
 %description
@@ -19,12 +19,12 @@ Vulkan Header files and API registry
 
 
 %build
-%cmake3 -DCMAKE_INSTALL_LIBDIR=%{_libdir} .
-%cmake_build
+%cmake -DCMAKE_INSTALL_LIBDIR=%{_libdir} .
+%make_build
 
 
 %install
-%cmake_install
+%make_install
 
 
 %files
@@ -39,6 +39,8 @@ Vulkan Header files and API registry
 * Fri Jan 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.148.0-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
+- Replaced 'cmake_(build|install)' macros with 'make_(build|install)'.
+- Replaced BR 'cmake3' with 'cmake'.
 
 * Tue Aug 04 2020 Dave Airlie <airlied@redhat.com> - 1.2.148.0-1
 - Update to 1.2.148.0 headers
