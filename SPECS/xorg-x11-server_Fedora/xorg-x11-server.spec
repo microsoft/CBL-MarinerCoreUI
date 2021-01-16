@@ -188,7 +188,7 @@ upon.
 %package Xnest
 Summary: A nested server
 Requires: xorg-x11-server-common >= %{version}-%{release}
-Provides: Xnest
+Provides: Xnest = %{version}-%{release}
 
 %description Xnest
 Xnest is an X server which has been implemented as an ordinary
@@ -196,6 +196,22 @@ X application.  It runs in a window just like other X applications,
 but it is an X server itself in which you can run other software.  It
 is a very useful tool for developers who wish to test their
 applications without running them on their real X server.
+
+%package Xvfb
+Summary: A X Windows System virtual framebuffer X server
+# The 'xvfb-run.sh' script is removed from CBL-Mariner as opposed to what is present in Fedora 33.
+# If ever re-added, the 'License' must be updated to include GPLv2 in addition to MIT.
+License: MIT
+# Re-adding 'xvfb-run.sh' requires an additional 'Requires: xorg-x11-xauth'.
+Requires: xorg-x11-server-common >= %{version}-%{release}
+Provides: Xvfb = %{version}-%{release}
+
+%description Xvfb
+Xvfb (X Virtual Frame Buffer) is an X server that is able to run on
+machines with no display hardware and no physical input devices.
+Xvfb simulates a dumb framebuffer using virtual memory.  Xvfb does
+not open any devices, but behaves otherwise as an X display.  Xvfb
+is normally used for testing servers.
 
 %package Xwayland
 Summary:        Wayland X Server
@@ -272,6 +288,7 @@ autoreconf -f -v --install || exit 1
   --enable-libunwind=no \
   --enable-suid-wrapper \
   --enable-xnest \
+  --enable-xvfb \
   --enable-xwayland \
   --with-builderstring="Build ID: %{name} %{version}-%{release}" \
   --with-default-font-path=%{default_font_path} \
@@ -360,6 +377,10 @@ find %{buildroot} -type f -name "*.la" -delete -print
 %{_bindir}/Xnest
 %{_mandir}/man1/Xnest.1*
 
+%files Xvfb
+%{_bindir}/Xvfb
+%{_mandir}/man1/Xvfb.1*
+
 %files Xwayland
 %{_bindir}/Xwayland
 
@@ -376,8 +397,9 @@ find %{buildroot} -type f -name "*.la" -delete -print
 * Tue Jan 05 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.20.10-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
-- Removed following subpackages: source, Xdmx, Xephyr, Xvfb.
+- Removed following subpackages: source, Xdmx, Xephyr.
 - Removed dependency on "libunwind".
+- Removed the 'xvfb-run' script from the Xvfb subpackage to avoid dependency on 'xorg-x11-xauth'.
 - Removed using the set of "redhat-hardened-*" compiler and linker specs.
 - Changed BuildRequires for "audit-libs-devel" to "audit-devel".
 
