@@ -1,13 +1,13 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 
 Summary: X Athena Widget Set
 Name: libXaw
 Version: 1.0.13
-Release: 15%{?dist}
+Release: 16%{?dist}
 License: MIT
-URL: http://www.x.org
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL: https://www.x.org
 
 Source0: https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
 
@@ -25,6 +25,8 @@ Requires: %{name} = %{version}-%{release}
 Requires: pkgconfig
 Requires: pkgconfig(xproto) pkgconfig(xmu) pkgconfig(xt) pkgconfig(xpm)
 
+Provides:    pkgconfig(xaw7) = %{version}-%{release}
+
 %description devel
 X.Org X11 libXaw development package
 
@@ -35,10 +37,10 @@ X.Org X11 libXaw development package
 autoreconf -v --install --force
 export CFLAGS="$RPM_OPT_FLAGS -Os"
 %configure \
-	    --docdir=%{_pkgdocdir} \
-	    --disable-xaw8 --disable-static \
-	    --disable-xaw6 \
-	    --without-fop --without-xmlto
+        --docdir=%{_pkgdocdir} \
+        --disable-xaw8 --disable-static \
+        --disable-xaw6 \
+        --without-fop --without-xmlto
 make %{?_smp_mflags}
 
 %install
@@ -48,8 +50,8 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 install -pm 644 COPYING README ChangeLog $RPM_BUILD_ROOT%{_pkgdocdir}
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
-%ldconfig_post
-%ldconfig_postun
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %dir %{_pkgdocdir}
@@ -70,10 +72,14 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/pkgconfig/xaw7.pc
 %{_mandir}/man3/*.3*
 %{_pkgdocdir}/*.xml
-#{_pkgdocdir}/%{name}.html
-#{_pkgdocdir}/%{name}.txt
 
 %changelog
+* Fri Jan 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.13-16
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.13-15
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
