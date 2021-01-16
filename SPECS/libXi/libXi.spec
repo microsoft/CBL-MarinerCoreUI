@@ -7,6 +7,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://www.x.org
 Source0:        https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
+
 BuildRequires:  asciidoc >= 8.4.5
 BuildRequires:  autoconf
 BuildRequires:  automake
@@ -19,6 +20,7 @@ BuildRequires:  xmlto
 BuildRequires:  xorg-x11-proto-devel
 BuildRequires:  xorg-x11-util-macros
 BuildRequires:  pkgconfig(inputproto) >= 2.2.99.1
+
 Requires:       libX11 >= 1.5.99.902
 
 %description
@@ -30,6 +32,7 @@ Requires:       %{name} = %{version}-%{release}
 Requires:       pkg-config
 # required by xi.pc
 Requires:       xorg-x11-proto-devel
+
 Provides:       pkgconfig(xi) = %{version}-%{release}
 
 %description devel
