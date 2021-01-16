@@ -1,6 +1,4 @@
-%global tarball libXi
-#global gitdate 20130524
-%global gitversion 661c45ca1
+%global tarball %{name}
 
 Summary: X.Org X11 libXi runtime library
 Name: libXi
@@ -32,18 +30,18 @@ X.Org X11 libXi runtime library
 %package devel
 Summary: X.Org X11 libXi development package
 
-Provides: pkgconfig(libXi) = %{version}-%{release}
+Provides: pkgconfig(Xi) = %{version}-%{release}
 
 Requires: %{name} = %{version}-%{release}
 # required by xi.pc
 Requires: xorg-x11-proto-devel
-Requires: pkgconfig
+Requires: pkg-config
 
 %description devel
 X.Org X11 libXi development package
 
 %prep
-%setup -q -n %{tarball}-%{?gitdate:%{gitdate}}%{!?gitdate:%{version}}
+%autosetup
 
 %build
 autoreconf -v --install || exit 1
