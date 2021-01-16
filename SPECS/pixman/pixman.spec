@@ -1,21 +1,12 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
-%define gitdate 20070827
-%define gitrev 8ff7213f39edc1b2b8b60d6b0cc5d5f14ca1928d
-
+Summary:        Pixel manipulation library
 Name:           pixman
 Version:        0.40.0
-Release:        2%{?dist}
-Summary:        Pixel manipulation library
-
+Release:        3%{?dist}
 License:        MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
 URL:            https://gitlab.freedesktop.org/pixman/pixman
-#VCS:           git:git://git.freedesktop.org/git/pixman
-# To make git snapshots:
-# ./make-pixman-snapshot.sh %{\?gitrev}
-# if no revision specified, makes a new one from HEAD.
 Source0:        https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.xz
-Source1:        make-pixman-snapshot.sh
 
 BuildRequires:  gcc
 BuildRequires:  meson
@@ -28,12 +19,14 @@ Summary: Pixel manipulation library development package
 Requires: %{name}%{?isa} = %{version}-%{release}
 Requires: pkgconfig
 
+Provides: pkgconfig(pixman-1) = %{version}-%{name}
+
 %description devel
 Development library for pixman.
 
 %prep
 %autosetup -p1
-# bump up the test suite timeout because arm
+# Bump up the test suite timeout because arm
 sed -i 's/120/600/' test/meson.build
 
 %build
@@ -51,8 +44,8 @@ sed -i 's/120/600/' test/meson.build
 %check
 %meson_test
 
-%ldconfig_post
-%ldconfig_postun
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %doc COPYING
@@ -66,6 +59,12 @@ sed -i 's/120/600/' test/meson.build
 %{_libdir}/pkgconfig/pixman-1.pc
 
 %changelog
+* Fri Jan 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.40.0-3
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.40.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
