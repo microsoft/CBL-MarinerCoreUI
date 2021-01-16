@@ -1,42 +1,43 @@
 # INFO: Package contains data-only, no binaries, so no debuginfo is needed
 %global debug_package %{nil}
-
-Summary:    X Keyboard Extension configuration data
-Name:       xkeyboard-config
-Version:    2.30
-Release:    4%{?dist}
-License:    MIT
+Summary:        X Keyboard Extension configuration data
+Name:           xkeyboard-config
+Version:        2.30
+Release:        4%{?dist}
+License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL:        https://www.freedesktop.org/wiki/Software/XKeyboardConfig
+URL:            https://www.freedesktop.org/wiki/Software/XKeyboardConfig
+Source0:        https://xorg.freedesktop.org/archive/individual/data/%{name}/%{name}-%{version}.tar.bz2
 
-Source0:    https://xorg.freedesktop.org/archive/individual/data/%{name}/%{name}-%{version}.tar.bz2
+BuildArch:      noarch
 
-Patch01:    0001-Fix-symbols-in-syntax-error-spurious-git-conflict-ma.patch
+Patch01:        0001-Fix-symbols-in-syntax-error-spurious-git-conflict-ma.patch
 
-BuildArch:  noarch
-
-BuildRequires:  gettext gettext-devel
+BuildRequires:  gettext
+BuildRequires:  gettext-devel
+BuildRequires:  git
 BuildRequires:  libtool
 BuildRequires:  libxslt
+BuildRequires:  pkg-config
+BuildRequires:  xkbcomp
 BuildRequires:  perl(XML::Parser)
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(x11) >= 1.4.3
 BuildRequires:  pkgconfig(xorg-macros) >= 1.12
 BuildRequires:  pkgconfig(xproto) >= 7.0.20
-BuildRequires:  xkbcomp
-BuildRequires:  git
 
 %description
 This package contains configuration data used by the X Keyboard Extension (XKB),
 which allows selection of keyboard layouts when using a graphical interface.
 
 %package devel
-Summary:    Development files for %{name}
-Requires:   %{name} = %{version}-%{release}
-Requires:   pkg-config
+Summary:        Development files for %{name}
 
-Provides: pkgconfig(xkeyboard-config) = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
+Requires:       pkg-config
+
+Provides:       pkgconfig(xkeyboard-config) = %{version}-%{release}
 
 %description devel
 Development files for %{name}.
@@ -54,23 +55,24 @@ autoreconf -v --force --install || exit 1
 make %{?_smp_mflags}
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
+make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 # Remove unnecessary symlink
-rm -f $RPM_BUILD_ROOT%{_datadir}/X11/xkb/compiled
+rm -f %{buildroot}%{_datadir}/X11/xkb/compiled
 %find_lang %{name}
 
 # Create filelist
 {
    FILESLIST=${PWD}/files.list
-   pushd $RPM_BUILD_ROOT
+   pushd %{buildroot}
    find .%{_datadir}/X11/xkb -type d | sed -e "s/^\./%dir /g" > $FILESLIST
    find .%{_datadir}/X11/xkb -type f | sed -e "s/^\.//g" >> $FILESLIST
    popd
 }
 
 %files -f files.list -f %{name}.lang
-%doc AUTHORS README NEWS TODO COPYING docs/README.* docs/HOWTO.*
+%license COPYING
+%doc AUTHORS README NEWS TODO docs/README.* docs/HOWTO.*
 %{_datadir}/X11/xkb/rules/xorg
 %{_datadir}/X11/xkb/rules/xorg.lst
 %{_datadir}/X11/xkb/rules/xorg.xml
