@@ -1,28 +1,30 @@
-Summary: X.Org X11 ICE runtime library
-Name: libICE
-Version: 1.0.10
-Release: 5%{?dist}
-License: MIT
+Summary:        X.Org X11 ICE runtime library
+Name:           libICE
+Version:        1.0.10
+Release:        5%{?dist}
+License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL: https://www.x.org
+URL:            https://www.x.org
+Source0:        https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
 
-Source0: https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
-
-BuildRequires: xorg-x11-util-macros
-BuildRequires: autoconf automake libtool
-BuildRequires: pkgconfig
-BuildRequires: xorg-x11-proto-devel
-BuildRequires: xorg-x11-xtrans-devel >= 1.0.3-5
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
+BuildRequires:  pkg-config
+BuildRequires:  xorg-x11-proto-devel
+BuildRequires:  xorg-x11-util-macros
+BuildRequires:  xorg-x11-xtrans-devel >= 1.0.3-5
 
 %description
 The X.Org X11 ICE (Inter-Client Exchange) runtime library.
 
 %package devel
-Summary: X.Org X11 ICE development package
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Summary:        X.Org X11 ICE development package
 
-Provides: pkgconfig(ice) = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+
+Provides:       pkgconfig(ice) = %{version}-%{release}
 
 %description devel
 The X.Org X11 ICE (Inter-Client Exchange) development package.
@@ -39,12 +41,11 @@ autoreconf -v --install --force
 V=1 make %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=%{buildroot}
 
 # We intentionally don't ship *.la files
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+find %{buildroot} -type f -name "*.la" -delete -print
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -255,7 +256,6 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 - Updated libICE to version 0.99.1 from X11R7 RC2
 - Changed 'Conflicts: XFree86-devel, xorg-x11-devel' to 'Obsoletes'
 - Changed 'Conflicts: XFree86-libs, xorg-x11-libs' to 'Obsoletes'
-
 
 * Mon Oct 24 2005 Mike A. Harris <mharris@redhat.com> 0.99.0-5
 - Updated libICE to version 0.99.0 from X11R7 RC1
