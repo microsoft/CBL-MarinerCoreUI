@@ -33,6 +33,8 @@ Summary:        X.Org X11 X server
 Name:           xorg-x11-server
 Version:        1.20.10
 Release:        2%{?dist}
+# The 'xvfb-run.sh' script is removed from CBL-Mariner as opposed to what is present in Fedora 33.
+# If ever re-added, the 'License' must be updated to include GPLv2 in addition to MIT.
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -41,10 +43,10 @@ Source0:        https://www.x.org/pub/individual/xserver/%{pkgname}-%{version}.t
 Source1:        gitignore
 Source4:        10-quirks.conf
 Source10:       xserver.pamd
-# for requires generation in drivers
+# For requires generation in drivers
 Source30:       xserver-sdk-abi-requires.release
 Source31:       xserver-sdk-abi-requires.git
-# maintainer convenience script
+# Maintainer convenience script
 Source40:       driver-abi-rebuild.sh
 
 # From Debian use intel ddx driver only for gen4 and older chipsets
@@ -56,7 +58,7 @@ Patch2:         0001-xfree86-use-modesetting-driver-by-default-on-GeForce.patch
 Patch3:         0001-xf86-dri2-Use-va_gl-as-vdpau_driver-for-Intel-i965-G.patch
 # Submitted upstream, but not going anywhere
 Patch5:         0001-autobind-GPUs-to-the-screen.patch
-# because the display-managers are not ready yet, do not upstream
+# Because the display-managers are not ready yet, do not upstream
 Patch6:         0001-Fedora-hack-Make-the-suid-root-wrapper-always-start-.patch
 # Backports from current stable "server-1.20-branch":
 # <empty>
@@ -190,8 +192,6 @@ applications without running them on their real X server.
 
 %package Xvfb
 Summary:        A X Windows System virtual framebuffer X server
-# The 'xvfb-run.sh' script is removed from CBL-Mariner as opposed to what is present in Fedora 33.
-# If ever re-added, the 'License' must be updated to include GPLv2 in addition to MIT.
 # Re-adding 'xvfb-run.sh' requires an additional 'Requires: xorg-x11-xauth'.
 Requires:       xorg-x11-server-common >= %{version}-%{release}
 Provides:       Xvfb = %{version}-%{release}
@@ -242,7 +242,7 @@ cp %{SOURCE1} .gitignore
 %autopatch
 
 %if 0%{?stable_abi}
-# check the ABI in the source against what we expect.
+# Check the ABI in the source against what we expect.
 getmajor() {
     grep -i ^#define.ABI.$1_VERSION hw/xfree86/common/xf86Module.h |
     tr '(),' '   ' | awk '{ print $4 }'
@@ -305,7 +305,7 @@ install -m 644 %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/xserver
 mkdir -p %{buildroot}%{_datadir}/X11/xorg.conf.d
 install -m 644 %{SOURCE4} %{buildroot}%{_datadir}/X11/xorg.conf.d
 
-# make sure the (empty) /etc/X11/xorg.conf.d is there, system-setup-keyboard
+# Make sure the (empty) /etc/X11/xorg.conf.d is there, system-setup-keyboard
 # relies on it more or less.
 mkdir -p %{buildroot}%{_sysconfdir}/X11/xorg.conf.d
 
@@ -378,7 +378,6 @@ find %{buildroot} -type f -name "*.la" -delete -print
 
 %files devel
 %license COPYING
-#{_docdir}/xorg-server
 %{_bindir}/xserver-sdk-abi-requires
 %{_libdir}/pkgconfig/xorg-server.pc
 %dir %{_includedir}/xorg
