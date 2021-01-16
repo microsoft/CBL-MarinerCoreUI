@@ -1,31 +1,36 @@
-Summary: X.Org X11 libXt runtime library
-Name: libXt
-Version: 1.2.0
-Release: 3%{?dist}
-License: MIT
+Summary:        X.Org X11 libXt runtime library
+Name:           libXt
+Version:        1.2.0
+Release:        3%{?dist}
+License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL: https://www.x.org
+URL:            https://www.x.org
+Source0:        https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
 
-Source0: https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
+Patch0:         0001-xt-Work-around-a-compiler-issue-with-gcc-10.patch
 
-Patch0: 0001-xt-Work-around-a-compiler-issue-with-gcc-10.patch
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libX11-devel >= 1.6
+BuildRequires:  libtool
+BuildRequires:  pkg-config
+BuildRequires:  xorg-x11-util-macros
+BuildRequires:  pkgconfig(sm)
+BuildRequires:  pkgconfig(x11)
+BuildRequires:  pkgconfig(xproto)
 
-Requires: libX11%{?_isa} >= 1.6
-
-BuildRequires: xorg-x11-util-macros
-BuildRequires: autoconf automake libtool
-BuildRequires: pkgconfig(xproto) pkgconfig(x11) pkgconfig(sm)
-BUildRequires: libX11-devel >= 1.6
+Requires:       libX11%{?_isa} >= 1.6
 
 %description
 X.Org X11 libXt runtime library
 
 %package devel
-Summary: X.Org X11 libXt development package
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Summary:        X.Org X11 libXt development package
 
-Provides: pkgconfig(xt) = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+
+Provides:       pkgconfig(xt) = %{version}-%{release}
 
 %description devel
 X.Org X11 libXt development package
@@ -36,18 +41,17 @@ X.Org X11 libXt development package
 %build
 autoreconf -v --install --force
 # FIXME: Work around pointer aliasing warnings from compiler for now
-export CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing"
+export CFLAGS="%{optflags} -fno-strict-aliasing"
 %configure --disable-static \
   --with-xfile-search-path="%{_sysconfdir}/X11/%%L/%%T/%%N%%C%%S:%{_sysconfdir}/X11/%%l/%%T/\%%N%%C%%S:%{_sysconfdir}/X11/%%T/%%N%%C%%S:%{_sysconfdir}/X11/%%L/%%T/%%N%%S:%{_sysconfdir}/X\11/%%l/%%T/%%N%%S:%{_sysconfdir}/X11/%%T/%%N%%S:%{_datadir}/X11/%%L/%%T/%%N%%C%%S:%{_datadir}/X1\1/%%l/%%T/%%N%%C%%S:%{_datadir}/X11/%%T/%%N%%C%%S:%{_datadir}/X11/%%L/%%T/%%N%%S:%{_datadir}/X11/%%\l/%%T/%%N%%S:%{_datadir}/X11/%%T/%%N%%S"
 
 V=1 make %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT
-mkdir -p -m 0755 $RPM_BUILD_ROOT%{_datadir}/X11/app-defaults
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+make install DESTDIR=%{buildroot}
+mkdir -p -m 0755 %{buildroot}%{_datadir}/X11/app-defaults
+find %{buildroot} -type f -name "*.la" -delete -print
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
