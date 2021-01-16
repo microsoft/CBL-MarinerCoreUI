@@ -1,34 +1,36 @@
-Summary: X.Org X11 libXi runtime library
-Name: libXi
-Version: 1.7.10
-Release: 5%{?dist}
-License: MIT
-URL: http://www.x.org
-
-Source0: https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
-
-BuildRequires: autoconf automake libtool
-BuildRequires: xorg-x11-util-macros
-BuildRequires: xorg-x11-proto-devel
-BuildRequires: pkgconfig(inputproto) >= 2.2.99.1
-BuildRequires: libX11-devel >= 1.5.99.902
-BuildRequires: libXext-devel libXfixes-devel
-BuildRequires: xmlto asciidoc >= 8.4.5
-
-Requires: libX11 >= 1.5.99.902
+Summary:        X.Org X11 libXi runtime library
+Name:           libXi
+Version:        1.7.10
+Release:        5%{?dist}
+License:        MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL:            https://www.x.org
+Source0:        https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
+BuildRequires:  asciidoc >= 8.4.5
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libX11-devel >= 1.5.99.902
+BuildRequires:  libXext-devel
+BuildRequires:  libXfixes-devel
+BuildRequires:  libtool
+BuildRequires:  pkg-config
+BuildRequires:  xmlto
+BuildRequires:  xorg-x11-proto-devel
+BuildRequires:  xorg-x11-util-macros
+BuildRequires:  pkgconfig(inputproto) >= 2.2.99.1
+Requires:       libX11 >= 1.5.99.902
 
 %description
 X.Org X11 libXi runtime library
 
 %package devel
-Summary: X.Org X11 libXi development package
-
-Provides: pkgconfig(xi) = %{version}-%{release}
-
-Requires: %{name} = %{version}-%{release}
+Summary:        X.Org X11 libXi development package
+Requires:       %{name} = %{version}-%{release}
+Requires:       pkg-config
 # required by xi.pc
-Requires: xorg-x11-proto-devel
-Requires: pkg-config
+Requires:       xorg-x11-proto-devel
+Provides:       pkgconfig(xi) = %{version}-%{release}
 
 %description devel
 X.Org X11 libXi development package
@@ -44,18 +46,17 @@ autoreconf -v --install || exit 1
 make %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=%{buildroot}
 
 # We intentionally don't ship *.la files
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+find %{buildroot} -type f -name "*.la" -delete -print
 
 %post -p /sbin/ldconfig
-%ldconfig_postun	%postun -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
-%doc COPYING
+%license COPYING
 %{_libdir}/libXi.so.6
 %{_libdir}/libXi.so.6.1.0
 
