@@ -1,11 +1,11 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
 Summary: X.Org X11 libXpm runtime library
 Name: libXpm
 Version: 3.5.13
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: MIT
-URL: http://www.x.org
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL: https://www.x.org
 
 Source0: https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
 
@@ -20,6 +20,8 @@ X.Org X11 libXpm runtime library
 %package devel
 Summary: X.Org X11 libXpm development package
 Requires: %{name} = %{version}-%{release}
+
+Provides:       pkgconfig(xpm) = %{version}-%{release}
 
 %description devel
 X.Org X11 libXpm development package
@@ -40,8 +42,8 @@ make install DESTDIR=$RPM_BUILD_ROOT
 # We intentionally don't ship *.la files
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
-%ldconfig_post
-%ldconfig_postun
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %doc AUTHORS COPYING ChangeLog
@@ -54,11 +56,15 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_includedir}/X11/xpm.h
 %{_libdir}/libXpm.so
 %{_libdir}/pkgconfig/xpm.pc
-#%dir %{_mandir}/man1x
 %{_mandir}/man1/*.1*
-#%{_mandir}/man1/*.1x*
 
 %changelog
+* Sat Jan 16 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.5.13-4
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 3.5.13-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
