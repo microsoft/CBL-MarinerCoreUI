@@ -21,7 +21,6 @@ Source4:        https://www.x.org/pub/individual/app/xkbutils-%{xkbutils}.tar.bz
 
 Patch0:         0001-Suppress-high-keycode-warnings-at-the-default-warnin.patch
 
-BuildRequires:  byacc
 BuildRequires:  pkg-config
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xaw7)
@@ -118,6 +117,7 @@ popd
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Added explicit "Provides" for "pkgconfig(*)".
+- Removing unused build-time dependency on 'byacc'.
 
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 7.7-33
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
