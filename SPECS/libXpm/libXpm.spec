@@ -1,25 +1,30 @@
-Summary: X.Org X11 libXpm runtime library
-Name: libXpm
-Version: 3.5.13
-Release: 4%{?dist}
-License: MIT
+Summary:        X.Org X11 libXpm runtime library
+Name:           libXpm
+Version:        3.5.13
+Release:        4%{?dist}
+License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL: https://www.x.org
+URL:            https://www.x.org
+Source0:        https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
 
-Source0: https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
-
-BuildRequires: xorg-x11-util-macros
-BuildRequires: autoconf automake libtool
-BuildRequires: gettext
-BuildRequires: pkgconfig(xext) pkgconfig(xt) pkgconfig(xau)
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  gettext
+BuildRequires:  libtool
+BuildRequires:  pkg-config
+BuildRequires:  xorg-x11-util-macros
+BuildRequires:  pkgconfig(xau)
+BuildRequires:  pkgconfig(xext)
+BuildRequires:  pkgconfig(xt)
 
 %description
 X.Org X11 libXpm runtime library
 
 %package devel
-Summary: X.Org X11 libXpm development package
-Requires: %{name} = %{version}-%{release}
+Summary:        X.Org X11 libXpm development package
+
+Requires:       %{name} = %{version}-%{release}
 
 Provides:       pkgconfig(xpm) = %{version}-%{release}
 
@@ -35,18 +40,18 @@ autoreconf -v --install --force
 make %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=%{buildroot}
 
 # We intentionally don't ship *.la files
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+find %{buildroot} -type f -name "*.la" -delete -print
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
-%doc AUTHORS COPYING ChangeLog
+%license COPYING
+%doc AUTHORS ChangeLog
 %{_libdir}/libXpm.so.4
 %{_libdir}/libXpm.so.4.11.0
 
