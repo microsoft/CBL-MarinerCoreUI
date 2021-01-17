@@ -12,7 +12,7 @@ BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  libICE-devel
 BuildRequires:  libtool
-BuildRequires:  libuuid-devel
+BuildRequires:  uuid-devel
 BuildRequires:  pkg-config
 BuildRequires:  xmlto
 BuildRequires:  xorg-x11-proto-devel
@@ -73,6 +73,7 @@ rm -rf %{buildroot}%{_docdir}
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Added explicit "Provides" for "pkgconfig(*)".
+- Renaming BR 'libuuid-devel' to CBL-Mariner's 'uuid-devel'.
 - Replaced ldconfig scriptlets with explicit calls to ldconfig.
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.3-6
