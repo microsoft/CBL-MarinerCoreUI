@@ -13,9 +13,7 @@ Source0:        https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
 BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  libtool
-BuildRequires:  lynx
 BuildRequires:  pkg-config
-BuildRequires:  xmlto
 BuildRequires:  xorg-x11-util-macros
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xext)
@@ -85,10 +83,11 @@ find %{buildroot} -type f -name "*.la" -delete -print
 %{_pkgdocdir}/*.xml
 
 %changelog
-* Fri Jan 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.13-16
+* Sun Jan 17 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.13-16
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Added explicit "Provides" for "pkgconfig(*)".
+- Removed 'lynx' and 'xmlto' build-time requirement.
 - Replaced ldconfig scriptlets with explicit calls to ldconfig.
 - Using %%{_pkgdocdir} only for generated docs.
 
