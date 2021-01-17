@@ -1,13 +1,11 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
-# TODO: libXmuu split and/or elf filter emulation
-
 Summary: X.Org X11 libXmu/libXmuu runtime libraries
 Name: libXmu
 Version: 1.1.3
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: MIT
-URL: http://www.x.org
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL: https://www.x.org
 
 Source0: https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
 
@@ -24,6 +22,9 @@ X.Org X11 libXmu/libXmuu runtime libraries
 %package devel
 Summary: X.Org X11 libXmu development package
 Requires: %{name} = %{version}-%{release}
+
+Provides:   pkgconfig(xmu) = %{version}-%{release}
+Provides:   pkgconfig(xmuu) = %{version}-%{release}
 
 %description devel
 X.Org X11 libXmu development package
@@ -47,8 +48,8 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 # fixup later
 rm -rf $RPM_BUILD_ROOT%{_docdir}
 
-%ldconfig_post
-%ldconfig_postun
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %doc COPYING README.md ChangeLog
@@ -88,6 +89,12 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 %{_libdir}/pkgconfig/xmuu.pc
 
 %changelog
+* Sat Jan 16 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.3-5
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.3-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
