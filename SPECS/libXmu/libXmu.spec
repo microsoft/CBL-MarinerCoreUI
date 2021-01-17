@@ -1,30 +1,32 @@
-Summary: X.Org X11 libXmu/libXmuu runtime libraries
-Name: libXmu
-Version: 1.1.3
-Release: 5%{?dist}
-License: MIT
+Summary:        X.Org X11 libXmu/libXmuu runtime libraries
+Name:           libXmu
+Version:        1.1.3
+Release:        5%{?dist}
+License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL: https://www.x.org
+URL:            https://www.x.org
+Source0:        https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
 
-Source0: https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
-
-BuildRequires: autoconf automake libtool
-BuildRequires: xorg-x11-util-macros
-BuildRequires: libX11-devel
-BuildRequires: libXext-devel
-BuildRequires: libXt-devel
-BuildRequires: xmlto
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libX11-devel
+BuildRequires:  libXext-devel
+BuildRequires:  libXt-devel
+BuildRequires:  libtool
+BuildRequires:  xmlto
+BuildRequires:  xorg-x11-util-macros
 
 %description
 X.Org X11 libXmu/libXmuu runtime libraries
 
 %package devel
-Summary: X.Org X11 libXmu development package
-Requires: %{name} = %{version}-%{release}
+Summary:        X.Org X11 libXmu development package
 
-Provides:   pkgconfig(xmu) = %{version}-%{release}
-Provides:   pkgconfig(xmuu) = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
+
+Provides:       pkgconfig(xmu) = %{version}-%{release}
+Provides:       pkgconfig(xmuu) = %{version}-%{release}
 
 %description devel
 X.Org X11 libXmu development package
@@ -38,21 +40,21 @@ autoreconf -v --install --force
 make  %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=%{buildroot}
 
 # We intentionally don't ship *.la files
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+find %{buildroot} -type f -name "*.la" -delete -print
 
 # fixup later
-rm -rf $RPM_BUILD_ROOT%{_docdir}
+rm -rf %{buildroot}%{_docdir}
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
-%doc COPYING README.md ChangeLog
+%license COPYING
+%doc README.md ChangeLog
 %{_libdir}/libXmu.so.6
 %{_libdir}/libXmu.so.6.2.0
 %{_libdir}/libXmuu.so.1
