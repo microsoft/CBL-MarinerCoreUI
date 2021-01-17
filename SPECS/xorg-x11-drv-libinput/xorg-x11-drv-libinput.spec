@@ -58,9 +58,8 @@ make %{?_smp_mflags}
 %install
 %make_install
 
-# FIXME: Remove all libtool archives (*.la) from modules directory.  This
-# should be fixed in upstream Makefile.am or whatever.
-find %{buildroot} -regex ".*\.la$" | xargs rm -f --
+# We intentionally don't ship *.la files
+find %{buildroot} -type f -name "*.la" -delete -print
 
 cp %{SOURCE1} %{buildroot}%{_datadir}/X11/xorg.conf.d/
 
