@@ -18,41 +18,40 @@
 %global xvidtune 1.0.3
 %global xwd 1.0.7
 %global xwud 1.0.5
-
-Summary:    X.Org X11 applications
-Name:       xorg-x11-apps
-Version:    7.7
-Release:    29%{?dist}
-License:    MIT
+Summary:        X.Org X11 applications
+Name:           xorg-x11-apps
+Version:        7.7
+Release:        29%{?dist}
+License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL:        https://www.x.org
+URL:            https://www.x.org
+Source0:        https://www.x.org/pub/individual/app/luit-%{luit}.tar.bz2
+Source1:        https://www.x.org/pub/individual/app/oclock-%{oclock}.tar.bz2
+Source2:        https://www.x.org/pub/individual/app/x11perf-%{x11perf}.tar.bz2
+Source3:        https://www.x.org/pub/individual/app/xbiff-%{xbiff}.tar.bz2
+Source4:        https://www.x.org/pub/individual/app/xclipboard-%{xclipboard}.tar.bz2
+Source5:        https://www.x.org/pub/individual/app/xclock-%{xclock}.tar.bz2
+Source6:        https://www.x.org/pub/individual/app/xconsole-%{xconsole}.tar.bz2
+Source7:        https://www.x.org/pub/individual/app/xcursorgen-%{xcursorgen}.tar.bz2
+Source8:        https://www.x.org/pub/individual/app/xeyes-%{xeyes}.tar.bz2
+Source9:        https://www.x.org/pub/individual/app/xfd-%{xfd}.tar.bz2
+Source10:       https://www.x.org/pub/individual/app/xfontsel-%{xfontsel}.tar.bz2
+Source11:       https://www.x.org/pub/individual/app/xload-%{xload}.tar.bz2
+Source12:       https://www.x.org/pub/individual/app/xlogo-%{xlogo}.tar.bz2
+Source13:       https://www.x.org/pub/individual/app/xmag-%{xmag}.tar.bz2
+Source14:       https://www.x.org/pub/individual/app/xmessage-%{xmessage}.tar.bz2
+Source15:       https://www.x.org/pub/individual/app/xpr-%{xpr}.tar.bz2
+Source16:       https://www.x.org/pub/individual/app/xvidtune-%{xvidtune}.tar.bz2
+Source17:       https://www.x.org/pub/individual/app/xwd-%{xwd}.tar.bz2
+Source18:       https://www.x.org/pub/individual/app/xwud-%{xwud}.tar.bz2
 
-Source0:    https://www.x.org/pub/individual/app/luit-%{luit}.tar.bz2
-Source1:    https://www.x.org/pub/individual/app/oclock-%{oclock}.tar.bz2
-Source2:    https://www.x.org/pub/individual/app/x11perf-%{x11perf}.tar.bz2
-Source3:    https://www.x.org/pub/individual/app/xbiff-%{xbiff}.tar.bz2
-Source4:    https://www.x.org/pub/individual/app/xclipboard-%{xclipboard}.tar.bz2
-Source5:    https://www.x.org/pub/individual/app/xclock-%{xclock}.tar.bz2
-Source6:    https://www.x.org/pub/individual/app/xconsole-%{xconsole}.tar.bz2
-Source7:    https://www.x.org/pub/individual/app/xcursorgen-%{xcursorgen}.tar.bz2
-Source8:    https://www.x.org/pub/individual/app/xeyes-%{xeyes}.tar.bz2
-Source9:    https://www.x.org/pub/individual/app/xfd-%{xfd}.tar.bz2
-Source10:   https://www.x.org/pub/individual/app/xfontsel-%{xfontsel}.tar.bz2
-Source11:   https://www.x.org/pub/individual/app/xload-%{xload}.tar.bz2
-Source12:   https://www.x.org/pub/individual/app/xlogo-%{xlogo}.tar.bz2
-Source13:   https://www.x.org/pub/individual/app/xmag-%{xmag}.tar.bz2
-Source14:   https://www.x.org/pub/individual/app/xmessage-%{xmessage}.tar.bz2
-Source15:   https://www.x.org/pub/individual/app/xpr-%{xpr}.tar.bz2
-Source16:   https://www.x.org/pub/individual/app/xvidtune-%{xvidtune}.tar.bz2
-Source17:   https://www.x.org/pub/individual/app/xwd-%{xwd}.tar.bz2
-Source18:   https://www.x.org/pub/individual/app/xwud-%{xwud}.tar.bz2
-
-Patch0:     x11perf-1.6.0-x11perf-datadir-cleanups.patch
-Patch1:     luit-1.1.1-configure-define-XOPEN_SOURCE-to-600-on-linux.patch
+Patch0:         x11perf-1.6.0-x11perf-datadir-cleanups.patch
+Patch1:         luit-1.1.1-configure-define-XOPEN_SOURCE-to-600-on-linux.patch
 
 BuildRequires:  gettext-devel
 BuildRequires:  libtool
+BuildRequires:  pkg-config
 BuildRequires:  pkgconfig(fontenc)
 BuildRequires:  pkgconfig(libpng) >= 1.2
 BuildRequires:  pkgconfig(x11)
@@ -63,44 +62,43 @@ BuildRequires:  pkgconfig(xext)
 BuildRequires:  pkgconfig(xft)
 BuildRequires:  pkgconfig(xkbfile)
 BuildRequires:  pkgconfig(xmu)
+BuildRequires:  pkgconfig(xorg-macros) >= 1.8
 BuildRequires:  pkgconfig(xrender) >= 0.4
 BuildRequires:  pkgconfig(xt) >= 1.1
 BuildRequires:  pkgconfig(xxf86vm)
-BuildRequires:  pkgconfig(xorg-macros) >= 1.8
-
-# xbiff requires xbitmaps (#474258)
-Requires:   xorg-x11-xbitmaps
 
 # luit requires the encodings from xorg-x11-fonts-misc (rhbz#1046341)
-Requires:   xorg-x11-fonts-misc
+Requires:       xorg-x11-fonts-misc
+# xbiff requires xbitmaps (#474258)
+Requires:       xorg-x11-xbitmaps
 
-Provides:   luit = %{luit}
-Provides:   oclock = %{oclock}
-Provides:   x11perf = %{x11perf}
-Provides:   xbiff = %{xbiff}
-Provides:   xclipboard = %{xclipboard}
-Provides:   xclock = %{xclock}
-Provides:   xconsole = %{xconsole}
-Provides:   xcursorgen = %{xcursorgen}
-Provides:   xeyes = %{xeyes}
-Provides:   xfd = %{xfd}
-Provides:   xfontsel = %{xfontsel}
-Provides:   xload = %{xload}
-Provides:   xlogo = %{xlogo}
-Provides:   xmag = %{xmag}
-Provides:   xmessage = %{xmessage}
-Provides:   xpr = %{xpr}
-Provides:   xvidtune = %{xvidtune}
-Provides:   xwd = %{xwd}
-Provides:   xwud = %{xwud}
+Provides:       luit = %{luit}
+Provides:       oclock = %{oclock}
+Provides:       x11perf = %{x11perf}
+Provides:       xbiff = %{xbiff}
+Provides:       xclipboard = %{xclipboard}
+Provides:       xclock = %{xclock}
+Provides:       xconsole = %{xconsole}
+Provides:       xcursorgen = %{xcursorgen}
+Provides:       xeyes = %{xeyes}
+Provides:       xfd = %{xfd}
+Provides:       xfontsel = %{xfontsel}
+Provides:       xload = %{xload}
+Provides:       xlogo = %{xlogo}
+Provides:       xmag = %{xmag}
+Provides:       xmessage = %{xmessage}
+Provides:       xpr = %{xpr}
+Provides:       xvidtune = %{xvidtune}
+Provides:       xwd = %{xwd}
+Provides:       xwud = %{xwud}
 
 %description
 A collection of common X Window System applications.
 
 %prep
 %setup -q -c %{name}-%{version} -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18
-%patch0 -p0 -b .x11perf-datadir-cleanup
-%patch1 -p0 -b .luit-xopen_source
+%patch0  -b .x11perf-datadir-cleanup
+%patch1  -b .luit-xopen_source
 
 %build
 # Build all apps
