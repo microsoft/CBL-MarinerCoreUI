@@ -24,23 +24,23 @@ License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://www.x.org
-Source1:        https://www.x.org/pub/individual/app/oclock-%{oclock}.tar.bz2
-Source2:        https://www.x.org/pub/individual/app/x11perf-%{x11perf}.tar.bz2
-Source4:        https://www.x.org/pub/individual/app/xclipboard-%{xclipboard}.tar.bz2
-Source5:        https://www.x.org/pub/individual/app/xclock-%{xclock}.tar.bz2
-Source6:        https://www.x.org/pub/individual/app/xconsole-%{xconsole}.tar.bz2
-Source7:        https://www.x.org/pub/individual/app/xcursorgen-%{xcursorgen}.tar.bz2
-Source8:        https://www.x.org/pub/individual/app/xeyes-%{xeyes}.tar.bz2
-Source9:        https://www.x.org/pub/individual/app/xfd-%{xfd}.tar.bz2
-Source10:       https://www.x.org/pub/individual/app/xfontsel-%{xfontsel}.tar.bz2
-Source11:       https://www.x.org/pub/individual/app/xload-%{xload}.tar.bz2
-Source12:       https://www.x.org/pub/individual/app/xlogo-%{xlogo}.tar.bz2
-Source13:       https://www.x.org/pub/individual/app/xmag-%{xmag}.tar.bz2
-Source14:       https://www.x.org/pub/individual/app/xmessage-%{xmessage}.tar.bz2
-Source15:       https://www.x.org/pub/individual/app/xpr-%{xpr}.tar.bz2
-Source16:       https://www.x.org/pub/individual/app/xvidtune-%{xvidtune}.tar.bz2
-Source17:       https://www.x.org/pub/individual/app/xwd-%{xwd}.tar.bz2
-Source18:       https://www.x.org/pub/individual/app/xwud-%{xwud}.tar.bz2
+Source0:        https://www.x.org/pub/individual/app/oclock-%{oclock}.tar.bz2
+Source1:        https://www.x.org/pub/individual/app/x11perf-%{x11perf}.tar.bz2
+Source2:        https://www.x.org/pub/individual/app/xclipboard-%{xclipboard}.tar.bz2
+Source3:        https://www.x.org/pub/individual/app/xclock-%{xclock}.tar.bz2
+Source4:        https://www.x.org/pub/individual/app/xconsole-%{xconsole}.tar.bz2
+Source5:        https://www.x.org/pub/individual/app/xcursorgen-%{xcursorgen}.tar.bz2
+Source6:        https://www.x.org/pub/individual/app/xeyes-%{xeyes}.tar.bz2
+Source7:        https://www.x.org/pub/individual/app/xfd-%{xfd}.tar.bz2
+Source8:        https://www.x.org/pub/individual/app/xfontsel-%{xfontsel}.tar.bz2
+Source9:        https://www.x.org/pub/individual/app/xload-%{xload}.tar.bz2
+Source10:       https://www.x.org/pub/individual/app/xlogo-%{xlogo}.tar.bz2
+Source11:       https://www.x.org/pub/individual/app/xmag-%{xmag}.tar.bz2
+Source12:       https://www.x.org/pub/individual/app/xmessage-%{xmessage}.tar.bz2
+Source13:       https://www.x.org/pub/individual/app/xpr-%{xpr}.tar.bz2
+Source14:       https://www.x.org/pub/individual/app/xvidtune-%{xvidtune}.tar.bz2
+Source15:       https://www.x.org/pub/individual/app/xwd-%{xwd}.tar.bz2
+Source16:       https://www.x.org/pub/individual/app/xwud-%{xwud}.tar.bz2
 
 Patch0:         x11perf-1.6.0-x11perf-datadir-cleanups.patch
 
@@ -51,7 +51,7 @@ BuildRequires:  pkgconfig(fontenc)
 BuildRequires:  pkgconfig(libpng) >= 1.2
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xaw7)
-#BuildRequires:  pkgconfig(xbitmaps)
+BuildRequires:  pkgconfig(xbitmaps)
 BuildRequires:  pkgconfig(xcursor)
 BuildRequires:  pkgconfig(xext)
 BuildRequires:  pkgconfig(xft)
@@ -84,7 +84,7 @@ Provides:       xwud = %{xwud}
 A collection of common X Window System applications.
 
 %prep
-%setup -q -c %{name}-%{version} -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18
+%setup -q -c %{name}-%{version} -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16
 %patch0  -b .x11perf-datadir-cleanup
 
 %build
