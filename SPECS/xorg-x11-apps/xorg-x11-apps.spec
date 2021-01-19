@@ -109,6 +109,9 @@ done
     done
 }
 
+# Removing documentation
+rm -r %{buildroot}%{_mandir}/man1
+
 %files
 %{_bindir}/oclock
 %{_bindir}/x11perf
@@ -173,6 +176,7 @@ done
 - License verified.
 - Removed 'luit' to drop run-time dependency on 'xorg-x11-fonts-misc' not present in CBL-Mariner.
 - Removed 'xbiff' to drop run-time dependency on 'xbitmaps' not present in CBL-Mariner.
+- Removed documentation.
 
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 7.7-28
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
