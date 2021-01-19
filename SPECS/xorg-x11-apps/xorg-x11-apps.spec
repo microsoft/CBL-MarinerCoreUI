@@ -51,7 +51,7 @@ BuildRequires:  pkgconfig(fontenc)
 BuildRequires:  pkgconfig(libpng) >= 1.2
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xaw7)
-BuildRequires:  pkgconfig(xbitmaps)
+#BuildRequires:  pkgconfig(xbitmaps)
 BuildRequires:  pkgconfig(xcursor)
 BuildRequires:  pkgconfig(xext)
 BuildRequires:  pkgconfig(xft)
