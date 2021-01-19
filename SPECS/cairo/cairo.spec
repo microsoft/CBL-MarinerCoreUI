@@ -1,24 +1,19 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
 %define pixman_version 0.30.0
 %define freetype_version 2.1.9
 %define fontconfig_version 2.2.95
 
-%if 0%{?fedora} > 26 || 0%{?rhel} > 7
-%global cairogl --disable-gl
-%else
-%global cairogl --enable-gl
-%global with_gl 1
-%endif
-
+Summary:	A 2D graphics library
 Name:		cairo
 Version:	1.16.0
-Release:	9%{?dist}
-Summary:	A 2D graphics library
-
-License:	LGPLv2 or MPLv1.1
-URL:		http://cairographics.org
-Source0:	http://cairographics.org/releases/%{name}-%{version}.tar.xz
+Release:	10%{?dist}
+# The sources for 'cairo' itself are available under the (LGPLv2 OR MPLv1.1) license.
+# Test code and fonts are available under either the MIT or Public Domain license.
+# The 'cairo-trace' tools are released under the GPLv3 license - 'License' tag added separately for that subpackage.
+License:	(LGPLv2 OR MPLv1.1) AND MIT AND Public Domain
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL:		https://cairographics.org
+Source0:	https://cairographics.org/releases/%{name}-%{version}.tar.xz
 
 Patch3:         cairo-multilib.patch
 
@@ -34,7 +29,7 @@ Patch6:         cairo-composite_color_glyphs.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1817958
 Patch7:         0001-cff-Allow-empty-array-of-operands-for-certain-operat.patch
 
-BuildRequires:  gcc
+BuildRequires: gcc
 BuildRequires: pkgconfig
 BuildRequires: libXrender-devel
 BuildRequires: libX11-devel
@@ -45,10 +40,6 @@ BuildRequires: freetype-devel >= %{freetype_version}
 BuildRequires: fontconfig-devel >= %{fontconfig_version}
 BuildRequires: glib2-devel
 BuildRequires: librsvg2-devel
-%if 0%{?with_gl}
-BuildRequires: mesa-libGL-devel
-BuildRequires: mesa-libEGL-devel
-%endif
 
 %description
 Cairo is a 2D graphics library designed to provide high-quality display
@@ -61,6 +52,20 @@ taking advantage of display hardware acceleration when available.
 %package devel
 Summary: Development files for cairo
 Requires: %{name}%{?_isa} = %{version}-%{release}
+
+Provides: cairo-fc = %{version}-%{release}
+Provides: cairo-ft = %{version}-%{release}
+Provides: cairo = %{version}-%{release}
+Provides: cairo-pdf = %{version}-%{release}
+Provides: cairo-png = %{version}-%{release}
+Provides: cairo-ps = %{version}-%{release}
+Provides: cairo-svg = %{version}-%{release}
+Provides: cairo-tee = %{version}-%{release}
+Provides: cairo-xlib = %{version}-%{release}
+Provides: cairo-xlib-xrender = %{version}-%{release}
+Provides: cairo-script = %{version}-%{release}
+Provides: cairo-xcb-shm = %{version}-%{release}
+Provides: cairo-xcb = %{version}-%{release}
 
 %description devel
 Cairo is a 2D graphics library designed to provide high-quality display
@@ -85,6 +90,8 @@ Summary: Development files for cairo-gobject
 Requires: %{name}-devel%{?_isa} = %{version}-%{release}
 Requires: %{name}-gobject%{?_isa} = %{version}-%{release}
 
+Provides: cairo-gobject = %{version}-%{release}
+
 %description gobject-devel
 Cairo is a 2D graphics library designed to provide high-quality display
 and print output.
@@ -94,6 +101,7 @@ needed for developing software which uses the cairo Gobject library.
 
 %package tools
 Summary: Development tools for cairo
+License:        GPLv3
 
 %description tools
 Cairo is a 2D graphics library designed to provide high-quality display
@@ -106,16 +114,18 @@ This package contains tools for working with the cairo graphics library.
 %autosetup -p1
 
 %build
-%configure --disable-static	\
-	--enable-xlib		\
+%configure \
+	--disable-gl		\
+	--disable-gtk-doc \
+  --disable-static	\
 	--enable-ft		\
-	--enable-ps		\
+	--enable-gobject
 	--enable-pdf		\
+	--enable-ps		\
 	--enable-svg		\
 	--enable-tee		\
-	--enable-gobject	\
-	%{cairogl}		\
-	--disable-gtk-doc
+	--enable-xlib		\
+
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 make V=1 %{?_smp_mflags}
@@ -123,6 +133,9 @@ make V=1 %{?_smp_mflags}
 %install
 %make_install
 find $RPM_BUILD_ROOT -name '*.la' -delete
+
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %license COPYING COPYING-LGPL-2.1 COPYING-MPL-1.1
@@ -164,12 +177,6 @@ find $RPM_BUILD_ROOT -name '*.la' -delete
 %{_libdir}/pkgconfig/cairo-xcb-shm.pc
 %{_libdir}/pkgconfig/cairo-xcb.pc
 %{_datadir}/gtk-doc/html/cairo
-%if 0%{?with_gl}
-%{_includedir}/cairo/cairo-gl.h
-%{_libdir}/pkgconfig/cairo-egl.pc
-%{_libdir}/pkgconfig/cairo-gl.pc
-%{_libdir}/pkgconfig/cairo-glx.pc
-%endif
 
 %files gobject
 %{_libdir}/libcairo-gobject.so.*
@@ -180,10 +187,18 @@ find $RPM_BUILD_ROOT -name '*.la' -delete
 %{_libdir}/pkgconfig/cairo-gobject.pc
 
 %files tools
+%license util/cairo-trace/COPYING util/cairo-trace/COPYING-GPL-3
 %{_bindir}/cairo-trace
 %{_libdir}/cairo/
 
 %changelog
+* Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.16.0-10
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added explicit "GPLv3" license for the '*-tools' subpackage.
+- Added explicit "Provides" for "pkgconfig(*)".
+- Added explicit calls to ldconfig.
+
 * Mon Jul 27 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.16.0-9
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
