@@ -1,5 +1,3 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
 # Component versions
 %global luit 1.1.1
 %global oclock 1.0.4
@@ -24,8 +22,10 @@ Distribution:   Mariner
 Summary:    X.Org X11 applications
 Name:       xorg-x11-apps
 Version:    7.7
-Release:    28%{?dist}
+Release:    29%{?dist}
 License:    MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
 URL:        https://www.x.org
 
 Source0:    https://www.x.org/pub/individual/app/luit-%{luit}.tar.bz2
@@ -187,6 +187,10 @@ done
 %{_mandir}/man1/xwud.1*
 
 %changelog
+* Mon Jan 18 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 7.7-29
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 7.7-28
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
