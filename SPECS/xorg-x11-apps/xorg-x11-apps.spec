@@ -156,6 +156,7 @@ rm -r %{buildroot}%{_mandir}/man1
 - Removed 'luit' to drop run-time dependency on 'xorg-x11-fonts-misc' not present in CBL-Mariner.
 - Removed 'xbiff' to drop run-time dependency on 'xbitmaps' not present in CBL-Mariner.
 - Removed documentation.
+- Switched "pkgconfig(libpng)" BR to "libpng-devel" due to CBL-Mariner's misconfiguration.
 
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 7.7-28
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
