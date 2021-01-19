@@ -16,6 +16,7 @@
 %global xvidtune 1.0.3
 %global xwd 1.0.7
 %global xwud 1.0.5
+
 Summary:        X.Org X11 applications
 Name:           xorg-x11-apps
 Version:        7.7
@@ -51,7 +52,6 @@ BuildRequires:  pkgconfig(fontenc)
 BuildRequires:  pkgconfig(libpng) >= 1.2
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xaw7)
-BuildRequires:  pkgconfig(xbitmaps)
 BuildRequires:  pkgconfig(xcursor)
 BuildRequires:  pkgconfig(xext)
 BuildRequires:  pkgconfig(xft)
@@ -148,27 +148,6 @@ rm -r %{buildroot}%{_mandir}/man1
 %{_datadir}/X11/app-defaults/Xmessage-color
 %{_datadir}/X11/app-defaults/Xvidtune
 %{_datadir}/X11/x11perfcomp
-%{_mandir}/man1/oclock.1*
-%{_mandir}/man1/x11perf.1*
-%{_mandir}/man1/x11perfcomp.1*
-%{_mandir}/man1/xclipboard.1*
-%{_mandir}/man1/xclock.1*
-%{_mandir}/man1/xconsole.1*
-%{_mandir}/man1/xcursorgen.1*
-%{_mandir}/man1/xcutsel.1*
-%{_mandir}/man1/xdpr.1*
-%{_mandir}/man1/xeyes.1*
-%{_mandir}/man1/xfd.1*
-%{_mandir}/man1/xfontsel.1*
-%{_mandir}/man1/xload.1*
-%{_mandir}/man1/xlogo.1*
-%{_mandir}/man1/xmag.1*
-%{_mandir}/man1/Xmark.1*
-%{_mandir}/man1/xmessage.1*
-%{_mandir}/man1/xpr.1*
-%{_mandir}/man1/xvidtune.1*
-%{_mandir}/man1/xwd.1*
-%{_mandir}/man1/xwud.1*
 
 %changelog
 * Mon Jan 18 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 7.7-29
