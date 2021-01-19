@@ -31,11 +31,11 @@ BuildRequires:  gcc
 BuildRequires:  libX11-devel
 BuildRequires:  libXrender-devel
 BuildRequires:  libpng-devel
-BuildRequires:  librsvg2-devel
 BuildRequires:  libxml2-devel
 BuildRequires:  pixman-devel >= %{pixman_version}
 BuildRequires:  pkg-config
 BuildRequires:  glib-devel
+BuildRequires:  pkgconfig(xext)
 
 %description
 Cairo is a 2D graphics library designed to provide high-quality display
@@ -198,9 +198,11 @@ find %{buildroot} -type f -name "*.la" -delete -print
 * Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.16.0-10
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
-- Added explicit "GPLv3" license for the '*-tools' subpackage.
+- Added "GPLv3" license for the '*-tools' subpackage.
 - Added explicit "Provides" for "pkgconfig(*)".
 - Added explicit calls to ldconfig.
+- Added missing BR on "pkgconfig(xext)".
+- Removing BR on "librsvg2-devel" missing in CBL-Mariner. This disables build-time tests for SVG.
 
 * Mon Jul 27 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.16.0-9
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
