@@ -19,7 +19,7 @@ Patch3:         cairo-multilib.patch
 # https://gitlab.freedesktop.org/cairo/cairo/merge_requests/1
 Patch4:         0001-Set-default-LCD-filter-to-FreeType-s-default.patch
 # https://gitlab.freedesktop.org/cairo/cairo/merge_requests/5
-Patch5:         0001-ft-Use-FT_Done_MM_Var-instead-of-free-when-available.patch
+Patch5:         CVE-2018-19876.patch
 # https://github.com/matthiasclasen/cairo/commit/79ad01724161502e8d9d2bd384ff1f0174e5df6e
 Patch6:         cairo-composite_color_glyphs.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1817958
@@ -198,6 +198,7 @@ find %{buildroot} -type f -name "*.la" -delete -print
 * Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.16.0-10
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
+- Renamed patch file for a CVE-2018-19876 fix to align it with CBL-Mariner's tooling.
 - Added "GPLv3" license for the '*-tools' subpackage.
 - Added explicit "Provides" for "pkgconfig(*)".
 - Added explicit calls to ldconfig.
