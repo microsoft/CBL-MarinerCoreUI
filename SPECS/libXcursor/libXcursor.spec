@@ -1,23 +1,24 @@
-Summary: Cursor management library
-Name: libXcursor
-Version: 1.2.0
-Release: 4%{?dist}
-License: MIT
+Summary:        Cursor management library
+Name:           libXcursor
+Version:        1.2.0
+Release:        4%{?dist}
+License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL: https://www.x.org
+URL:            https://www.x.org
+Source0:        https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
 
-Source0: https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libX11-devel >= 1.5.99.902
+BuildRequires:  libXfixes-devel
+BuildRequires:  libXrender-devel >= 0.8.2
+BuildRequires:  libtool
+BuildRequires:  pkg-config
+BuildRequires:  xorg-x11-proto-devel
+BuildRequires:  xorg-x11-util-macros
 
-Requires: libX11 >= 1.5.99.902
-
-BuildRequires: autoconf automake libtool
-BuildRequires: xorg-x11-util-macros
-BuildRequires: xorg-x11-proto-devel
-BuildRequires: libX11-devel >= 1.5.99.902
-BuildRequires: libXfixes-devel
-BuildRequires: libXrender-devel >= 0.8.2
-BuildRequires: autoconf automake libtool pkg-config
+Requires:       libX11 >= 1.5.99.902
 
 %description
 This is  a simple library designed to help locate and load cursors.
@@ -26,8 +27,9 @@ exists which map to the standard X cursor names.Cursors can exist in
 several sizes and the library automatically picks the best size.
 
 %package devel
-Summary: Development files for %{name}
-Requires: %{name} = %{version}-%{release}
+Summary:        Development files for %{name}
+
+Requires:       %{name} = %{version}-%{release}
 
 Provides:       pkgconfig(xcursor) = %{version}-%{release}
 
@@ -46,12 +48,11 @@ autoreconf -v --install --force
 make V=1 %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
+make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 # We intentionally don't ship *.la files
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+find %{buildroot} -type f -name "*.la" -delete -print
 
 # Removing documentation
 rm -r %{buildroot}%{_mandir}/man3
@@ -60,7 +61,8 @@ rm -r %{buildroot}%{_mandir}/man3
 %postun -p /sbin/ldconfig
 
 %files
-%doc AUTHORS COPYING README.md
+%license COPYING
+%doc AUTHORS README.md
 %{_libdir}/libXcursor.so.1
 %{_libdir}/libXcursor.so.1.0.2
 %dir %{_datadir}/icons/default
