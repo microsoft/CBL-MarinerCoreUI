@@ -2,44 +2,40 @@
 %define freetype_version 2.1.9
 %define fontconfig_version 2.2.95
 
-Summary:	A 2D graphics library
-Name:		cairo
-Version:	1.16.0
-Release:	10%{?dist}
+Summary:        A 2D graphics library
+Name:           cairo
+Version:        1.16.0
+Release:        10%{?dist}
 # The sources for 'cairo' itself are available under the (LGPLv2 OR MPLv1.1) license.
 # Test code and fonts are available under either the MIT or Public Domain license.
 # The 'cairo-trace' tools are released under the GPLv3 license - 'License' tag added separately for that subpackage.
-License:	(LGPLv2 OR MPLv1.1) AND MIT AND Public Domain
+License:        (LGPLv2 OR MPLv1.1) AND MIT AND Public Domain
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL:		https://cairographics.org
-Source0:	https://cairographics.org/releases/%{name}-%{version}.tar.xz
+URL:            https://cairographics.org
+Source0:        https://cairographics.org/releases/%{name}-%{version}.tar.xz
 
 Patch3:         cairo-multilib.patch
-
 # https://gitlab.freedesktop.org/cairo/cairo/merge_requests/1
 Patch4:         0001-Set-default-LCD-filter-to-FreeType-s-default.patch
-
 # https://gitlab.freedesktop.org/cairo/cairo/merge_requests/5
 Patch5:         0001-ft-Use-FT_Done_MM_Var-instead-of-free-when-available.patch
-
 # https://github.com/matthiasclasen/cairo/commit/79ad01724161502e8d9d2bd384ff1f0174e5df6e
 Patch6:         cairo-composite_color_glyphs.patch
-
 # https://bugzilla.redhat.com/show_bug.cgi?id=1817958
 Patch7:         0001-cff-Allow-empty-array-of-operands-for-certain-operat.patch
 
-BuildRequires: gcc
-BuildRequires: pkgconfig
-BuildRequires: libXrender-devel
-BuildRequires: libX11-devel
-BuildRequires: libpng-devel
-BuildRequires: libxml2-devel
-BuildRequires: pixman-devel >= %{pixman_version}
-BuildRequires: freetype-devel >= %{freetype_version}
-BuildRequires: fontconfig-devel >= %{fontconfig_version}
-BuildRequires: glib2-devel
-BuildRequires: librsvg2-devel
+BuildRequires:  fontconfig-devel >= %{fontconfig_version}
+BuildRequires:  freetype-devel >= %{freetype_version}
+BuildRequires:  gcc
+BuildRequires:  glib2-devel
+BuildRequires:  libX11-devel
+BuildRequires:  libXrender-devel
+BuildRequires:  libpng-devel
+BuildRequires:  librsvg2-devel
+BuildRequires:  libxml2-devel
+BuildRequires:  pixman-devel >= %{pixman_version}
+BuildRequires:  pkg-config
 
 %description
 Cairo is a 2D graphics library designed to provide high-quality display
@@ -50,22 +46,24 @@ Cairo is designed to produce consistent output on all output media while
 taking advantage of display hardware acceleration when available.
 
 %package devel
-Summary: Development files for cairo
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Summary:        Development files for cairo
+License:        (LGPLv2 OR MPLv1.1) AND MIT AND Public Domain
 
-Provides: cairo-fc = %{version}-%{release}
-Provides: cairo-ft = %{version}-%{release}
-Provides: cairo = %{version}-%{release}
-Provides: cairo-pdf = %{version}-%{release}
-Provides: cairo-png = %{version}-%{release}
-Provides: cairo-ps = %{version}-%{release}
-Provides: cairo-svg = %{version}-%{release}
-Provides: cairo-tee = %{version}-%{release}
-Provides: cairo-xlib = %{version}-%{release}
-Provides: cairo-xlib-xrender = %{version}-%{release}
-Provides: cairo-script = %{version}-%{release}
-Provides: cairo-xcb-shm = %{version}-%{release}
-Provides: cairo-xcb = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+
+Provides:       pkconfig(cairo-fc) = %{version}-%{release}
+Provides:       pkconfig(cairo-ft) = %{version}-%{release}
+Provides:       pkconfig(cairo) = %{version}-%{release}
+Provides:       pkconfig(cairo-pdf) = %{version}-%{release}
+Provides:       pkconfig(cairo-png) = %{version}-%{release}
+Provides:       pkconfig(cairo-ps) = %{version}-%{release}
+Provides:       pkconfig(cairo-svg) = %{version}-%{release}
+Provides:       pkconfig(cairo-tee) = %{version}-%{release}
+Provides:       pkconfig(cairo-xlib) = %{version}-%{release}
+Provides:       pkconfig(cairo-xlib-xrender) = %{version}-%{release}
+Provides:       pkconfig(cairo-script) = %{version}-%{release}
+Provides:       pkconfig(cairo-xcb-shm) = %{version}-%{release}
+Provides:       pkconfig(cairo-xcb) = %{version}-%{release}
 
 %description devel
 Cairo is a 2D graphics library designed to provide high-quality display
@@ -75,8 +73,10 @@ This package contains libraries, header files and developer documentation
 needed for developing software which uses the cairo graphics library.
 
 %package gobject
-Summary: GObject bindings for cairo
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Summary:        GObject bindings for cairo
+License:        (LGPLv2 OR MPLv1.1) AND MIT AND Public Domain
+
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description gobject
 Cairo is a 2D graphics library designed to provide high-quality display
@@ -86,11 +86,13 @@ This package contains functionality to make cairo graphics library
 integrate well with the GObject object system used by GNOME.
 
 %package gobject-devel
-Summary: Development files for cairo-gobject
-Requires: %{name}-devel%{?_isa} = %{version}-%{release}
-Requires: %{name}-gobject%{?_isa} = %{version}-%{release}
+Summary:        Development files for cairo-gobject
+License:        (LGPLv2 OR MPLv1.1) AND MIT AND Public Domain
 
-Provides: cairo-gobject = %{version}-%{release}
+Requires:       %{name}-devel%{?_isa} = %{version}-%{release}
+
+Requires:       %{name}-gobject%{?_isa} = %{version}-%{release}
+Provides:       pkconfig(cairo-gobject) = %{version}-%{release}
 
 %description gobject-devel
 Cairo is a 2D graphics library designed to provide high-quality display
@@ -100,7 +102,8 @@ This package contains libraries, header files and developer documentation
 needed for developing software which uses the cairo Gobject library.
 
 %package tools
-Summary: Development tools for cairo
+Summary:        Development tools for cairo
+
 License:        GPLv3
 
 %description tools
@@ -115,16 +118,16 @@ This package contains tools for working with the cairo graphics library.
 
 %build
 %configure \
-	--disable-gl		\
-	--disable-gtk-doc \
-  --disable-static	\
-	--enable-ft		\
-	--enable-gobject
-	--enable-pdf		\
-	--enable-ps		\
-	--enable-svg		\
-	--enable-tee		\
-	--enable-xlib		\
+    --disable-gl        \
+    --disable-gtk-doc \
+    --disable-static    \
+    --enable-ft        \
+    --enable-gobject
+    --enable-pdf        \
+    --enable-ps        \
+    --enable-svg        \
+    --enable-tee        \
+    --enable-xlib        \
 
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
@@ -132,7 +135,7 @@ make V=1 %{?_smp_mflags}
 
 %install
 %make_install
-find $RPM_BUILD_ROOT -name '*.la' -delete
+find %{buildroot} -type f -name "*.la" -delete -print
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
