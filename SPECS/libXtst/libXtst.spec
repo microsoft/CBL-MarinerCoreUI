@@ -25,8 +25,10 @@ X.Org X11 libXtst runtime library
 
 %package devel
 Summary:        X.Org X11 libXtst development package
+
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       libXi-devel%{?_isa}
+
 Provides:       pkgconfig(xtst) = %{version}-%{release}
 
 %description devel
