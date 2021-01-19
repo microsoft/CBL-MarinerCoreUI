@@ -1,28 +1,31 @@
-Summary: X.Org X11 libXft runtime library
-Name: libXft
-Version: 2.3.3
-Release: 5%{?dist}
-License: MIT
+Summary:        X.Org X11 libXft runtime library
+Name:           libXft
+Version:        2.3.3
+Release:        5%{?dist}
+License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL: https://www.x.org
+URL:            https://www.x.org
+Source0:        https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
 
-Source0: https://www.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  fontconfig-devel >= 2.2-1
+BuildRequires:  freetype-devel >= 2.1.9-2
+BuildRequires:  libtool
+BuildRequires:  pkg-config
+BuildRequires:  xorg-x11-util-macros
+BuildRequires:  pkgconfig(xrender)
 
-BuildRequires: xorg-x11-util-macros
-BuildRequires: autoconf automake libtool
-BuildRequires: pkgconfig(xrender)
-BuildRequires: freetype-devel >= 2.1.9-2
-BuildRequires: fontconfig-devel >= 2.2-1
-
-Requires: fontconfig >= 2.2-1
+Requires:       fontconfig >= 2.2-1
 
 %description
 X.Org X11 libXft runtime library
 
 %package devel
-Summary: X.Org X11 libXft development package
-Requires: %{name} = %{version}-%{release}
+Summary:        X.Org X11 libXft development package
+
+Requires:       %{name} = %{version}-%{release}
 
 Provides:       pkgconfig(xft) = %{version}-%{release}
 
@@ -36,15 +39,14 @@ X.Org X11 libXft development package
 autoreconf -v --install --force
 
 %configure --disable-static
-make %{?_smp_mflags} 
+make %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=%{buildroot}
 
 # We intentionally don't ship *.la files
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+find %{buildroot} -type f -name "*.la" -delete -print
 
 # Removing documentation
 rm -r %{buildroot}%{_mandir}/man3
@@ -53,7 +55,8 @@ rm -r %{buildroot}%{_mandir}/man3
 %postun -p /sbin/ldconfig
 
 %files
-%doc AUTHORS COPYING README.md ChangeLog
+%license COPYING
+%doc AUTHORS README.md ChangeLog
 %{_libdir}/libXft.so.2*
 
 %files devel
