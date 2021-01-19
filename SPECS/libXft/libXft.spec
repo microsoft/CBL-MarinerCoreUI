@@ -26,6 +26,7 @@ X.Org X11 libXft runtime library
 Summary:        X.Org X11 libXft development package
 
 Requires:       %{name} = %{version}-%{release}
+Requires:       fontconfig-devel >= 2.2-1
 
 Provides:       pkgconfig(xft) = %{version}-%{release}
 
@@ -71,6 +72,7 @@ rm -r %{buildroot}%{_mandir}/man3
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Added explicit "Provides" for "pkgconfig(*)".
+- Added missing "Requires" on "fontconfig-devel" for the "*-devel" subpackage.
 - Removed documentation.
 - Replaced ldconfig scriptlets with explicit calls to ldconfig.
 
