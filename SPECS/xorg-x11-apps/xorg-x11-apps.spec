@@ -27,7 +27,7 @@ URL:            https://www.x.org
 Source0:        https://www.x.org/pub/individual/app/oclock-%{oclock}.tar.bz2
 Source1:        https://www.x.org/pub/individual/app/x11perf-%{x11perf}.tar.bz2
 Source2:        https://www.x.org/pub/individual/app/xclipboard-%{xclipboard}.tar.bz2
-#Source3:        https://www.x.org/pub/individual/app/xclock-%{xclock}.tar.bz2
+Source3:        https://www.x.org/pub/individual/app/xclock-%{xclock}.tar.bz2
 Source4:        https://www.x.org/pub/individual/app/xconsole-%{xconsole}.tar.bz2
 Source5:        https://www.x.org/pub/individual/app/xcursorgen-%{xcursorgen}.tar.bz2
 Source6:        https://www.x.org/pub/individual/app/xeyes-%{xeyes}.tar.bz2
@@ -52,7 +52,7 @@ BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xaw7)
 BuildRequires:  pkgconfig(xcursor)
 BuildRequires:  pkgconfig(xext)
-#BuildRequires:  pkgconfig(xft)
+BuildRequires:  pkgconfig(xft)
 BuildRequires:  pkgconfig(xkbfile)
 BuildRequires:  pkgconfig(xmu)
 BuildRequires:  pkgconfig(xorg-macros) >= 1.8
@@ -63,7 +63,7 @@ BuildRequires:  pkgconfig(xxf86vm)
 Provides:       oclock = %{oclock}
 Provides:       x11perf = %{x11perf}
 Provides:       xclipboard = %{xclipboard}
-#Provides:       xclock = %{xclock}
+Provides:       xclock = %{xclock}
 Provides:       xconsole = %{xconsole}
 Provides:       xcursorgen = %{xcursorgen}
 Provides:       xeyes = %{xeyes}
@@ -81,7 +81,7 @@ Provides:       xwud = %{xwud}
 A collection of common X Window System applications.
 
 %prep
-%setup -q -c %{name}-%{version} -a1 -a2 -a4 -a5 -a6 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16
+%setup -q -c %{name}-%{version} -a1 -a2 -a3 -a4 -a5 -a6 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16
 %patch0  -b .x11perf-datadir-cleanup
 
 %build
@@ -114,7 +114,7 @@ rm -r %{buildroot}%{_mandir}/man1
 %{_bindir}/x11perf
 %{_bindir}/x11perfcomp
 %{_bindir}/xclipboard
-#%{_bindir}/xclock
+%{_bindir}/xclock
 %{_bindir}/xconsole
 %{_bindir}/xcursorgen
 %{_bindir}/xcutsel
@@ -131,8 +131,8 @@ rm -r %{buildroot}%{_mandir}/man1
 %{_bindir}/xwud
 %{_datadir}/X11/app-defaults/Clock-color
 %{_datadir}/X11/app-defaults/XClipboard
-#%{_datadir}/X11/app-defaults/XClock
-#%{_datadir}/X11/app-defaults/XClock-color
+%{_datadir}/X11/app-defaults/XClock
+%{_datadir}/X11/app-defaults/XClock-color
 %{_datadir}/X11/app-defaults/XConsole
 %{_datadir}/X11/app-defaults/XFontSel
 %{_datadir}/X11/app-defaults/XLoad
