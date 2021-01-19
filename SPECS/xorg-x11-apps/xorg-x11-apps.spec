@@ -1,5 +1,4 @@
 # Component versions
-%global luit 1.1.1
 %global oclock 1.0.4
 %global x11perf 1.6.0
 %global xbiff 1.0.4
@@ -26,7 +25,6 @@ License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://www.x.org
-Source0:        https://www.x.org/pub/individual/app/luit-%{luit}.tar.bz2
 Source1:        https://www.x.org/pub/individual/app/oclock-%{oclock}.tar.bz2
 Source2:        https://www.x.org/pub/individual/app/x11perf-%{x11perf}.tar.bz2
 Source3:        https://www.x.org/pub/individual/app/xbiff-%{xbiff}.tar.bz2
@@ -47,7 +45,6 @@ Source17:       https://www.x.org/pub/individual/app/xwd-%{xwd}.tar.bz2
 Source18:       https://www.x.org/pub/individual/app/xwud-%{xwud}.tar.bz2
 
 Patch0:         x11perf-1.6.0-x11perf-datadir-cleanups.patch
-Patch1:         luit-1.1.1-configure-define-XOPEN_SOURCE-to-600-on-linux.patch
 
 BuildRequires:  gettext-devel
 BuildRequires:  libtool
@@ -67,12 +64,9 @@ BuildRequires:  pkgconfig(xrender) >= 0.4
 BuildRequires:  pkgconfig(xt) >= 1.1
 BuildRequires:  pkgconfig(xxf86vm)
 
-# luit requires the encodings from xorg-x11-fonts-misc (rhbz#1046341)
-Requires:       xorg-x11-fonts-misc
 # xbiff requires xbitmaps (#474258)
 Requires:       xorg-x11-xbitmaps
 
-Provides:       luit = %{luit}
 Provides:       oclock = %{oclock}
 Provides:       x11perf = %{x11perf}
 Provides:       xbiff = %{xbiff}
@@ -98,7 +92,6 @@ A collection of common X Window System applications.
 %prep
 %setup -q -c %{name}-%{version} -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18
 %patch0  -b .x11perf-datadir-cleanup
-%patch1  -b .luit-xopen_source
 
 %build
 # Build all apps
@@ -123,7 +116,6 @@ done
 }
 
 %files
-%{_bindir}/luit
 %{_bindir}/oclock
 %{_bindir}/x11perf
 %{_bindir}/x11perfcomp
@@ -160,7 +152,6 @@ done
 %{_datadir}/X11/app-defaults/Xmessage-color
 %{_datadir}/X11/app-defaults/Xvidtune
 %{_datadir}/X11/x11perfcomp
-%{_mandir}/man1/luit.1*
 %{_mandir}/man1/oclock.1*
 %{_mandir}/man1/x11perf.1*
 %{_mandir}/man1/x11perfcomp.1*
@@ -188,6 +179,7 @@ done
 * Mon Jan 18 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 7.7-29
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
+- Removed 'luit' to drop run-time dependency on 'xorg-x11-fonts-misc' not present in CBL-Mariner.
 
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 7.7-28
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
