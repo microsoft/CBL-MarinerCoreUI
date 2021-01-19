@@ -1,30 +1,30 @@
-Summary:	Library for reading and writing sound files
-Name:		libsndfile
-Version:	1.0.28
-Release:	14%{?dist}
-License:	BSD AND GPLv2+ AND LGPLv2+ AND MIT
+Summary:        Library for reading and writing sound files
+Name:           libsndfile
+Version:        1.0.28
+Release:        14%{?dist}
+License:        BSD AND GPLv2+ AND LGPLv2+ AND MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL:		http://www.mega-nerd.com/libsndfile/
-Source0:	http://www.mega-nerd.com/libsndfile/files/libsndfile-%{version}.tar.gz
-Patch0:		libsndfile-1.0.25-system-gsm.patch
-Patch1:		libsndfile-1.0.25-zerodivfix.patch
-Patch2: revert.patch
-Patch3: CVE-2017-8365.patch
-Patch4: CVE-2017-6892.patch
-# From upstream, for <= 1.0.28, rhbz#1483140
-Patch5: CVE-2017-12562.patch
-BuildRequires:  gcc
-BuildRequires:	alsa-lib-devel
-BuildRequires:	flac-devel
-BuildRequires:	gcc
-BuildRequires:	libogg-devel
-BuildRequires:	libvorbis-devel
-BuildRequires:	pkgconfig
-BuildRequires:	sqlite-devel
-BuildRequires:	gsm-devel
-BuildRequires:	libtool
+URL:            http://www.mega-nerd.com/libsndfile/
+Source0:        http://www.mega-nerd.com/libsndfile/files/libsndfile-%{version}.tar.gz
 
+Patch0:         libsndfile-1.0.25-system-gsm.patch
+Patch1:         libsndfile-1.0.25-zerodivfix.patch
+Patch2:         revert.patch
+Patch3:         CVE-2017-8365.patch
+Patch4:         CVE-2017-6892.patch
+# From upstream, for <= 1.0.28, rhbz#1483140
+Patch5:         CVE-2017-12562.patch
+
+BuildRequires:  alsa-lib-devel
+BuildRequires:  flac-devel
+BuildRequires:  gcc
+BuildRequires:  gsm-devel
+BuildRequires:  libogg-devel
+BuildRequires:  libtool
+BuildRequires:  libvorbis-devel
+BuildRequires:  pkg-config
+BuildRequires:  sqlite-devel
 
 %description
 libsndfile is a C library for reading and writing sound files such as
@@ -33,10 +33,11 @@ currently read/write 8, 16, 24 and 32-bit PCM files as well as 32 and
 64-bit floating point WAV files and a number of compressed formats. It
 compiles and runs on *nix, MacOS, and Win32.
 
-
 %package devel
-Summary:	Development files for libsndfile
-Requires:	%{name}%{?_isa} = %{version}-%{release} pkgconfig
+Summary:        Development files for libsndfile
+
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       pkg-config
 
 Provides:       pkgconfig(sndfile) = %{version}-%{release}
 
@@ -45,17 +46,15 @@ libsndfile is a C library for reading and writing sound files such as
 AIFF, AU, WAV, and others through one standard interface.
 This package contains files needed to develop with libsndfile.
 
-
 %package utils
-Summary:	Command Line Utilities for libsndfile
-Requires:	%{name} = %{version}-%{release}
+Summary:        Command Line Utilities for libsndfile
 
+Requires:       %{name} = %{version}-%{release}
 
 %description utils
 libsndfile is a C library for reading and writing sound files such as
 AIFF, AU, WAV, and others through one standard interface.
 This package contains command line utilities for libsndfile.
-
 
 %prep
 %setup -q
@@ -70,11 +69,11 @@ rm -r src/GSM610
 %build
 autoreconf -I M4 -fiv # for system-gsm patch
 %configure \
-	--disable-dependency-tracking \
-	--enable-sqlite \
-	--enable-alsa \
-	--enable-largefile \
-	--disable-static
+    --disable-dependency-tracking \
+    --enable-sqlite \
+    --enable-alsa \
+    --enable-largefile \
+    --disable-static
 
 # Get rid of rpath
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -84,11 +83,11 @@ make %{?_smp_mflags}
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=%{buildroot}
 
 # Removing docs and static libs
-rm -rf $RPM_BUILD_ROOT%{_docdir}/%{name}
-find %{buildroot} -type f -name "*.la" -delete
+rm -rf %{buildroot}%{_docdir}/%{name}
+find %{buildroot} -type f -name "*.la" -delete -print
 
 # fix multilib issues
 mv %{buildroot}%{_includedir}/sndfile.h \
@@ -149,7 +148,6 @@ LD_LIBRARY_PATH=$PWD/src/.libs make check
 %{_includedir}/sndfile-%{__isa_bits}.h
 %{_libdir}/%{name}.so
 %{_libdir}/pkgconfig/sndfile.pc
-
 
 %changelog
 * Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.28-14
