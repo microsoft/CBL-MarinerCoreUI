@@ -118,16 +118,16 @@ This package contains tools for working with the cairo graphics library.
 
 %build
 %configure \
-    --disable-gl        \
+    --disable-gl \
     --disable-gtk-doc \
-    --disable-static    \
-    --enable-ft        \
-    --enable-gobject
-    --enable-pdf        \
-    --enable-ps        \
-    --enable-svg        \
-    --enable-tee        \
-    --enable-xlib        \
+    --disable-static \
+    --enable-ft \
+    --enable-gobject \
+    --enable-pdf \
+    --enable-ps \
+    --enable-svg \
+    --enable-tee \
+    --enable-xlib
 
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
