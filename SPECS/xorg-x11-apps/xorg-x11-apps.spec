@@ -32,7 +32,7 @@ Source3:        https://www.x.org/pub/individual/app/xclock-%{xclock}.tar.bz2
 Source4:        https://www.x.org/pub/individual/app/xconsole-%{xconsole}.tar.bz2
 Source5:        https://www.x.org/pub/individual/app/xcursorgen-%{xcursorgen}.tar.bz2
 Source6:        https://www.x.org/pub/individual/app/xeyes-%{xeyes}.tar.bz2
-#Source7:        https://www.x.org/pub/individual/app/xfd-%{xfd}.tar.bz2
+Source7:        https://www.x.org/pub/individual/app/xfd-%{xfd}.tar.bz2
 Source8:        https://www.x.org/pub/individual/app/xfontsel-%{xfontsel}.tar.bz2
 Source9:        https://www.x.org/pub/individual/app/xload-%{xload}.tar.bz2
 Source10:       https://www.x.org/pub/individual/app/xlogo-%{xlogo}.tar.bz2
@@ -69,7 +69,7 @@ Provides:       xclock = %{xclock}
 Provides:       xconsole = %{xconsole}
 Provides:       xcursorgen = %{xcursorgen}
 Provides:       xeyes = %{xeyes}
-#Provides:       xfd = %{xfd}
+Provides:       xfd = %{xfd}
 Provides:       xfontsel = %{xfontsel}
 Provides:       xload = %{xload}
 Provides:       xlogo = %{xlogo}
@@ -84,7 +84,7 @@ Provides:       xwud = %{xwud}
 A collection of common X Window System applications.
 
 %prep
-%setup -q -c %{name}-%{version} -a1 -a2 -a3 -a4 -a5 -a6 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16
+%setup -q -c %{name}-%{version} -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16
 %patch0  -b .x11perf-datadir-cleanup
 
 %build
@@ -123,7 +123,7 @@ rm -r %{buildroot}%{_mandir}/man1
 %{_bindir}/xcutsel
 %{_bindir}/xdpr
 %{_bindir}/xeyes
-#%{_bindir}/xfd
+%{_bindir}/xfd
 %{_bindir}/xfontsel
 %{_bindir}/xload
 %{_bindir}/xlogo
@@ -138,7 +138,7 @@ rm -r %{buildroot}%{_mandir}/man1
 %{_datadir}/X11/app-defaults/XClock
 %{_datadir}/X11/app-defaults/XClock-color
 %{_datadir}/X11/app-defaults/XConsole
-#%{_datadir}/X11/app-defaults/Xfd
+%{_datadir}/X11/app-defaults/Xfd
 %{_datadir}/X11/app-defaults/XFontSel
 %{_datadir}/X11/app-defaults/XLoad
 %{_datadir}/X11/app-defaults/XLogo
