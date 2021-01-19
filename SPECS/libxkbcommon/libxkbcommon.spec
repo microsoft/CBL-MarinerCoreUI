@@ -1,20 +1,12 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
-#global gitdate  20120917
-
 Name:           libxkbcommon
 Version:        1.0.1
-Release:        1%{?gitdate:.%{gitdate}}%{?dist}
+Release:        2%{?dist}
 Summary:        X.Org X11 XKB parsing library
 License:        MIT
-URL:            http://www.x.org
-
-%if 0%{?gitdate}
-Source0:       %{name}-%{gitdate}.tar.xz
-%else
-Source0:        http://xkbcommon.org/download/%{name}-%{version}.tar.xz
-%endif
-Source1:        make-git-snapshot.sh
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL:            https://www.x.org
+Source0:        https://xkbcommon.org/download/%{name}-%{version}.tar.xz
 
 BuildRequires:  git meson
 BuildRequires:  xorg-x11-util-macros byacc flex bison
@@ -33,6 +25,9 @@ the X Server or other display servers.
 Summary:        X.Org X11 XKB parsing development package
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
+Provides:       pkgconfig(xkbcommon) = %{version}-%{release}
+Provides:       pkgconfig(xkbregistry) = %{version}-%{release}
+
 %description devel
 X.Org X11 XKB parsing development package
 
@@ -47,6 +42,8 @@ server.
 %package x11-devel
 Summary:        X.Org X11 XKB keymap creation library
 Requires:       %{name}-x11%{?_isa} = %{version}-%{release}
+
+Provides:       pkgconfig(xkbcommon-x11) = %{version}-%{release}
 
 %description x11-devel
 X.Org X11 XKB keymap creation library development package
@@ -70,7 +67,8 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 %install
 %meson_install
 
-%ldconfig_scriptlets
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %license LICENSE
@@ -92,7 +90,8 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 %{_libdir}/pkgconfig/xkbcommon.pc
 %{_libdir}/pkgconfig/xkbregistry.pc
 
-%ldconfig_scriptlets x11
+%post x11 -p /sbin/ldconfig
+%postun x11 -p /sbin/ldconfig
 
 %files x11
 %{_libdir}/libxkbcommon-x11.so.0.0.0
@@ -118,6 +117,12 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 %{_mandir}/man1/xkbcli.1.gz
 
 %changelog
+* Mon Jan 18 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.1-2
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
+
 * Fri Sep 11 2020 Pete Walter <pwalter@fedoraproject.org> - 1.0.1-1
 - libxkbcommon 1.0.1
 
