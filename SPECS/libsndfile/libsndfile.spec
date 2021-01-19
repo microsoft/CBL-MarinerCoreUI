@@ -1,21 +1,20 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
 Summary:	Library for reading and writing sound files
 Name:		libsndfile
 Version:	1.0.28
-Release:	13%{?dist}
-License:	LGPLv2+ and GPLv2+ and BSD
+Release:	14%{?dist}
+License:	BSD AND GPLv2+ AND LGPLv2+ AND MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
 URL:		http://www.mega-nerd.com/libsndfile/
 Source0:	http://www.mega-nerd.com/libsndfile/files/libsndfile-%{version}.tar.gz
 Patch0:		libsndfile-1.0.25-system-gsm.patch
 Patch1:		libsndfile-1.0.25-zerodivfix.patch
 Patch2: revert.patch
-Patch3: libsndfile-1.0.28-flacbufovfl.patch
-Patch4: libsndfile-1.0.29-cve2017_6892.patch
-#libsndfile-1.0.29-cve2017_6892.patch
-# from upstream, for <= 1.0.28, rhbz#1483140
-Patch5: libsndfile-1.0.28-cve2017_12562.patch
-BuildRequires:  gcc-c++
+Patch3: CVE-2017-8365.patch
+Patch4: CVE-2017-6892.patch
+# From upstream, for <= 1.0.28, rhbz#1483140
+Patch5: CVE-2017-12562.patch
+BuildRequires:  gcc
 BuildRequires:	alsa-lib-devel
 BuildRequires:	flac-devel
 BuildRequires:	gcc
@@ -39,6 +38,7 @@ compiles and runs on *nix, MacOS, and Win32.
 Summary:	Development files for libsndfile
 Requires:	%{name}%{?_isa} = %{version}-%{release} pkgconfig
 
+Provides:       pkgconfig(sndfile) = %{version}-%{release}
 
 %description devel
 libsndfile is a C library for reading and writing sound files such as
@@ -85,9 +85,8 @@ make %{?_smp_mflags}
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
-rm -rf __docs
-mkdir __docs
-cp -pR $RPM_BUILD_ROOT%{_docdir}/%{name}/* __docs
+
+# Removing docs and static libs
 rm -rf $RPM_BUILD_ROOT%{_docdir}/%{name}
 find %{buildroot} -type f -name "*.la" -delete
 
@@ -107,17 +106,12 @@ cat > %{buildroot}%{_includedir}/sndfile.h <<EOF
 #endif
 EOF
 
-%if 0%{?rhel} != 0
-rm -f %{buildroot}%{_bindir}/sndfile-jackplay
-%endif
-
-
 %check
 LD_LIBRARY_PATH=$PWD/src/.libs make check
 
 
-%ldconfig_scriptlets
-
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %{!?_licensedir:%global license %%doc}
@@ -158,6 +152,14 @@ LD_LIBRARY_PATH=$PWD/src/.libs make check
 
 
 %changelog
+* Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.28-14
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Added explicit "Provides" for "pkgconfig(*)".
+- Removed documentation.
+- Renamed CVE patches to CBL-Mariner's "CBL-YYYY-NNNNN" format.
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.28-13
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
