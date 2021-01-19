@@ -6,7 +6,6 @@
 %global xconsole 1.0.6
 %global xcursorgen 1.0.6
 %global xeyes 1.1.2
-%global xfd 1.1.2
 %global xfontsel 1.0.6
 %global xload 1.1.3
 %global xlogo 1.0.4
@@ -32,7 +31,6 @@ Source2:        https://www.x.org/pub/individual/app/xclipboard-%{xclipboard}.ta
 Source4:        https://www.x.org/pub/individual/app/xconsole-%{xconsole}.tar.bz2
 Source5:        https://www.x.org/pub/individual/app/xcursorgen-%{xcursorgen}.tar.bz2
 Source6:        https://www.x.org/pub/individual/app/xeyes-%{xeyes}.tar.bz2
-#Source7:        https://www.x.org/pub/individual/app/xfd-%{xfd}.tar.bz2
 Source8:        https://www.x.org/pub/individual/app/xfontsel-%{xfontsel}.tar.bz2
 Source9:        https://www.x.org/pub/individual/app/xload-%{xload}.tar.bz2
 Source10:       https://www.x.org/pub/individual/app/xlogo-%{xlogo}.tar.bz2
@@ -69,7 +67,6 @@ Provides:       xclipboard = %{xclipboard}
 Provides:       xconsole = %{xconsole}
 Provides:       xcursorgen = %{xcursorgen}
 Provides:       xeyes = %{xeyes}
-#Provides:       xfd = %{xfd}
 Provides:       xfontsel = %{xfontsel}
 Provides:       xload = %{xload}
 Provides:       xlogo = %{xlogo}
@@ -123,7 +120,6 @@ rm -r %{buildroot}%{_mandir}/man1
 %{_bindir}/xcutsel
 %{_bindir}/xdpr
 %{_bindir}/xeyes
-#%{_bindir}/xfd
 %{_bindir}/xfontsel
 %{_bindir}/xload
 %{_bindir}/xlogo
@@ -138,7 +134,6 @@ rm -r %{buildroot}%{_mandir}/man1
 #%{_datadir}/X11/app-defaults/XClock
 #%{_datadir}/X11/app-defaults/XClock-color
 %{_datadir}/X11/app-defaults/XConsole
-#%{_datadir}/X11/app-defaults/Xfd
 %{_datadir}/X11/app-defaults/XFontSel
 %{_datadir}/X11/app-defaults/XLoad
 %{_datadir}/X11/app-defaults/XLogo
@@ -155,6 +150,7 @@ rm -r %{buildroot}%{_mandir}/man1
 - License verified.
 - Removed 'luit' to drop run-time dependency on 'xorg-x11-fonts-misc' not present in CBL-Mariner.
 - Removed 'xbiff' to drop run-time dependency on 'xbitmaps' not present in CBL-Mariner.
+- Removed 'xfd' to drop run-time dependency on 'fontconfig' not present in CBL-Mariner.
 - Removed documentation.
 
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 7.7-28
