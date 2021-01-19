@@ -44,7 +44,7 @@ Source16:       https://www.x.org/pub/individual/app/xwud-%{xwud}.tar.bz2
 
 Patch0:         x11perf-1.6.0-x11perf-datadir-cleanups.patch
 
-BuildRequires:  gettext-devel
+BuildRequires:  gettext
 BuildRequires:  libtool
 BuildRequires:  pkg-config
 BuildRequires:  pkgconfig(fontenc)
