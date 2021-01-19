@@ -1,3 +1,6 @@
+%define required_wayland_version 1.2.0
+%define required_wayland_protocols_version 1.7
+
 Summary:        X.Org X11 XKB parsing library
 Name:           libxkbcommon
 Version:        1.0.1
@@ -9,16 +12,19 @@ URL:            https://www.x.org
 Source0:        https://xkbcommon.org/download/%{name}-%{version}.tar.xz
 
 BuildRequires:  bison
-BuildRequires:  byacc
 BuildRequires:  flex
 BuildRequires:  git
 BuildRequires:  libX11-devel
 BuildRequires:  libxml2-devel
+BuildRequires:  marinerui-rpm-macros
 BuildRequires:  meson
 BuildRequires:  pkg-config
 BuildRequires:  xkeyboard-config-devel
 BuildRequires:  xorg-x11-proto-devel
 BuildRequires:  xorg-x11-util-macros
+BuildRequires:  pkgconfig(wayland-client) >= %{required_wayland_version}
+BuildRequires:  pkgconfig(wayland-protocols) >= %{required_wayland_protocols_version}
+BuildRequires:  pkgconfig(wayland-scanner) >= %{required_wayland_version}
 BuildRequires:  pkgconfig(xcb-xkb) >= 1.10
 
 Requires:       xkeyboard-config
@@ -69,13 +75,16 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 %autosetup -S git
 
 %build
-%meson -Denable-docs=false \
-       -Denable-x11=true \
-       -Denable-wayland=false
+%meson --buildtype=release \
+       -Denable-docs=false \
+       -Denable-x11=true
 %meson_build
 
 %install
 %meson_install
+
+# Removing documentation
+rm -r %{buildroot}%{_mandir}/man1
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -117,20 +126,19 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 %{_libexecdir}/xkbcommon/xkbcli-compile-keymap
 %{_libexecdir}/xkbcommon/xkbcli-how-to-type
 %{_libexecdir}/xkbcommon/xkbcli-interactive-evdev
+%{_libexecdir}/xkbcommon/xkbcli-interactive-wayland
 %{_libexecdir}/xkbcommon/xkbcli-interactive-x11
 %{_libexecdir}/xkbcommon/xkbcli-list
-%{_mandir}/man1/xkbcli-compile-keymap.1.gz
-%{_mandir}/man1/xkbcli-how-to-type.1.gz
-%{_mandir}/man1/xkbcli-interactive-evdev.1.gz
-%{_mandir}/man1/xkbcli-interactive-x11.1.gz
-%{_mandir}/man1/xkbcli-list.1.gz
-%{_mandir}/man1/xkbcli.1.gz
 
 %changelog
 * Mon Jan 18 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.1-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
+- Added build-time dependency on 'marinerui-rpm-macros'.
 - Added explicit "Provides" for "pkgconfig(*)".
+- Enabled 'wayland' in the build config - added the new 'xkbcli-interactive-wayland' to *-utils subpackage.
+- Removed documentation.
+- Removed unused build-time dependency on 'byacc'.
 - Replaced ldconfig scriptlets with explicit calls to ldconfig.
 
 * Fri Sep 11 2020 Pete Walter <pwalter@fedoraproject.org> - 1.0.1-1
