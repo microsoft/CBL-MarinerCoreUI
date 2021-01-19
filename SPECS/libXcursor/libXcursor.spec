@@ -65,7 +65,6 @@ rm -r %{buildroot}%{_mandir}/man3
 %doc AUTHORS README.md
 %{_libdir}/libXcursor.so.1
 %{_libdir}/libXcursor.so.1.0.2
-%dir %{_datadir}/icons/default
 
 %files devel
 %dir %{_includedir}/X11/Xcursor
