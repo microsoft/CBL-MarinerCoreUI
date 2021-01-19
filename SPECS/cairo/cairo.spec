@@ -28,13 +28,13 @@ Patch7:         0001-cff-Allow-empty-array-of-operands-for-certain-operat.patch
 BuildRequires:  fontconfig-devel >= %{fontconfig_version}
 BuildRequires:  freetype-devel >= %{freetype_version}
 BuildRequires:  gcc
+BuildRequires:  glib-devel
 BuildRequires:  libX11-devel
 BuildRequires:  libXrender-devel
 BuildRequires:  libpng-devel
 BuildRequires:  libxml2-devel
 BuildRequires:  pixman-devel >= %{pixman_version}
 BuildRequires:  pkg-config
-BuildRequires:  glib-devel
 BuildRequires:  pkgconfig(xext)
 
 %description
@@ -90,8 +90,8 @@ Summary:        Development files for cairo-gobject
 License:        (LGPLv2 OR MPLv1.1) AND MIT AND Public Domain
 
 Requires:       %{name}-devel%{?_isa} = %{version}-%{release}
-
 Requires:       %{name}-gobject%{?_isa} = %{version}-%{release}
+
 Provides:       pkconfig(cairo-gobject) = %{version}-%{release}
 
 %description gobject-devel
@@ -103,7 +103,6 @@ needed for developing software which uses the cairo Gobject library.
 
 %package tools
 Summary:        Development tools for cairo
-
 License:        GPLv3
 
 %description tools
