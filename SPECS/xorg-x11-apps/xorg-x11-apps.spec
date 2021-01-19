@@ -1,7 +1,6 @@
 # Component versions
 %global oclock 1.0.4
 %global x11perf 1.6.0
-%global xbiff 1.0.4
 %global xclipboard 1.1.3
 %global xclock 1.0.9
 %global xconsole 1.0.6
@@ -27,7 +26,6 @@ Distribution:   Mariner
 URL:            https://www.x.org
 Source1:        https://www.x.org/pub/individual/app/oclock-%{oclock}.tar.bz2
 Source2:        https://www.x.org/pub/individual/app/x11perf-%{x11perf}.tar.bz2
-Source3:        https://www.x.org/pub/individual/app/xbiff-%{xbiff}.tar.bz2
 Source4:        https://www.x.org/pub/individual/app/xclipboard-%{xclipboard}.tar.bz2
 Source5:        https://www.x.org/pub/individual/app/xclock-%{xclock}.tar.bz2
 Source6:        https://www.x.org/pub/individual/app/xconsole-%{xconsole}.tar.bz2
@@ -64,12 +62,8 @@ BuildRequires:  pkgconfig(xrender) >= 0.4
 BuildRequires:  pkgconfig(xt) >= 1.1
 BuildRequires:  pkgconfig(xxf86vm)
 
-# xbiff requires xbitmaps (#474258)
-Requires:       xorg-x11-xbitmaps
-
 Provides:       oclock = %{oclock}
 Provides:       x11perf = %{x11perf}
-Provides:       xbiff = %{xbiff}
 Provides:       xclipboard = %{xclipboard}
 Provides:       xclock = %{xclock}
 Provides:       xconsole = %{xconsole}
@@ -119,7 +113,6 @@ done
 %{_bindir}/oclock
 %{_bindir}/x11perf
 %{_bindir}/x11perfcomp
-%{_bindir}/xbiff
 %{_bindir}/xclipboard
 %{_bindir}/xclock
 %{_bindir}/xconsole
@@ -155,7 +148,6 @@ done
 %{_mandir}/man1/oclock.1*
 %{_mandir}/man1/x11perf.1*
 %{_mandir}/man1/x11perfcomp.1*
-%{_mandir}/man1/xbiff.1*
 %{_mandir}/man1/xclipboard.1*
 %{_mandir}/man1/xclock.1*
 %{_mandir}/man1/xconsole.1*
@@ -180,6 +172,7 @@ done
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Removed 'luit' to drop run-time dependency on 'xorg-x11-fonts-misc' not present in CBL-Mariner.
+- Removed 'xbiff' to drop run-time dependency on 'xbitmaps' not present in CBL-Mariner.
 
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 7.7-28
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
