@@ -1,19 +1,25 @@
+Summary:        X.Org X11 XKB parsing library
 Name:           libxkbcommon
 Version:        1.0.1
 Release:        2%{?dist}
-Summary:        X.Org X11 XKB parsing library
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://www.x.org
 Source0:        https://xkbcommon.org/download/%{name}-%{version}.tar.xz
 
-BuildRequires:  git meson
-BuildRequires:  xorg-x11-util-macros byacc flex bison
-BuildRequires:  xorg-x11-proto-devel libX11-devel
-BuildRequires:  xkeyboard-config-devel
-BuildRequires:  pkgconfig(xcb-xkb) >= 1.10
+BuildRequires:  bison
+BuildRequires:  byacc
+BuildRequires:  flex
+BuildRequires:  git
+BuildRequires:  libX11-devel
 BuildRequires:  libxml2-devel
+BuildRequires:  meson
+BuildRequires:  pkg-config
+BuildRequires:  xkeyboard-config-devel
+BuildRequires:  xorg-x11-proto-devel
+BuildRequires:  xorg-x11-util-macros
+BuildRequires:  pkgconfig(xcb-xkb) >= 1.10
 
 Requires:       xkeyboard-config
 
@@ -23,6 +29,7 @@ the X Server or other display servers.
 
 %package devel
 Summary:        X.Org X11 XKB parsing development package
+
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 Provides:       pkgconfig(xkbcommon) = %{version}-%{release}
@@ -33,6 +40,7 @@ X.Org X11 XKB parsing development package
 
 %package x11
 Summary:        X.Org X11 XKB keymap creation library
+
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description x11
@@ -41,6 +49,7 @@ server.
 
 %package x11-devel
 Summary:        X.Org X11 XKB keymap creation library
+
 Requires:       %{name}-x11%{?_isa} = %{version}-%{release}
 
 Provides:       pkgconfig(xkbcommon-x11) = %{version}-%{release}
@@ -50,6 +59,7 @@ X.Org X11 XKB keymap creation library development package
 
 %package utils
 Summary:        X.Org X11 XKB parsing utilities
+
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description utils
@@ -287,4 +297,3 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 * Sat Nov 06 2010 Dave Airlie <airlied@redhat.com> 0.1.0-1.20101110
 - inital import
-
