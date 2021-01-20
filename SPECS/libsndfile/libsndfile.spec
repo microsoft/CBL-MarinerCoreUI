@@ -54,13 +54,7 @@ AIFF, AU, WAV, and others through one standard interface.
 This package contains command line utilities for libsndfile.
 
 %prep
-%setup -q
-%patch0 -p1 -b .systemgsm
-%patch1 -p1 -b .zerodivfix
-%patch2 -p1 -b .revert
-%patch3 -p1 -b .flacbufovfl
-%patch4 -p1 -b .cve2017_6892
-%patch5 -p1 -b .cve2017_12562
+%autosetup -p1
 rm -r src/GSM610
 
 %build
