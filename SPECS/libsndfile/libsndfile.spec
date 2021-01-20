@@ -17,12 +17,9 @@ Patch4:         CVE-2017-6892.patch
 Patch5:         CVE-2017-12562.patch
 
 BuildRequires:  alsa-lib-devel
-BuildRequires:  flac-devel
 BuildRequires:  gcc
 BuildRequires:  gsm-devel
-BuildRequires:  libogg-devel
 BuildRequires:  libtool
-BuildRequires:  libvorbis-devel
 BuildRequires:  pkg-config
 BuildRequires:  sqlite-devel
 
@@ -79,11 +76,11 @@ autoreconf -I M4 -fiv # for system-gsm patch
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
-make %{?_smp_mflags}
+%make_build
 
 
 %install
-make install DESTDIR=%{buildroot}
+%make_install
 
 # Removing docs and static libs
 rm -rf %{buildroot}%{_docdir}/%{name}
@@ -113,7 +110,6 @@ LD_LIBRARY_PATH=$PWD/src/.libs make check
 %postun -p /sbin/ldconfig
 
 %files
-%{!?_licensedir:%global license %%doc}
 %license COPYING
 %doc AUTHORS README NEWS
 %{_libdir}/%{name}.so.*
@@ -155,6 +151,7 @@ LD_LIBRARY_PATH=$PWD/src/.libs make check
 - License verified.
 - Added explicit "Provides" for "pkgconfig(*)".
 - Removed documentation.
+- Removed support for FLAC and Vorbis/Ogg, since they are not required for CBL-Mariner.
 - Renamed CVE patches to CBL-Mariner's "CBL-YYYY-NNNNN" format.
 - Replaced ldconfig scriptlets with explicit calls to ldconfig.
 
