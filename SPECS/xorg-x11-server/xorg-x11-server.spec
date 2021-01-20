@@ -338,7 +338,7 @@ find %{buildroot} -type f -name "*.la" -delete -print
 %{_libdir}/xorg/modules/libshadowfb.so
 %{_libdir}/xorg/modules/libvgahw.so
 %{_libdir}/xorg/modules/libwfb.so
-%ifarch %{ix86} x86_64
+%ifarch %{arm} %{ix86} aarch64 x86_64
 %{_libdir}/xorg/modules/libint10.so
 %{_libdir}/xorg/modules/libvbe.so
 %endif
@@ -380,6 +380,7 @@ find %{buildroot} -type f -name "*.la" -delete -print
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Changed BuildRequires for "audit-libs-devel" to "audit-devel".
+- Made 'libint10.so' and 'libvbe.so' be packaged for ARM architectures as well.
 - Removed dependency on "libunwind".
 - Removed following subpackages: source, Xdmx, Xephyr.
 - Removed the 'xvfb-run' script from the Xvfb subpackage to avoid dependency on 'xorg-x11-xauth'.
