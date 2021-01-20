@@ -142,7 +142,7 @@ LD_LIBRARY_PATH=$PWD/src/.libs make check
 %{_mandir}/man1/sndfile-salvage.1*
 
 %files devel
-%doc __docs ChangeLog
+%doc ChangeLog
 %{_includedir}/sndfile.h
 %{_includedir}/sndfile.hh
 %{_includedir}/sndfile-%{__isa_bits}.h
