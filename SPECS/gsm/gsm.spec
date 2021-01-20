@@ -1,19 +1,19 @@
 %global ver_major 1
 %global ver_minor 0
 %global ver_patch 19
-
+Summary:        Shared libraries for GSM speech compressor
 Name:           gsm
 Version:        %{ver_major}.%{ver_minor}.%{ver_patch}
 Release:        4%{?dist}
-Summary:        Shared libraries for GSM speech compressor
-
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            http://www.quut.com/gsm/
 Source:         http://www.quut.com/gsm/%{name}-%{version}.tar.gz
+
 Patch0:         %{name}-makefile.patch
 Patch1:         %{name}-warnings.patch
+
 BuildRequires:  gcc
 
 %description
@@ -46,6 +46,7 @@ excitation/long term prediction) coding at 13 kbit/s.
 
 %package        devel
 Summary:        Header files and development libraries for libgsm
+
 Requires:       %{name}%{_isa} = %{version}-%{release}
 
 %description    devel
