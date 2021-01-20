@@ -1,6 +1,7 @@
 %global ver_major 1
 %global ver_minor 0
 %global ver_patch 19
+
 Summary:        Shared libraries for GSM speech compressor
 Name:           gsm
 Version:        %{ver_major}.%{ver_minor}.%{ver_patch}
