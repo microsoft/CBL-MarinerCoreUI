@@ -1,22 +1,20 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
 %global ver_major 1
 %global ver_minor 0
 %global ver_patch 19
 
 Name:           gsm
 Version:        %{ver_major}.%{ver_minor}.%{ver_patch}
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Shared libraries for GSM speech compressor
 
 License:        MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
 URL:            http://www.quut.com/gsm/
 Source:         http://www.quut.com/gsm/%{name}-%{version}.tar.gz
 Patch0:         %{name}-makefile.patch
 Patch1:         %{name}-warnings.patch
 BuildRequires:  gcc
-
-%global srcver %{ver_major}.%{ver_minor}-pl%{ver_patch}
 
 %description
 Contains runtime shared libraries for libgsm, an implementation of
@@ -57,7 +55,7 @@ full-rate speech transcoding, prI-ETS 300 036, which uses RPE/LTP
 (residual pulse excitation/long term prediction) coding at 13 kbit/s.
 
 %prep
-%setup -n gsm-%{srcver} -q
+%setup -q -n gsm-%{ver_major}.%{ver_minor}-pl%{ver_patch}
 %patch0 -p1 -b .mk
 %patch1 -p1 -b .warn
 
@@ -78,8 +76,8 @@ make install \
 # some apps look for this in /usr/include
 ln -s gsm/gsm.h %{buildroot}%{_includedir}
 
-echo ".so toast.1" > %{buildroot}%{_mandir}/man1/tcat.1
-echo ".so toast.1" > %{buildroot}%{_mandir}/man1/untoast.1
+# Removing documentation
+rm -r %{buildroot}%{_mandir}/man{1,3}
 
 %check
 # This is to ensure that the patch creates the proper library version.
@@ -87,7 +85,8 @@ echo ".so toast.1" > %{buildroot}%{_mandir}/man1/untoast.1
 export LDFLAGS="%{?__global_ldflags}"
 make addtst
 
-%ldconfig_scriptlets
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %license COPYRIGHT
@@ -98,21 +97,20 @@ make addtst
 %{_bindir}/tcat
 %{_bindir}/toast
 %{_bindir}/untoast
-%{_mandir}/man1/tcat.1*
-%{_mandir}/man1/toast.1*
-%{_mandir}/man1/untoast.1*
 
 %files devel
 %dir %{_includedir}/gsm
 %{_includedir}/gsm/gsm.h
 %{_includedir}/gsm.h
 %{_libdir}/libgsm.so
-%{_mandir}/man3/gsm.3*
-%{_mandir}/man3/gsm_explode.3*
-%{_mandir}/man3/gsm_option.3*
-%{_mandir}/man3/gsm_print.3*
 
 %changelog
+* Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.19-4
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Removed documentation.
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.19-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
