@@ -532,7 +532,6 @@ popd
 %{_libdir}/dri/r600_drv_video.so
 %{_libdir}/dri/radeonsi_drv_video.so
 %endif
-%endif
 %if 0%{?with_kmsro}
 %{_libdir}/dri/armada-drm_dri.so
 %{_libdir}/dri/exynos_dri.so
@@ -547,6 +546,7 @@ popd
 %{_libdir}/dri/st7586_dri.so
 %{_libdir}/dri/st7735r_dri.so
 %{_libdir}/dri/sun4i-drm_dri.so
+%endif
 %endif
 %ifarch %{ix86} x86_64
 %{_libdir}/dri/i915_dri.so
