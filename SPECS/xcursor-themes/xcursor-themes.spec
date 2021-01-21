@@ -28,13 +28,10 @@ Source0:        https://xorg.freedesktop.org/releases/individual/data/%{name}-%{
 
 BuildArch:      noarch
 
-BuildRequires:  pkgconf-pkg-config
-BuildRequires:  xcursorgen
+BuildRequires:  pkg-config
+BuildRequires:  xorg-x11-apps
 BuildRequires:  pkgconfig(xcursor)
 BuildRequires:  pkgconfig(xorg-macros) >= 1.3
-
-# This was part of the xorg-x11 package up to version 7.6
-Conflicts:      xorg-x11 <= 7.6
 
 %description
 This is a default set of cursor themes for use with libXcursor,
@@ -60,7 +57,6 @@ of the X.Org software distribution.
 %{_datadir}/icons/whiteglass/
 
 %changelog
-#FIXME: First changelog entry header failed to parse
 * Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.6-1.3
 - Initial CBL-Mariner import from OpenSUSE Tumbleweed (license: MIT).
 - License verified.
