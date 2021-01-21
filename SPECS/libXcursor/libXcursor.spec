@@ -7,6 +7,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://www.x.org
 Source0:        https://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
+Source1:        index.theme
 
 BuildRequires:  autoconf
 BuildRequires:  automake
@@ -51,6 +52,9 @@ make V=1 %{?_smp_mflags}
 
 make install DESTDIR=%{buildroot} INSTALL="install -p"
 
+mkdir -p %{buildroot}%{_datadir}/icons/default
+install -m 644 -p %{SOURCE1} %{buildroot}%{_datadir}/icons/default/index.theme
+
 # We intentionally don't ship *.la files
 find %{buildroot} -type f -name "*.la" -delete -print
 
@@ -63,6 +67,8 @@ rm -r %{buildroot}%{_mandir}/man3
 %files
 %license COPYING
 %doc AUTHORS README.md
+%dir %{_datadir}/icons/default
+%{_datadir}/icons/default/index.theme
 %{_libdir}/libXcursor.so.1
 %{_libdir}/libXcursor.so.1.0.2
 
@@ -78,7 +84,7 @@ rm -r %{buildroot}%{_mandir}/man3
 - License verified.
 - Added explicit "Provides" for "pkgconfig(*)".
 - Removed documentation.
-- Removed Fedora's default icon theme file.
+- Replaced default icon theme "Adwaita" with "whiteglass" from the "xcursor-themes" package.
 - Replaced ldconfig scriptlets with explicit calls to ldconfig.
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.0-3
