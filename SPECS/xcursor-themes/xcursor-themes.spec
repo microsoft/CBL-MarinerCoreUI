@@ -26,7 +26,6 @@ Distribution:   Mariner
 Url:            https://xorg.freedesktop.org/
 Source0:        https://xorg.freedesktop.org/releases/individual/data/%{name}-%{version}.tar.bz2
 
-BuildRequires:  fdupes
 BuildRequires:  pkgconf-pkg-config
 BuildRequires:  xcursorgen
 BuildRequires:  pkgconfig(xcursor)
@@ -50,7 +49,6 @@ make %{?_smp_mflags}
 
 %install
 %make_install
-%fdupes -s %{buildroot}
 
 %files
 %defattr(-,root,root)
@@ -63,6 +61,7 @@ make %{?_smp_mflags}
 * Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.6-1.3
 - Initial CBL-Mariner import from OpenSUSE Tumbleweed (license: MIT).
 - License verified.
+- Removed BR on 'fdupes'.
 
 * Thu Apr 23 2020 Callum Farmer <callumjfarmer13@gmail.com>
 - Update to version 1.0.6
