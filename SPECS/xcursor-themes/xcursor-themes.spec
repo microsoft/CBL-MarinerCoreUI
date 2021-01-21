@@ -1,5 +1,3 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
 #
 # spec file for package xcursor-themes
 #
@@ -17,15 +15,17 @@ Distribution:   Mariner
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-
+Summary:        Default set of cursor themes for X
 Name:           xcursor-themes
 Version:        1.0.6
-Release:        1.2
-Summary:        Default set of cursor themes for X
-License:        X11
+Release:        1.3
+License:        MIT
 Group:          System/X11/Icons
-Url:            http://xorg.freedesktop.org/
-Source0:        http://xorg.freedesktop.org/releases/individual/data/%{name}-%{version}.tar.bz2
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+Url:            https://xorg.freedesktop.org/
+Source0:        https://xorg.freedesktop.org/releases/individual/data/%{name}-%{version}.tar.bz2
+
 BuildRequires:  fdupes
 BuildRequires:  pkgconf-pkg-config
 BuildRequires:  xcursorgen
@@ -42,7 +42,7 @@ originally created for the XFree86 Project, and now shipped as part
 of the X.Org software distribution.
 
 %prep
-%setup -q
+%autosetup
 
 %build
 %configure
@@ -60,6 +60,10 @@ make %{?_smp_mflags}
 %{_datadir}/icons/whiteglass/
 
 %changelog
+* Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.6-1.3
+- Initial CBL-Mariner import from OpenSUSE Tumbleweed (license: MIT).
+- License verified.
+
 * Thu Apr 23 2020 Callum Farmer <callumjfarmer13@gmail.com>
 - Update to version 1.0.6
   + Switch to NO_ARCH
