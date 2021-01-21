@@ -20,20 +20,21 @@ Name:           xcursor-themes
 Version:        1.0.6
 Release:        1.3
 License:        MIT
-Group:          System/X11/Icons
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-Url:            https://xorg.freedesktop.org/
+Group:          System/X11/Icons
+URL:            https://xorg.freedesktop.org/
 Source0:        https://xorg.freedesktop.org/releases/individual/data/%{name}-%{version}.tar.bz2
+
+BuildArch:      noarch
 
 BuildRequires:  pkgconf-pkg-config
 BuildRequires:  xcursorgen
 BuildRequires:  pkgconfig(xcursor)
 BuildRequires:  pkgconfig(xorg-macros) >= 1.3
+
 # This was part of the xorg-x11 package up to version 7.6
 Conflicts:      xorg-x11 <= 7.6
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-BuildArch:      noarch
 
 %description
 This is a default set of cursor themes for use with libXcursor,
@@ -45,19 +46,21 @@ of the X.Org software distribution.
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 %install
 %make_install
 
 %files
 %defattr(-,root,root)
-%doc ChangeLog COPYING README.md
+%license COPYING
+%doc ChangeLog README.md
 %{_datadir}/icons/handhelds/
 %{_datadir}/icons/redglass/
 %{_datadir}/icons/whiteglass/
 
 %changelog
+#FIXME: First changelog entry header failed to parse
 * Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.6-1.3
 - Initial CBL-Mariner import from OpenSUSE Tumbleweed (license: MIT).
 - License verified.
@@ -68,6 +71,7 @@ make %{?_smp_mflags}
   + Switch to NO_ARCH
   + Remove unneded dependency on xorgproto
   + This adds some symlinks to the whiteglass cursor theme, that gnome-shell expects
+
 * Wed Apr  4 2018 sndirsch@suse.com
 - Update to version 1.0.5:
   * configure: Drop AM_MAINTAINER_MODE
@@ -77,8 +81,10 @@ make %{?_smp_mflags}
   * Add copyright files for redglass and whiteglass themes.
   * autogen: add default patch prefix
   * autogen.sh: use exec instead of waiting for configure to finish
+
 * Thu Feb  6 2014 sndirsch@suse.com
 - fixed license to X11 in specfile
+
 * Sun Jul 21 2013 zaitor@opensuse.org
 - Update to version 1.0.4:
   + Create missing symlinks for cursor animations (fdo#6466).
@@ -87,5 +93,6 @@ make %{?_smp_mflags}
   - Split up EXTRA_DIST lines.
   - Fix autogeneration of handhelds/Makefile.cursor.
   - Change echo to printf for better portability & control.
+
 * Fri Apr 13 2012 vuntz@opensuse.org
 - Split xcursor-themes from xorg-x11. Initial version: 1.0.3.
