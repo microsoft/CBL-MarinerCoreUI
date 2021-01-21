@@ -1,0 +1,88 @@
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+#
+# spec file for package xcursor-themes
+#
+# Copyright (c) 2020 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+
+Name:           xcursor-themes
+Version:        1.0.6
+Release:        1.2
+Summary:        Default set of cursor themes for X
+License:        X11
+Group:          System/X11/Icons
+Url:            http://xorg.freedesktop.org/
+Source0:        http://xorg.freedesktop.org/releases/individual/data/%{name}-%{version}.tar.bz2
+BuildRequires:  fdupes
+BuildRequires:  pkgconf-pkg-config
+BuildRequires:  xcursorgen
+BuildRequires:  pkgconfig(xcursor)
+BuildRequires:  pkgconfig(xorg-macros) >= 1.3
+# This was part of the xorg-x11 package up to version 7.6
+Conflicts:      xorg-x11 <= 7.6
+BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+BuildArch:      noarch
+
+%description
+This is a default set of cursor themes for use with libXcursor,
+originally created for the XFree86 Project, and now shipped as part
+of the X.Org software distribution.
+
+%prep
+%setup -q
+
+%build
+%configure
+make %{?_smp_mflags}
+
+%install
+%make_install
+%fdupes -s %{buildroot}
+
+%files
+%defattr(-,root,root)
+%doc ChangeLog COPYING README.md
+%{_datadir}/icons/handhelds/
+%{_datadir}/icons/redglass/
+%{_datadir}/icons/whiteglass/
+
+%changelog
+* Thu Apr 23 2020 Callum Farmer <callumjfarmer13@gmail.com>
+- Update to version 1.0.6
+  + Switch to NO_ARCH
+  + Remove unneded dependency on xorgproto
+  + This adds some symlinks to the whiteglass cursor theme, that gnome-shell expects
+* Wed Apr  4 2018 sndirsch@suse.com
+- Update to version 1.0.5:
+  * configure: Drop AM_MAINTAINER_MODE
+  * autogen.sh: Honor NOCONFIGURE=1
+  * autogen.sh: use quoted string variables
+  * config: replace deprecated use of AC_OUTPUT with AC_CONFIG_FILES
+  * Add copyright files for redglass and whiteglass themes.
+  * autogen: add default patch prefix
+  * autogen.sh: use exec instead of waiting for configure to finish
+* Thu Feb  6 2014 sndirsch@suse.com
+- fixed license to X11 in specfile
+* Sun Jul 21 2013 zaitor@opensuse.org
+- Update to version 1.0.4:
+  + Create missing symlinks for cursor animations (fdo#6466).
+  + config: Add missing AC_CONFIG_SRCDIR.
+  + genmakefile.sh:
+  - Split up EXTRA_DIST lines.
+  - Fix autogeneration of handhelds/Makefile.cursor.
+  - Change echo to printf for better portability & control.
+* Fri Apr 13 2012 vuntz@opensuse.org
+- Split xcursor-themes from xorg-x11. Initial version: 1.0.3.
