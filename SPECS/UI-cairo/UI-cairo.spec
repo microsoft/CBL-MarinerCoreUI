@@ -1,9 +1,15 @@
+%define tarname cairo
 %define pixman_version 0.30.0
 %define freetype_version 2.1.9
 %define fontconfig_version 2.2.95
 
-Summary:        A 2D graphics library
-Name:           cairo
+# This version of "cairo" uses the same sources as the "regular" one but builds
+# with a dependency on some X11 and other graphics-related libraries, producing
+# same-named binaries as the "regular" version, thus the "UI-" prefix.
+# Due to this conflict "cairo*" and "UI-cairo*" packages CANNOT be installed
+# on a single system.
+Summary:        A 2D graphics library (UI libs dependent)
+Name:           UI-cairo
 Version:        1.16.0
 Release:        10%{?dist}
 # The sources for 'cairo' itself are available under the (LGPLv2 OR MPLv1.1) license.
@@ -13,7 +19,7 @@ License:        (LGPLv2 OR MPLv1.1) AND MIT AND Public Domain
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://cairographics.org
-Source0:        https://cairographics.org/releases/%{name}-%{version}.tar.xz
+Source0:        https://cairographics.org/releases/%{tarname}-%{version}.tar.xz
 
 Patch3:         cairo-multilib.patch
 # https://gitlab.freedesktop.org/cairo/cairo/merge_requests/1
@@ -37,6 +43,8 @@ BuildRequires:  pixman-devel >= %{pixman_version}
 BuildRequires:  pkg-config
 BuildRequires:  pkgconfig(xext)
 
+Conflicts:       cairo
+
 %description
 Cairo is a 2D graphics library designed to provide high-quality display
 and print output. Currently supported output targets include the X Window
@@ -45,9 +53,15 @@ System, in-memory image buffers, and image files (PDF, PostScript, and SVG).
 Cairo is designed to produce consistent output on all output media while
 taking advantage of display hardware acceleration when available.
 
+NOTE: this is an extended version of 'cairo' built with multiple dependencies on X11
+and other graphics-related libraries compiled into its binaries. It CONFLICTS
+with the non-UI version.
+
 %package devel
 Summary:        Development files for cairo
 License:        (LGPLv2 OR MPLv1.1) AND MIT AND Public Domain
+
+Conflicts:      cairo-devel
 
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
@@ -113,7 +127,7 @@ This package contains tools for working with the cairo graphics library.
  * cairo-trace: Record cairo library calls for later playback
 
 %prep
-%autosetup -p1
+%autosetup -p1 -n %{tarname}-%{version}
 
 %build
 %configure \
@@ -197,12 +211,13 @@ find %{buildroot} -type f -name "*.la" -delete -print
 * Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.16.0-10
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
+- Removing BR on "librsvg2-devel" missing in CBL-Mariner. This disables build-time tests for SVG.
+- Renamed package to "UI-cairo" to avoid conflicts with core CBL-Mariner's version of "cairo".
 - Renamed patch file for a CVE-2018-19876 fix to align it with CBL-Mariner's tooling.
 - Added "GPLv3" license for the '*-tools' subpackage.
 - Added explicit "Provides" for "pkgconfig(*)".
 - Added explicit calls to ldconfig.
 - Added missing BR on "pkgconfig(xext)".
-- Removing BR on "librsvg2-devel" missing in CBL-Mariner. This disables build-time tests for SVG.
 
 * Mon Jul 27 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.16.0-9
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
