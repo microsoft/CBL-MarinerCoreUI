@@ -391,7 +391,6 @@ find %{buildroot} -type f -name "*.la" -delete -print
 - Made 'libint10.so' and 'libvbe.so' be packaged for ARM architectures as well.
 - Removed dependency on "libunwind".
 - Removed following subpackages: source, Xdmx, Xephyr.
-- Removed the 'xvfb-run' script from the Xvfb subpackage to avoid dependency on 'xorg-x11-xauth'.
 - Removed using the set of "redhat-hardened-*" compiler and linker specs.
 - Replacing 'Requires' on 'system-setup-keyboard' with 'systemd'.
 
