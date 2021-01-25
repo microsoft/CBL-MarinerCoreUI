@@ -1,16 +1,14 @@
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
 %global pkgname xauth
 
 Summary: X.Org X11 X authority utilities
 Name: xorg-x11-%{pkgname}
 Version: 1.1
-Release: 5%{?dist}
-# NOTE: Remove Epoch line if package gets renamed
+Release: 6%{?dist}
 Epoch: 1
 License: MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
 URL: https://www.x.org
-
 Source0: https://www.x.org/pub/individual/app/%{pkgname}-%{version}.tar.bz2
 
 BuildRequires: pkgconfig automake gcc
@@ -18,19 +16,20 @@ BuildRequires: libX11-devel
 BuildRequires: libXau-devel
 BuildRequires: libXext-devel
 BuildRequires: libXmu-devel
-%if 0
+
+%if %{with_check}
 BuildRequires: cmdtest
 BuildRequires: python2-markdown
 %endif
 
-Provides: xauth
+Provides: xauth = %{version}-%{release}
 
 %description
 xauth is used to edit and display the authorization information
 used in connecting to an X server.
 
 %prep
-%setup -q -n %{pkgname}-%{version}
+%autosetup -n %{pkgname}-%{version}
 
 %build
 %configure
@@ -39,17 +38,22 @@ used in connecting to an X server.
 %install
 %make_install
 
-%if 0
+# Removing documentation.
+rm -r %{buildroot}%{_mandir}/man1/xauth.1*
+
 %check
 make check || cat tests/test-suite.log
-%endif
 
 %files
 %doc COPYING README.md
 %{_bindir}/xauth
-%{_mandir}/man1/xauth.1*
 
 %changelog
+* Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1:1.1-6
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+- Removed documentation.
+
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1:1.1-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
