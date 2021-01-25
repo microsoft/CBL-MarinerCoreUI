@@ -1,28 +1,31 @@
 %global pkgname xauth
 
-Summary: X.Org X11 X authority utilities
-Name: xorg-x11-%{pkgname}
-Version: 1.1
-Release: 6%{?dist}
-Epoch: 1
-License: MIT
+Summary:        X.Org X11 X authority utilities
+Name:           xorg-x11-%{pkgname}
+Version:        1.1
+Release:        6%{?dist}
+Epoch:          1
+License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL: https://www.x.org
-Source0: https://www.x.org/pub/individual/app/%{pkgname}-%{version}.tar.bz2
+URL:            https://www.x.org
+Source0:        https://www.x.org/pub/individual/app/%{pkgname}-%{version}.tar.bz2
 
-BuildRequires: pkgconfig automake gcc
-BuildRequires: libX11-devel
-BuildRequires: libXau-devel
-BuildRequires: libXext-devel
-BuildRequires: libXmu-devel
+BuildRequires:  automake
+BuildRequires:  gcc
+BuildRequires:  libX11-devel
+BuildRequires:  libXau-devel
+BuildRequires:  libXext-devel
+BuildRequires:  libXmu-devel
+BuildRequires:  pkg-config
 
 %if %{with_check}
-BuildRequires: cmdtest
-BuildRequires: python2-markdown
+BuildRequires:  cmdtest
+BuildRequires:  python2-markdown
 %endif
 
-Provides: xauth = %{version}-%{release}
+Provides:       xauth = %{version}-%{release}
+
 
 %description
 xauth is used to edit and display the authorization information
@@ -45,7 +48,8 @@ rm -r %{buildroot}%{_mandir}/man1/xauth.1*
 make check || cat tests/test-suite.log
 
 %files
-%doc COPYING README.md
+%license COPYING
+%doc README.md
 %{_bindir}/xauth
 
 %changelog
