@@ -22,8 +22,6 @@ Summary:        X.Org X11 X server
 Name:           xorg-x11-server
 Version:        1.20.10
 Release:        2%{?dist}
-# The 'xvfb-run.sh' script is removed from CBL-Mariner as opposed to what is present in Fedora 33.
-# If ever re-added, the 'License' must be updated to include GPLv2 in addition to MIT.
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -32,6 +30,8 @@ Source0:        https://www.x.org/pub/individual/xserver/%{pkgname}-%{version}.t
 Source1:        gitignore
 Source4:        10-quirks.conf
 Source10:       xserver.pamd
+# The xvfb-run script is used by other packages to enable ptests on display-less machines.
+Source20:  http://svn.exactcode.de/t2/trunk/package/xorg/xorg-server/xvfb-run.sh
 # For requires generation in drivers
 Source30:       xserver-sdk-abi-requires.release
 Source31:       xserver-sdk-abi-requires.git
@@ -183,8 +183,13 @@ applications without running them on their real X server.
 
 %package Xvfb
 Summary:        A X Windows System virtual framebuffer X server
-# Re-adding 'xvfb-run' requires an additional 'Requires: xorg-x11-xauth'.
+# The "xvfb-run.sh" script is GPLv2, rest is MIT.
+License:        GPLv2 AND MIT
+
 Requires:       xorg-x11-server-common >= %{version}-%{release}
+# Required for "xvfb-run.sh".
+Requires:       xorg-x11-xauth
+
 Provides:       Xvfb = %{version}-%{release}
 
 %description Xvfb
@@ -296,6 +301,8 @@ install -m 644 %{SOURCE10} %{buildroot}%{_sysconfdir}/pam.d/xserver
 mkdir -p %{buildroot}%{_datadir}/X11/xorg.conf.d
 install -m 644 %{SOURCE4} %{buildroot}%{_datadir}/X11/xorg.conf.d
 
+install -m 0755 %{SOURCE20} $RPM_BUILD_ROOT%{_bindir}/xvfb-run
+
 # Make sure the (empty) /etc/X11/xorg.conf.d is there, system-setup-keyboard
 # relies on it more or less.
 mkdir -p %{buildroot}%{_sysconfdir}/X11/xorg.conf.d
@@ -362,6 +369,7 @@ find %{buildroot} -type f -name "*.la" -delete -print
 
 %files Xvfb
 %{_bindir}/Xvfb
+%{_bindir}/xvfb-run
 %{_mandir}/man1/Xvfb.1*
 
 %files Xwayland

@@ -6,6 +6,7 @@
   "xorg-server-1.20.10.tar.bz2": "977420c082450dc808de301ef56af4856d653eea71519a973c3490a780cb7c99",
   "xserver-sdk-abi-requires.git": "733c2649992522f99870ecda49ddf97d42cc7fbefc66050b4727adc84d8a71f4",
   "xserver-sdk-abi-requires.release": "f74314bb99d620e5c1adf2bcf76bcce9a8340d555fc2da23fd586cd07dc00246",
-  "xserver.pamd": "fd24e23ab6da064a1c600eb7e174cf268336b4976a607242164bb81e0aa633f9"
+  "xserver.pamd": "fd24e23ab6da064a1c600eb7e174cf268336b4976a607242164bb81e0aa633f9",
+  "xvfb-run.sh": "2198b9e635bb4e52bf986e678a702ec74f781b5b10c5713e1eeaa16cc9af078c"
  }
 }
