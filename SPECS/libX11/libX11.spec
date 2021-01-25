@@ -82,8 +82,8 @@ rm -rf %{buildroot}%{_docdir}
 %check
 make %{?_smp_mflags} check
 
-%ldconfig_post
-%ldconfig_postun
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %{_libdir}/libX11.so.6
@@ -128,6 +128,7 @@ make %{?_smp_mflags} check
 - License verified.
 - Added explicit "Provides" for "pkgconfig(*)".
 - Removed unused BR on 'pkgconfig(xdmcp)' and 'perl(Pod::Usage)'.
+- Replaced ldconfig scriptlets with explicit calls to ldconfig.
 
 * Mon Nov 09 2020 Peter Hutterer <peter.hutterer@redhat.com> 1.6.12-3
 - Fix a race-condition in poll_for_response (#1758384)
