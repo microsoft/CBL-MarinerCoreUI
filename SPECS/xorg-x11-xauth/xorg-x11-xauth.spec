@@ -44,7 +44,7 @@ rm -r %{buildroot}%{_mandir}/man1/xauth.1*
 %{_bindir}/xauth
 
 %changelog
-* Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1:1.1-6
+* Mon Jan 25 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1:1.1-6
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Removed documentation.
