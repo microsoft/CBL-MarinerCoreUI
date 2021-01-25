@@ -19,13 +19,7 @@ BuildRequires:  libXext-devel
 BuildRequires:  libXmu-devel
 BuildRequires:  pkg-config
 
-%if %{with_check}
-BuildRequires:  cmdtest
-BuildRequires:  python2-markdown
-%endif
-
 Provides:       xauth = %{version}-%{release}
-
 
 %description
 xauth is used to edit and display the authorization information
@@ -44,9 +38,6 @@ used in connecting to an X server.
 # Removing documentation.
 rm -r %{buildroot}%{_mandir}/man1/xauth.1*
 
-%check
-make check || cat tests/test-suite.log
-
 %files
 %license COPYING
 %doc README.md
@@ -57,6 +48,8 @@ make check || cat tests/test-suite.log
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 - Removed documentation.
+- Removed the %%check section as it depended on a dead/orphaned 'cmdtest' package.
+  See here for details: https://src.fedoraproject.org/rpms/cmdtest/tree/master.
 
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1:1.1-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
