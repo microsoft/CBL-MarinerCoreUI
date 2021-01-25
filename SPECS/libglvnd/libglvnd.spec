@@ -12,6 +12,7 @@ Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 
 Patch0:         libglvnd-python3.patch
 Patch1:         0001-glx-Add-another-fallback-library-name.patch
+Patch2:         0002-Adding-a-separate-conditional-to-disable-running-GLX.patch
 
 BuildRequires:  gcc
 BuildRequires:  libtool
@@ -129,6 +130,7 @@ export PYTHON=python3
 #armhfp and aarch64 fallback to asm and tsd
 #Others arches fallback to pure-c and tls.
 %configure \
+  --disable-glx-tests \
   --disable-static \
   --enable-asm \
   --enable-tls
