@@ -58,7 +58,7 @@ of the X.Org software distribution.
 
 %changelog
 * Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.6-1.3
-- Initial CBL-Mariner import from OpenSUSE Tumbleweed (license: MIT).
+- Initial CBL-Mariner import from openSUSE Tumbleweed (license: MIT).
 - License verified.
 - Removed BR on 'fdupes'.
 
