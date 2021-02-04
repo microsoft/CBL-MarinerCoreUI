@@ -16,6 +16,6 @@ The CBL-MarinerCoreUI project, benefits from contributions by the open software 
 
 1) [The Fedora Project](https://start.fedoraproject.org/) for SPEC files. 
 
-2) [Open SUSE](https://www.opensuse.org/) for SPEC files.
+2) [OpenSUSE](https://www.opensuse.org/) for SPEC files.
 
 3) [GNU](https://www.gnu.org/) and the [Free Software Foundation](https://www.fsf.org/)
