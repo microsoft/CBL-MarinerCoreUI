@@ -14,8 +14,8 @@ This project may contain trademarks or logos for projects, products, or services
 
 The CBL-MarinerCoreUI project, benefits from contributions by the open software community. We gratefully acknowledge all contributions made from the broader open source community, in particular:
 
-1) The [Photon OS Project](https://vmware.github.io/photon/) for SPEC files originating from the Photon distribution.   
+1) [The Fedora Project](https://start.fedoraproject.org/) for SPEC files. T
 
-2) [The Fedora Project](https://start.fedoraproject.org/) for SPEC files. 
+2) [Open SUSE](https://www.opensuse.org/) for SPEC files.
 
 3) [GNU](https://www.gnu.org/) and the [Free Software Foundation](https://www.fsf.org/)
