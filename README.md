@@ -1,6 +1,6 @@
 # CBL-MarinerCoreUI
 
-CBL-MarinerCoreUI is an internal extension of the internal CBL-Mariner Linux distribution for Microsoft’s cloud infrastructure and edge products and services. CBL-Mariner is designed to provide a consistent platform for these devices and services and will enhance Microsoft’s ability to stay current on Linux updates. This initiative is part of Microsoft’s increasing investment in a wide range of Linux technologies.  CBL-MarinerCoreUI is being shared publicly as part of Microsoft’s commitment to Open Source and to contribute back to the Linux community. 
+CBL-MarinerCoreUI is an internal extension of the internal [CBL-Mariner](https://github.com/microsoft/CBL-Mariner) Linux distribution for Microsoft’s cloud infrastructure and edge products and services. CBL-Mariner is designed to provide a consistent platform for these devices and services and will enhance Microsoft’s ability to stay current on Linux updates. This initiative is part of Microsoft’s increasing investment in a wide range of Linux technologies.  CBL-MarinerCoreUI is being shared publicly as part of Microsoft’s commitment to Open Source and to contribute back to the Linux community. 
 
 As with CBL-Mariner, CBL-MarinerCoreUI makes the latest security patches and fixes available for download with the goal of fast turn-around times.
 
@@ -14,7 +14,7 @@ This project may contain trademarks or logos for projects, products, or services
 
 The CBL-MarinerCoreUI project, benefits from contributions by the open software community. We gratefully acknowledge all contributions made from the broader open source community, in particular:
 
-1) [The Fedora Project](https://start.fedoraproject.org/) for SPEC files. T
+1) [The Fedora Project](https://start.fedoraproject.org/) for SPEC files. 
 
 2) [Open SUSE](https://www.opensuse.org/) for SPEC files.
 
