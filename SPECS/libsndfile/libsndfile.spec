@@ -9,11 +9,12 @@ URL:            http://www.mega-nerd.com/libsndfile/
 #Source0:        https://github.com/libsndfile/libsndfile/archive/%{version}.tar.gz
 Source0:        %{name}-%{version}.tar.gz
 
-Patch0:         libsndfile-1.0.25-system-gsm.patch
+Patch0:         libsndfile-1.0.31-system-gsm.patch
 Patch1:         libsndfile-1.0.25-zerodivfix.patch
 Patch2:         revert.patch
 
 BuildRequires:  alsa-lib-devel
+BuildRequires:  autogen
 BuildRequires:  gcc
 BuildRequires:  gsm-devel
 BuildRequires:  libtool
@@ -138,6 +139,7 @@ LD_LIBRARY_PATH=$PWD/src/.libs make check
 
 %changelog
 * Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.31-1
+- Added "autogen" to "BuildRequires".
 - Updated version to 1.0.31 to fix the following CVEs:
 -   2017-6892, 2017-8365, 2017-12562, 2017-14245, 2017-14246,
 -   CVE-2017-6892, CVE-2017-8365, CVE-2017-12562,
