@@ -116,7 +116,6 @@ LD_LIBRARY_PATH=$PWD/src/.libs make check
 %{_bindir}/sndfile-metadata-get
 %{_bindir}/sndfile-metadata-set
 %{_bindir}/sndfile-play
-%{_bindir}/sndfile-regtest
 %{_bindir}/sndfile-salvage
 %{_mandir}/man1/sndfile-cmp.1*
 %{_mandir}/man1/sndfile-concat.1*
