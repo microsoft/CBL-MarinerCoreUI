@@ -141,7 +141,7 @@ LD_LIBRARY_PATH=$PWD/src/.libs make check
 %{_libdir}/pkgconfig/sndfile.pc
 
 %changelog
-* Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.31-1
+* Tue Feb 09 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.31-1
 - Added "autogen" to "BuildRequires" to build the newer version.
 - Added a .nopatch for CVE-2018-13419 (existence of issue disputed by project owner).
 - Updated version to 1.0.31 to fix the following CVEs:
