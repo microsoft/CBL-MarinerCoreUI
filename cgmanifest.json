@@ -148,8 +148,8 @@
         "type": "other",
         "other": {
           "name": "libsndfile",
-          "version": "1.0.28",
-          "downloadUrl": "http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.28.tar.gz"
+          "version": "1.0.31",
+          "downloadUrl": "https://github.com/libsndfile/libsndfile/archive/1.0.31.tar.gz"
         }
       }
     },
