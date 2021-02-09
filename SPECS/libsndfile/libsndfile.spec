@@ -13,6 +13,10 @@ Patch0:         libsndfile-1.0.31-system-gsm.patch
 Patch1:         libsndfile-1.0.25-zerodivfix.patch
 Patch2:         revert.patch
 
+# CVE disputed by project's owner, no repro.
+# See here for more details: https://github.com/libsndfile/libsndfile/issues/398.
+Patch100:       CVE-2018-13419.nopatch
+
 BuildRequires:  alsa-lib-devel
 BuildRequires:  autogen
 BuildRequires:  gcc
@@ -138,11 +142,12 @@ LD_LIBRARY_PATH=$PWD/src/.libs make check
 
 %changelog
 * Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.31-1
-- Added "autogen" to "BuildRequires".
+- Added "autogen" to "BuildRequires" to build the newer version.
+- Added a .nopatch for CVE-2018-13419 (existence of issue disputed by project owner).
 - Updated version to 1.0.31 to fix the following CVEs:
--   2017-6892, 2017-8365, 2017-12562, 2017-14245, 2017-14246,
--   CVE-2017-6892, CVE-2017-8365, CVE-2017-12562,
--   CVE-2017-6892, CVE-2017-8365, CVE-2017-12562.
+-   2017-6892, 2017-8361, 2017-8362, 2017-8363, 2017-8365, 2017-12562, 2017-14245, 2017-14246, 2017-14634,
+-   2018-13139, 2018-19432, 2018-19661, 2018-19662, 2018-19758,
+-   2019-3832.
 - Removing outdated patches.
 * Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.28-14
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
