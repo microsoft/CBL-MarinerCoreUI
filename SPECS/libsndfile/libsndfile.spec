@@ -1,20 +1,15 @@
 Summary:        Library for reading and writing sound files
 Name:           libsndfile
-Version:        1.0.28
-Release:        14%{?dist}
+Version:        1.0.31
+Release:        1%{?dist}
 License:        BSD AND GPLv2+ AND LGPLv2+ AND MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            http://www.mega-nerd.com/libsndfile/
-Source0:        http://www.mega-nerd.com/libsndfile/files/libsndfile-%{version}.tar.gz
+Source0:        https://github.com/libsndfile/libsndfile/archive/%{version}.tar.gz
 
 Patch0:         libsndfile-1.0.25-system-gsm.patch
 Patch1:         libsndfile-1.0.25-zerodivfix.patch
-Patch2:         revert.patch
-Patch3:         CVE-2017-8365.patch
-Patch4:         CVE-2017-6892.patch
-# From upstream, for <= 1.0.28, rhbz#1483140
-Patch5:         CVE-2017-12562.patch
 
 BuildRequires:  alsa-lib-devel
 BuildRequires:  gcc
@@ -140,6 +135,12 @@ LD_LIBRARY_PATH=$PWD/src/.libs make check
 %{_libdir}/pkgconfig/sndfile.pc
 
 %changelog
+* Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.31-1
+- Updated version to 1.0.31 to fix the following CVEs:
+-   CVE-2017-6892, CVE-2017-8365, CVE-2017-12562,
+-   CVE-2017-6892, CVE-2017-8365, CVE-2017-12562,
+-   CVE-2017-6892, CVE-2017-8365, CVE-2017-12562.
+- Removing outdated patches.
 * Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.28-14
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
