@@ -1,22 +1,24 @@
 Summary:        Library for reading and writing sound files
 Name:           libsndfile
-Version:        1.0.28
-Release:        14%{?dist}
+Version:        1.0.31
+Release:        1%{?dist}
 License:        BSD AND GPLv2+ AND LGPLv2+ AND MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            http://www.mega-nerd.com/libsndfile/
-Source0:        http://www.mega-nerd.com/libsndfile/files/libsndfile-%{version}.tar.gz
+#Source0:        https://github.com/libsndfile/libsndfile/archive/%{version}.tar.gz
+Source0:        %{name}-%{version}.tar.gz
 
-Patch0:         libsndfile-1.0.25-system-gsm.patch
+Patch0:         libsndfile-1.0.31-system-gsm.patch
 Patch1:         libsndfile-1.0.25-zerodivfix.patch
 Patch2:         revert.patch
-Patch3:         CVE-2017-8365.patch
-Patch4:         CVE-2017-6892.patch
-# From upstream, for <= 1.0.28, rhbz#1483140
-Patch5:         CVE-2017-12562.patch
+
+# CVE disputed by project's owner, no repro.
+# See here for more details: https://github.com/libsndfile/libsndfile/issues/398.
+Patch100:       CVE-2018-13419.nopatch
 
 BuildRequires:  alsa-lib-devel
+BuildRequires:  autogen
 BuildRequires:  gcc
 BuildRequires:  gsm-devel
 BuildRequires:  libtool
@@ -118,7 +120,6 @@ LD_LIBRARY_PATH=$PWD/src/.libs make check
 %{_bindir}/sndfile-metadata-get
 %{_bindir}/sndfile-metadata-set
 %{_bindir}/sndfile-play
-%{_bindir}/sndfile-regtest
 %{_bindir}/sndfile-salvage
 %{_mandir}/man1/sndfile-cmp.1*
 %{_mandir}/man1/sndfile-concat.1*
@@ -140,6 +141,14 @@ LD_LIBRARY_PATH=$PWD/src/.libs make check
 %{_libdir}/pkgconfig/sndfile.pc
 
 %changelog
+* Tue Feb 09 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.31-1
+- Added "autogen" to "BuildRequires" to build the newer version.
+- Added a .nopatch for CVE-2018-13419 (existence of issue disputed by project owner).
+- Updated version to 1.0.31 to fix the following CVEs:
+-   2017-6892, 2017-8361, 2017-8362, 2017-8363, 2017-8365, 2017-12562, 2017-14245, 2017-14246, 2017-14634,
+-   2018-13139, 2018-19432, 2018-19661, 2018-19662, 2018-19758,
+-   2019-3832.
+- Removing outdated patches.
 * Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.28-14
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
