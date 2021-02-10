@@ -34,7 +34,7 @@ What does the PR accomplish, why was it needed?
 
 ###### Links to CVEs  <!-- optional -->
 
-- <https://nvd.nist.gov/>... **OR remove this section if N/A**.
+- <https://nvd.nist.gov/vuln/detail/CVE-YYYY-XXXX> **OR remove this section if N/A**.
 
 ###### Test Methodology
 <!-- How as this test validated? i.e. local build, pipeline build etc. -->
