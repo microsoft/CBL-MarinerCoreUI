@@ -51,8 +51,8 @@
 
 Name:           mesa
 Summary:        Mesa graphics libraries
-Version:        20.2.6
-Release:        2%{?dist}
+Version:        21.0.0
+Release:        1%{?dist}
 License:        BSD
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -76,6 +76,8 @@ BuildRequires:  kernel-headers
 # We only check for the minimum version of pkgconfig(libdrm) needed so that the
 # SRPMs for each arch still have the same build dependencies. See:
 # https://bugzilla.redhat.com/show_bug.cgi?id=1859515
+BuildRequires:  bison
+BuildRequires:  flex
 BuildRequires:  marinerui-rpm-macros
 BuildRequires:  pkgconfig(libdrm) >= 2.4.97
 BuildRequires:  pkgconfig(expat)
@@ -104,8 +106,6 @@ BuildRequires:  pkgconfig(glproto) >= 1.4.14
 BuildRequires:  pkgconfig(xcb-xfixes)
 BuildRequires:  pkgconfig(xcb-randr)
 BuildRequires:  pkgconfig(xrandr) >= 1.3
-BuildRequires:  bison
-BuildRequires:  flex
 %if 0%{?with_vdpau}
 BuildRequires:  pkgconfig(vdpau) >= 1.1
 %endif
@@ -325,6 +325,7 @@ cp %{SOURCE2} .
 %define _lto_cflags %{nil}
 
 %meson \
+  --auto-features=disabled
   -Dplatforms=x11,wayland \
   -Ddri3=enabled \
   -Ddri-drivers=%{?dri_drivers} \
@@ -354,7 +355,7 @@ cp %{SOURCE2} .
   -Dvalgrind=%{?with_valgrind:true}%{!?with_valgrind:false} \
   -Dbuild-tests=false \
   -Dselinux=true \
-  -Dosmesa=gallium \
+  -Dosmesa=true \
   -Dvulkan-device-select-layer=true \
   %{nil}
 %meson_build
@@ -585,6 +586,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 22 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 21.0.0-1
+- Updating to version "21.0.0".
+
 * Tue Jan 12 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 20.2.6-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
