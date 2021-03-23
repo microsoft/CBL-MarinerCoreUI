@@ -325,7 +325,7 @@ cp %{SOURCE2} .
 %define _lto_cflags %{nil}
 
 %meson \
-  --auto-features=disabled
+  --auto-features=disabled \
   -Dplatforms=x11,wayland \
   -Ddri3=enabled \
   -Ddri-drivers=%{?dri_drivers} \
