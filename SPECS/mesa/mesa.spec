@@ -588,6 +588,8 @@ popd
 %changelog
 * Mon Mar 22 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 21.0.0-1
 - Updating to version "21.0.0".
+- Overriding the default "--auto-features" Meson config to fix build break.
+  With the new version, the build would complain about missing clang, even if it was installed.
 
 * Tue Jan 12 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 20.2.6-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
