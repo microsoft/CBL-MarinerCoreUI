@@ -388,8 +388,8 @@
         "type": "other",
         "other": {
           "name": "mesa",
-          "version": "20.2.6",
-          "downloadUrl": "https://mesa.freedesktop.org/archive/mesa-20.2.6.tar.xz"
+          "version": "21.0.0",
+          "downloadUrl": "https://mesa.freedesktop.org/archive/mesa-21.0.0.tar.xz"
         }
       }
     },
