@@ -49,8 +49,8 @@
 
 %global dri_drivers %{?base_drivers}%{?platform_drivers}
 
-Name:           mesa
 Summary:        Mesa graphics libraries
+Name:           mesa
 Version:        21.0.0
 Release:        1%{?dist}
 License:        BSD
@@ -66,69 +66,72 @@ Source0:        https://mesa.freedesktop.org/archive/%{name}-%{version}.tar.xz
 Source1:        Mesa-MLAA-License-Clarification-Email.txt
 Source2:        LICENSE.PTR
 
-BuildRequires:  meson >= 0.45
-BuildRequires:  gcc
-BuildRequires:  gettext
-
-%if 0%{?with_hardware}
-BuildRequires:  kernel-headers
-%endif
 # We only check for the minimum version of pkgconfig(libdrm) needed so that the
 # SRPMs for each arch still have the same build dependencies. See:
 # https://bugzilla.redhat.com/show_bug.cgi?id=1859515
 BuildRequires:  bison
 BuildRequires:  flex
+BuildRequires:  gcc
+BuildRequires:  gettext
+BuildRequires:  llvm-devel >= 7.0.0
 BuildRequires:  marinerui-rpm-macros
-BuildRequires:  pkgconfig(libdrm) >= 2.4.97
+BuildRequires:  meson >= 0.45
+BuildRequires:  pkgconfig(dri2proto) >= 2.8
 BuildRequires:  pkgconfig(expat)
-BuildRequires:  pkgconfig(zlib) >= 1.2.3
+BuildRequires:  pkgconfig(glproto) >= 1.4.14
+BuildRequires:  pkgconfig(libdrm) >= 2.4.97
+BuildRequires:  pkgconfig(libelf)
+BuildRequires:  pkgconfig(libglvnd) >= 1.3.2
 BuildRequires:  pkgconfig(libselinux)
-BuildRequires:  pkgconfig(wayland-scanner)
-BuildRequires:  pkgconfig(wayland-protocols) >= 1.8
 BuildRequires:  pkgconfig(wayland-client) >= 1.11
-BuildRequires:  pkgconfig(wayland-server) >= 1.11
 BuildRequires:  pkgconfig(wayland-egl-backend) >= 1.11
+BuildRequires:  pkgconfig(wayland-protocols) >= 1.8
+BuildRequires:  pkgconfig(wayland-scanner)
+BuildRequires:  pkgconfig(wayland-server) >= 1.11
 BuildRequires:  pkgconfig(x11)
-BuildRequires:  pkgconfig(xext)
-BuildRequires:  pkgconfig(xdamage) >= 1.1
-BuildRequires:  pkgconfig(xfixes)
-BuildRequires:  pkgconfig(xcb-glx) >= 1.8.1
-BuildRequires:  pkgconfig(xxf86vm)
-BuildRequires:  pkgconfig(xcb)
 BuildRequires:  pkgconfig(x11-xcb)
+BuildRequires:  pkgconfig(xcb)
 BuildRequires:  pkgconfig(xcb-dri2) >= 1.8
 BuildRequires:  pkgconfig(xcb-dri3)
+BuildRequires:  pkgconfig(xcb-glx) >= 1.8.1
 BuildRequires:  pkgconfig(xcb-present)
-BuildRequires:  pkgconfig(xcb-sync)
-BuildRequires:  pkgconfig(xshmfence) >= 1.1
-BuildRequires:  pkgconfig(dri2proto) >= 2.8
-BuildRequires:  pkgconfig(glproto) >= 1.4.14
-BuildRequires:  pkgconfig(xcb-xfixes)
 BuildRequires:  pkgconfig(xcb-randr)
+BuildRequires:  pkgconfig(xcb-sync)
+BuildRequires:  pkgconfig(xcb-xfixes)
+BuildRequires:  pkgconfig(xdamage) >= 1.1
+BuildRequires:  pkgconfig(xext)
+BuildRequires:  pkgconfig(xfixes)
 BuildRequires:  pkgconfig(xrandr) >= 1.3
-%if 0%{?with_vdpau}
-BuildRequires:  pkgconfig(vdpau) >= 1.1
+BuildRequires:  pkgconfig(xshmfence) >= 1.1
+BuildRequires:  pkgconfig(xxf86vm)
+BuildRequires:  pkgconfig(zlib) >= 1.2.3
+BuildRequires:  python3-devel
+BuildRequires:  python3-mako
+
+%if 0%{?with_hardware}
+BuildRequires:  kernel-headers
+BuildRequires:  vulkan-headers
 %endif
-%if 0%{?with_vaapi}
-BuildRequires:  pkgconfig(libva) >= 0.38.0
-%endif
+
 %if 0%{?with_omx}
 BuildRequires:  pkgconfig(libomxil-bellagio)
 %endif
-BuildRequires:  pkgconfig(libelf)
-BuildRequires:  pkgconfig(libglvnd) >= 1.3.2
-BuildRequires:  llvm-devel >= 7.0.0
+
+%if 0%{?with_vaapi}
+BuildRequires:  pkgconfig(libva) >= 0.38.0
+%endif
+
+%if 0%{?with_vdpau}
+BuildRequires:  pkgconfig(vdpau) >= 1.1
+%endif
+
 %if 0%{?with_opencl}
 BuildRequires:  clang-devel
 BuildRequires:  pkgconfig(libclc)
 %endif
+
 %if %{with valgrind}
 BuildRequires:  pkgconfig(valgrind)
-%endif
-BuildRequires:  python3-devel
-BuildRequires:  python3-mako
-%if 0%{?with_hardware}
-BuildRequires:  vulkan-headers
 %endif
 
 %description
