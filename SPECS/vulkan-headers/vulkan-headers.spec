@@ -1,12 +1,14 @@
 Summary:        Vulkan Header files and API registry
 Name:           vulkan-headers
 Version:        1.2.148.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        ASL 2.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://github.com/KhronosGroup/Vulkan-Headers
-Source0:        %{url}/archive/sdk-%{version}.tar.gz
+#WARNING: the source file downloads as 'sdk-%%{version}.tar.gz' and MUST be re-named to match the 'Source0' tag.
+#Source0:       %%{url}/archive/sdk-%%{version}.tar.gz
+Source0:        %{name}-%{version}.tar.gz
 
 BuildArch:      noarch
 
@@ -36,6 +38,9 @@ Vulkan Header files and API registry
 %{_datadir}/vulkan/registry/
 
 %changelog
+* Mon Mar 29 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.148.0-3
+- Changed source tarball name.
+
 * Fri Jan 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.148.0-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.

@@ -1,12 +1,14 @@
 Summary:        Vulkan ICD desktop loader
 Name:           vulkan-loader
 Version:        1.2.148.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        ASL 2.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://github.com/KhronosGroup/Vulkan-Loader
-Source0:        %{url}/archive/sdk-%{version}.tar.gz
+#WARNING: the source file downloads as 'sdk-%%{version}.tar.gz' and MUST be re-named to match the 'Source0' tag.
+#Source0:       %%{url}/archive/sdk-%%{version}.tar.gz
+Source0:        %{name}-%{version}.tar.gz
 
 BuildRequires:  cmake
 BuildRequires:  gcc
@@ -85,6 +87,9 @@ mkdir -p %{buildroot}%{_sysconfdir}/vulkan/{explicit,implicit}_layer.d/ \
 %{_libdir}/*.so
 
 %changelog
+* Mon Mar 29 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.148.1-3
+- Changed source tarball name.
+
 * Fri Jan 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.148.1-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.

@@ -1,12 +1,14 @@
 Summary:        Hardware identification and configuration data
 Name:           hwdata
 Version:        0.341
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        GPLv2+ OR XFree86 1.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://github.com/vcrhonek/hwdata
-Source:         https://github.com/vcrhonek/hwdata/archive/v%{version}.tar.gz
+#WARNING: the source file downloads as 'v%%{version}.tar.gz' and MUST be re-named to match the 'Source0' tag.
+#Source0:       %%{url}/archive/v%%{version}.tar.gz
+Source0:        %{name}-%{version}.tar.gz
 
 BuildArch:      noarch
 
@@ -31,6 +33,9 @@ make install DESTDIR=%{buildroot} libdir=%{_lib}
 %{_datadir}/%{name}/*
 
 %changelog
+* Mon Mar 29 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.341-3
+- Changed source tarball name.
+
 * Fri Dec 18 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.341-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.

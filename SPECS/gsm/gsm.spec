@@ -10,7 +10,7 @@ License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            http://www.quut.com/gsm/
-Source:         http://www.quut.com/gsm/%{name}-%{version}.tar.gz
+Source0:        http://www.quut.com/gsm/%{name}-%{version}.tar.gz
 
 Patch0:         %{name}-makefile.patch
 Patch1:         %{name}-warnings.patch
