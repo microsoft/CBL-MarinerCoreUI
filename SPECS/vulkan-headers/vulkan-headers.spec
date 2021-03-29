@@ -6,7 +6,9 @@ License:        ASL 2.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://github.com/KhronosGroup/Vulkan-Headers
-Source0:        %{url}/archive/sdk-%{version}.tar.gz
+#WARNING: the source file downloads as 'sdk-%%{version}.tar.gz' and MUST be re-named to match the 'Source0' tag.
+#Source0:       %%{url}/archive/sdk-%%{version}.tar.gz
+Source0:        %{name}-%{version}.tar.gz
 
 BuildArch:      noarch
 

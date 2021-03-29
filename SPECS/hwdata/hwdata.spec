@@ -6,7 +6,9 @@ License:        GPLv2+ OR XFree86 1.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://github.com/vcrhonek/hwdata
-Source0:        https://github.com/vcrhonek/hwdata/archive/v%{version}.tar.gz
+#WARNING: the source file downloads as 'v%%{version}.tar.gz' and MUST be re-named to match the 'Source0' tag.
+#Source0:       %%{url}/archive/v%%{version}.tar.gz
+Source0:        %{name}-%{version}.tar.gz
 
 BuildArch:      noarch
 
