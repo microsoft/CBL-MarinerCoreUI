@@ -1,7 +1,7 @@
 Summary:        Vulkan Header files and API registry
 Name:           vulkan-headers
 Version:        1.2.148.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        ASL 2.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -38,6 +38,9 @@ Vulkan Header files and API registry
 %{_datadir}/vulkan/registry/
 
 %changelog
+* Mon Mar 29 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.148.0-3
+- Changed source tarball name.
+
 * Fri Jan 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.148.0-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
