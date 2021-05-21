@@ -14,6 +14,17 @@
     {
       "component": {
         "type": "other",
+        "comment": "dejavu-sans-ttf compiled fonts",
+        "other": {
+          "name": "dejavu-sans",
+          "version": "2.37",
+          "downloadUrl": "https://sourceforge.net/projects/dejavu/files/dejavu/2.37/dejavu-sans-ttf-2.37.zip"
+        }
+      }
+    },
+    {
+      "component": {
+        "type": "other",
         "comment": "Imported as part of the 'xorg-x11-font-utils' package, version 7.5",
         "other": {
           "name": "font-util",
