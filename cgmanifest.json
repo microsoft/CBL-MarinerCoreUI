@@ -16,9 +16,9 @@
         "type": "other",
         "comment": "dejavu-sans-ttf compiled fonts",
         "other": {
-          "name": "dejavu-sans-ttf",
+          "name": "dejavu-sans",
           "version": "2.37",
-          "downloadUrl": "http://sourceforge.net/projects/dejavu/files/dejavu/2.37/dejavu-sans-ttf-2.37.zip"
+          "downloadUrl": "https://sourceforge.net/projects/dejavu/files/dejavu/2.37/dejavu-sans-ttf-2.37.zip"
         }
       }
     },
