@@ -1,7 +1,7 @@
 Summary:        Hardware identification and configuration data
 Name:           hwdata
 Version:        0.341
-Release:        3%{?dist}
+Release:        4%{?dist}
 License:        GPLv2+ OR XFree86 1.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -9,7 +9,6 @@ URL:            https://github.com/vcrhonek/hwdata
 #WARNING: the source file downloads as 'v%%{version}.tar.gz' and MUST be re-named to match the 'Source0' tag.
 #Source0:       %%{url}/archive/v%%{version}.tar.gz
 Source0:        %{name}-%{version}.tar.gz
-
 BuildArch:      noarch
 
 %description
@@ -24,15 +23,18 @@ such as the pci.ids and usb.ids databases.
 # nothing to build
 
 %install
-make install DESTDIR=%{buildroot} libdir=%{_lib}
+make install DESTDIR=%{buildroot} libdir=%{_libdir}
 
 %files
 %license COPYING LICENSE
 %dir %{_datadir}/%{name}
-%{_lib}/modprobe.d/dist-blacklist.conf
+%{_libdir}/modprobe.d/dist-blacklist.conf
 %{_datadir}/%{name}/*
 
 %changelog
+* Fri May 28 2021 Thomas Crain <thcrain@microsoft.com> - 0.341-4
+- Replace improper %%{_lib} macro usage with %%{_libdir}
+
 * Mon Mar 29 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.341-3
 - Changed source tarball name.
 
