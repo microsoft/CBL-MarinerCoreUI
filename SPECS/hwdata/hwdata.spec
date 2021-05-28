@@ -9,7 +9,6 @@ URL:            https://github.com/vcrhonek/hwdata
 #WARNING: the source file downloads as 'v%%{version}.tar.gz' and MUST be re-named to match the 'Source0' tag.
 #Source0:       %%{url}/archive/v%%{version}.tar.gz
 Source0:        %{name}-%{version}.tar.gz
-
 BuildArch:      noarch
 
 %description
