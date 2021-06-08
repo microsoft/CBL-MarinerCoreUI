@@ -11,7 +11,7 @@
 Summary:        A 2D graphics library (UI libs dependent)
 Name:           UI-cairo
 Version:        1.16.0
-Release:        10%{?dist}
+Release:        11%{?dist}
 # The sources for 'cairo' itself are available under the (LGPLv2 OR MPLv1.1) license.
 # Test code and fonts are available under either the MIT or Public Domain license.
 # The 'cairo-trace' tools are released under the GPLv3 license - 'License' tag added separately for that subpackage.
@@ -43,6 +43,11 @@ BuildRequires:  pixman-devel >= %{pixman_version}
 BuildRequires:  pkg-config
 BuildRequires:  pkgconfig(xext)
 
+Requires:       expat
+Requires:       glib
+Requires:       libpng
+Requires:       pixman
+
 Conflicts:       cairo
 
 %description
@@ -64,6 +69,10 @@ License:        (LGPLv2 OR MPLv1.1) AND MIT AND Public Domain
 Conflicts:      cairo-devel
 
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       fontconfig-devel
+Requires:       freetype-devel
+Requires:       libpng-devel
+Requires:       pixman-devel
 
 Provides:       pkconfig(cairo-fc) = %{version}-%{release}
 Provides:       pkconfig(cairo-ft) = %{version}-%{release}
@@ -208,6 +217,10 @@ find %{buildroot} -type f -name "*.la" -delete -print
 %{_libdir}/cairo/
 
 %changelog
+* Tue Apr 20 2021 Henry Li <lihl@microsoft.com> - 1.16.0-11
+- Add pixman, glib, libpng and expat as runtime requirement for UI-cairo
+- Add freetype-devel, pixman-devel, libpng-devel and fontconfig-devel as runtime requirements for UI-cairo-devel
+
 * Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.16.0-10
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
