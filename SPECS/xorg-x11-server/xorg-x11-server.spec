@@ -21,7 +21,7 @@
 Summary:        X.Org X11 X server
 Name:           xorg-x11-server
 Version:        1.20.10
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -81,6 +81,7 @@ Patch522:       0022-xwayland-Call-xwl_window_check_resolution_change_emu.patch
 Patch523:       0023-xwayland-Fix-setting-of-_XWAYLAND_RANDR_EMU_MONITOR_.patch
 Patch524:       0024-xwayland-Remove-unnecessary-xwl_window_is_toplevel-c.patch
 Patch525:       0025-xwayland-Make-window_get_client_toplevel-non-recursi.patch
+Patch526:       0026-xwayland-verbosity.patch
 
 BuildRequires:  audit-devel
 BuildRequires:  autoconf
@@ -384,6 +385,9 @@ find %{buildroot} -type f -name "*.la" -delete -print
 %{_datadir}/aclocal/xorg-server.m4
 
 %changelog
+* Wed May 26 2021 Vinicius Jarina <vinja@microsoft.com> - 1.20.10-3
+- Add verbosity backport from https://github.com/mirror/xserver/commit/4341f1da728e4c67187b48865faf06c1312bcdff.
+
 * Tue Jan 05 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.20.10-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
