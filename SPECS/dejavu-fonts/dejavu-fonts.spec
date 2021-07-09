@@ -1,4 +1,5 @@
 %define _fontdir %{_datadir}/fonts
+%define _fontconfig_dir %{_datadir}/fontconfig/conf.avail
 %define _mono_fontdir %{_fontdir}/dejavu-sans-mono-fonts
 %define _sans_fontdir %{_fontdir}/dejavu-sans-fonts
 %define _serif_fontdir %{_fontdir}/dejavu-serif-fonts
@@ -44,11 +45,14 @@ Summary:        DejaVu Serif fonts family. Variable-width, serif.
 %setup -q -n %{name}-ttf-%{version}
 
 %install
-intall -d %{buildroot}%{_datadir}/fontconfig/conf.avail/
-intall -d %{buildroot}%{_sysconfdir}/fonts/conf.d
+install -d %{buildroot}%{_datadir}/fontconfig/conf.avail/
+install -d %{buildroot}%{_sysconfdir}/fonts/conf.d
 
-install fontconfig/*.conf %{buildroot}%{_datadir}/fontconfig/conf.avail/
-ln -s %{_datadir}/fontconfig/conf.avail/* %{buildroot}%{_sysconfdir}/fonts/conf.d
+install fontconfig/*.conf %{buildroot}%{_fontconfig_dir}
+for fontconfig in fontconfig/*.conf
+do
+    ln -s %{_fontconfig_dir}/$(basename $fontconfig) %{buildroot}%{_sysconfdir}/fonts/conf.d
+done
 
 # Sans fonts
 install -d %{buildroot}%{_sans_fontdir}
