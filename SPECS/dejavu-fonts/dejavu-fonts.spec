@@ -1,17 +1,20 @@
 %global _fontdir %{_datadir}/fonts
-Summary:        Dejavu-Sans TTF Fonts
-Name:           dejavu-sans
+%global _mono_fontdir %{_datadir}/fonts/dejavu-sans-mono-fonts
+%global _sans_fontdir %{_datadir}/fonts/dejavu-sans-fonts
+%global _serif_fontdir %{_datadir}/fonts/dejavu-serif-fonts
+
+Summary:        The DejaVu font families
+Name:           dejavu-fonts
 Version:        2.37
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        Bistream Vera Font AND Arev Fonts
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Group:          System Environment/Base
 URL:            https://dejavu-fonts.github.io/
-Source0:        https://sourceforge.net/projects/dejavu/files/dejavu/%{version}/%{name}-ttf-%{version}.zip
+Source0:        https://sourceforge.net/projects/dejavu/files/dejavu/%{version}/%{name}-ttf-%{version}.tar.bz2
 
-
-BuildRequires:  unzip
+BuildRequires:  tar
 
 %description
 The DejaVu fonts are a font family based on the Vera Fonts. Its
@@ -22,8 +25,8 @@ the original look and feel through the process of collaborative development
 %setup -q -n %{name}-ttf-%{version}
 
 %install
-mkdir -p %{buildroot}%{_fontdir}
-mv ttf/*.ttf %{buildroot}%{_fontdir}/
+install -d %{buildroot}%{_fontdir}
+install ttf/*.ttf %{buildroot}%{_fontdir}/
 
 %files
 %defattr(-,root,root)
@@ -31,5 +34,10 @@ mv ttf/*.ttf %{buildroot}%{_fontdir}/
 %{_fontdir}/*.ttf
 
 %changelog
+* Fri Jul 09 2021 Pawel Winogrodzki <pawelwi@microsoft.com> 2.37-2
+- Renaming to 'dejavu-fonts'.
+- Adding 'dejavu-sans-mono-fonts' and 'dejavu-serif-fonts' subpackages.
+- Adding font configurations.
+
 * Fri May 21 2021 Jon Slobodzian <joslobo@microsoft.com> 2.37-1
 - Original version for CBL-Mariner.
