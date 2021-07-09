@@ -24,6 +24,9 @@ the original look and feel through the process of collaborative development
 
 %package -n dejavu-sans-fonts
 Summary:        DejaVu Sans fonts family. Variable-width, sans-serif.
+
+# Last time package was called 'dejavu-sans' was for the 2.37-1 version.
+Obsoletes:      dejavu-sans < 2.37-2
 Provides:       dejavu-sans = %{version}-%{release}
 
 %description -n dejavu-sans-fonts
