@@ -1,7 +1,8 @@
 %define _fontdir %{_datadir}/fonts
-%define _mono_fontdir %{_datadir}/fonts/dejavu-sans-mono-fonts
-%define _sans_fontdir %{_datadir}/fonts/dejavu-sans-fonts
-%define _serif_fontdir %{_datadir}/fonts/dejavu-serif-fonts
+%define _mono_fontdir %{_fontdir}/dejavu-sans-mono-fonts
+%define _sans_fontdir %{_fontdir}/dejavu-sans-fonts
+%define _serif_fontdir %{_fontdir}/dejavu-serif-fonts
+
 Summary:        The DejaVu fonts families
 Name:           dejavu-fonts
 Version:        2.37
