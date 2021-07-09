@@ -1,5 +1,6 @@
 %define _fontdir %{_datadir}/fonts
-%define _fontconfig_dir %{_datadir}/fontconfig/conf.avail
+%define _fontconfig_dir %{_datadir}/fontconfig/conf.avail/
+%define _fontconfig_links_dir %{_sysconfdir}/fonts/conf.d
 %define _mono_fontdir %{_fontdir}/dejavu-sans-mono-fonts
 %define _sans_fontdir %{_fontdir}/dejavu-sans-fonts
 %define _serif_fontdir %{_fontdir}/dejavu-serif-fonts
@@ -18,8 +19,8 @@ Source0:        https://sourceforge.net/projects/dejavu/files/dejavu/%{version}/
 BuildRequires:  tar
 
 %description
-The DejaVu fonts are a font family based on the Vera Fonts. Its
-purpose is to provide a wider range of characters while maintaining
+The DejaVu fonts are a font family based on the Vera Fonts.
+Its purpose is to provide a wider range of characters while maintaining
 the original look and feel through the process of collaborative development
 
 %package -n dejavu-sans-fonts
@@ -33,7 +34,7 @@ Provides:       dejavu-sans = %{version}-%{release}
 %{summary}
 
 %package -n dejavu-sans-mono-fonts
-Summary:        DejaVu Sans Mono fonts family. Monospace, sans-serif.
+Summary:        DejaVu Sans Mono fonts family. Monospaced, sans-serif.
 
 %description -n dejavu-sans-mono-fonts
 %{summary}
@@ -48,13 +49,13 @@ Summary:        DejaVu Serif fonts family. Variable-width, serif.
 %setup -q -n %{name}-ttf-%{version}
 
 %install
-install -d %{buildroot}%{_datadir}/fontconfig/conf.avail/
-install -d %{buildroot}%{_sysconfdir}/fonts/conf.d
+install -d %{buildroot}%{_fontconfig_dir}/
+install -d %{buildroot}%{_fontconfig_links_dir}
 
 install fontconfig/*.conf %{buildroot}%{_fontconfig_dir}
 for fontconfig in fontconfig/*.conf
 do
-    ln -s %{_fontconfig_dir}/$(basename $fontconfig) %{buildroot}%{_sysconfdir}/fonts/conf.d
+    ln -s %{_fontconfig_dir}/$(basename $fontconfig) %{buildroot}%{_fontconfig_links_dir}
 done
 
 # Sans fonts
@@ -77,27 +78,27 @@ install ttf/DejaVuMathTeXGyre.ttf %{buildroot}%{_serif_fontdir}
 %license LICENSE
 %doc AUTHORS BUGS NEWS README.md
 %dir %{_sans_fontdir}
-%{_datadir}/fontconfig/conf.avail/*sans.conf
+%{_fontconfig_dir}/*sans.conf
+%{_fontconfig_links_dir}/*sans.conf
 %{_sans_fontdir}/*.ttf
-%{_sysconfdir}/fonts/conf.d/*sans.conf
 
 %files -n dejavu-sans-mono-fonts
 %defattr(-,root,root)
 %license LICENSE
 %doc AUTHORS BUGS NEWS README.md
 %dir %{_mono_fontdir}
-%{_datadir}/fontconfig/conf.avail/*mono.conf
+%{_fontconfig_dir}/*mono.conf
+%{_fontconfig_links_dir}/*mono.conf
 %{_mono_fontdir}/*.ttf
-%{_sysconfdir}/fonts/conf.d/*mono.conf
 
 %files -n dejavu-serif-fonts
 %defattr(-,root,root)
 %license LICENSE
 %doc AUTHORS BUGS NEWS README.md
 %dir %{_serif_fontdir}
-%{_datadir}/fontconfig/conf.avail/*serif.conf
+%{_fontconfig_dir}/*serif.conf
+%{_fontconfig_links_dir}/*serif.conf
 %{_serif_fontdir}/*.ttf
-%{_sysconfdir}/fonts/conf.d/*serif.conf
 
 %changelog
 * Fri Jul 09 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.37-2
