@@ -12,6 +12,7 @@ Distribution:   Mariner
 Group:          System Environment/Base
 URL:            https://dejavu-fonts.github.io/
 Source0:        https://sourceforge.net/projects/dejavu/files/dejavu/%{version}/%{name}-ttf-%{version}.tar.bz2
+
 BuildRequires:  tar
 
 %description
