@@ -1,9 +1,9 @@
-%global _fontdir %{_datadir}/fonts
-%global _mono_fontdir %{_datadir}/fonts/dejavu-sans-mono-fonts
-%global _sans_fontdir %{_datadir}/fonts/dejavu-sans-fonts
-%global _serif_fontdir %{_datadir}/fonts/dejavu-serif-fonts
+%define _fontdir %{_datadir}/fonts
+%define _mono_fontdir %{_datadir}/fonts/dejavu-sans-mono-fonts
+%define _sans_fontdir %{_datadir}/fonts/dejavu-sans-fonts
+%define _serif_fontdir %{_datadir}/fonts/dejavu-serif-fonts
 
-Summary:        The DejaVu font families
+Summary:        The DejaVu fonts families
 Name:           dejavu-fonts
 Version:        2.37
 Release:        2%{?dist}
@@ -21,17 +21,74 @@ The DejaVu fonts are a font family based on the Vera Fonts. Its
 purpose is to provide a wider range of characters while maintaining
 the original look and feel through the process of collaborative development
 
+%package -n dejavu-sans-fonts
+Summary:        DejaVu Sans fonts family. Variable-width, sans-serif.
+
+Provides:       dejavu-sans = %{version}-%{release}
+
+%description -n dejavu-sans-fonts
+%{summary}
+
+%package -n dejavu-sans-mono-fonts
+Summary:        DejaVu Sans Mono fonts family. Monospace, sans-serif.
+
+%description -n dejavu-sans-mono-fonts
+%{summary}
+
+%package -n dejavu-serif-fonts
+Summary:        DejaVu Serif fonts family. Variable-width, serif.
+
+%description -n dejavu-serif-fonts
+%{summary}
+
 %prep
 %setup -q -n %{name}-ttf-%{version}
 
 %install
-install -d %{buildroot}%{_fontdir}
-install ttf/*.ttf %{buildroot}%{_fontdir}/
+intall -d %{buildroot}/usr/share/fontconfig/conf.avail/
+intall -d %{buildroot}/etc/fonts/conf.d
 
-%files
+install fontconfig/*.conf %{buildroot}/usr/share/fontconfig/conf.avail/
+ln -s /usr/share/fontconfig/conf.avail/* %{buildroot}/etc/fonts/conf.d
+
+# Sans fonts
+install -d %{buildroot}%{_sans_fontdir}
+install ttf/*Sans.ttf %{buildroot}%{_sans_fontdir}
+install ttf/*Sans-*.ttf %{buildroot}%{_sans_fontdir}
+install ttf/*SansCondensed*.ttf %{buildroot}%{_sans_fontdir}
+
+# Sans Mono fonts
+install -d %{buildroot}%{_mono_fontdir}
+install ttf/*Mono*.ttf %{buildroot}%{_mono_fontdir}
+
+# Sans Serif fonts
+install -d %{buildroot}%{_serif_fontdir}
+install ttf/*Serif*.ttf %{buildroot}%{_serif_fontdir}
+install ttf/DejaVuMathTeXGyre.ttf %{buildroot}%{_serif_fontdir}
+
+%files -n dejavu-sans-fonts
 %defattr(-,root,root)
 %license LICENSE
-%{_fontdir}/*.ttf
+%doc AUTHORS BUGS NEWS README.md
+%dir %{_sans_fontdir}
+%{_sans_fontdir}/*.ttf
+/etc/fonts/conf.d/*sans.conf
+
+%files -n dejavu-sans-mono-fonts
+%defattr(-,root,root)
+%license LICENSE
+%doc AUTHORS BUGS NEWS README.md
+%dir %{_mono_fontdir}
+%{_mono_fontdir}/*.ttf
+/etc/fonts/conf.d/*mono.conf
+
+%files -n dejavu-serif-fonts
+%defattr(-,root,root)
+%license LICENSE
+%doc AUTHORS BUGS NEWS README.md
+%dir %{_serif_fontdir}
+%{_serif_fontdir}/*.ttf
+/etc/fonts/conf.d/*serif.conf
 
 %changelog
 * Fri Jul 09 2021 Pawel Winogrodzki <pawelwi@microsoft.com> 2.37-2
