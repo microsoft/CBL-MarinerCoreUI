@@ -21,7 +21,7 @@
 Summary:        X.Org X11 X server
 Name:           xorg-x11-server
 Version:        1.20.10
-Release:        3%{?dist}
+Release:        4%{?dist}
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -385,6 +385,9 @@ find %{buildroot} -type f -name "*.la" -delete -print
 %{_datadir}/aclocal/xorg-server.m4
 
 %changelog
+* Mon Jul 12 2021 Vinicius Jarina <vinja@microsoft.com> - 1.20.10-4
+- Fixed backport to patch ddxProcessArgument https://github.com/mirror/xserver/commit/4341f1da728e4c67187b48865faf06c1312bcdff.
+
 * Wed May 26 2021 Vinicius Jarina <vinja@microsoft.com> - 1.20.10-3
 - Add verbosity backport from https://github.com/mirror/xserver/commit/4341f1da728e4c67187b48865faf06c1312bcdff.
 
