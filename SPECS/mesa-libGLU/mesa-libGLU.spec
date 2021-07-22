@@ -2,7 +2,7 @@
 
 Name:           mesa-libGLU
 Version:        9.0.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Mesa libGLU library
 
 License:        MIT
@@ -10,7 +10,6 @@ URL:            http://mesa3d.org/
 Source0:        https://ftp.freedesktop.org/pub/mesa/glu/glu-%{version}.tar.xz
 Source2:        make-git-snapshot.sh
 
-BuildRequires:  gcc-c++
 BuildRequires:  autoconf automake libtool
 BuildRequires:  mesa-libGL-devel
 #Requires:       
@@ -22,7 +21,6 @@ Mesa implementation of the standard GLU OpenGL utility API.
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       gl-manpages
 Provides:	libGLU-devel
 
 %description    devel
@@ -40,12 +38,9 @@ make %{?_smp_mflags}
 
 %install
 %make_install
-find $RPM_BUILD_ROOT -name '*.la' -delete
-rm -rf $RPM_BUILD_ROOT%{_datadir}/man/man3/gl[A-Z]*
 
-%ldconfig_post
-
-%ldconfig_postun
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %{_libdir}/libGLU.so.1
@@ -54,9 +49,16 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/man/man3/gl[A-Z]*
 %files devel
 %{_includedir}/GL/glu*.h
 %{_libdir}/libGLU.so
+%{_libdir}/libGLU.la
 %{_libdir}/pkgconfig/glu.pc
 
+%post devel -p /sbin/ldconfig
+%postun devel -p /sbin/ldconfig
+
 %changelog
+* Wed Jul 21 2021 Vinicius Jarina <vinja@microsoft.com> - 9.0.1-4
+- Rebuilt for Mariner Core UI
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 9.0.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 

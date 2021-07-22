@@ -2,7 +2,7 @@
 
 Name:           gdk-pixbuf2
 Version:        2.40.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        An image loading library
 
 License:        LGPLv2+
@@ -13,7 +13,7 @@ BuildRequires:  gettext
 BuildRequires:  gtk-doc
 BuildRequires:  pkgconfig(gio-2.0) >= %{glib2_version}
 BuildRequires:  libpng-devel
-BuildRequires:  libjpeg-devel
+BuildRequires:  libjpeg-turbo-devel
 BuildRequires:  libtiff-devel
 BuildRequires:  jasper-devel
 BuildRequires:  meson
@@ -23,7 +23,7 @@ BuildRequires:  pkgconfig(gobject-introspection-1.0) >= 0.9.3
 # layer; we need to actually have the mime type database.
 BuildRequires:  shared-mime-info
 
-Requires: glib2%{?_isa} >= %{glib2_version}
+Requires: glib%{?_isa} >= %{glib2_version}
 # We also need MIME information at runtime
 Requires: shared-mime-info
 
@@ -60,7 +60,7 @@ for writing applications that are using gdk-pixbuf-xlib.
 %package devel
 Summary: Development files for gdk-pixbuf
 Requires: %{name}%{?_isa} = %{version}-%{release}
-Requires: glib2-devel%{?_isa} >= %{glib2_version}
+Requires: glib-devel%{?_isa} >= %{glib2_version}
 
 %description devel
 This package contains the libraries and header files that are needed
@@ -143,6 +143,9 @@ gdk-pixbuf-query-loaders-%{__isa_bits} --update-cache
 %{_datadir}/installed-tests
 
 %changelog
+* Wed Jul 21 2021 Vinicius Jarina <vinja@microsoft.com> - 2.40.0-4
+- Rebuilt for Mariner Core UI
+
 * Mon Jul 27 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2.40.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 

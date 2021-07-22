@@ -1,7 +1,7 @@
 Summary: Shared MIME information database
 Name: shared-mime-info
 Version: 2.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: GPLv2+
 URL: http://freedesktop.org/Software/shared-mime-info
 Source0: https://gitlab.freedesktop.org/xdg/shared-mime-info/uploads/0440063a2e6823a4b1a6fb2f2af8350f/shared-mime-info-2.0.tar.xz
@@ -31,7 +31,7 @@ Patch1: 0001-data-Fix-pkg-config-installation-path.patch
 BuildRequires:  gcc
 BuildRequires:  libxml2-devel
 BuildRequires:  xmlto
-BuildRequires:  glib2-devel
+BuildRequires:  glib-devel
 BuildRequires:  gettext
 BuildRequires:  itstool
 BuildRequires:  meson
@@ -51,13 +51,14 @@ and looking up the correct MIME type in a database.
 %prep
 %autosetup -S git
 tar xjf %SOURCE6
+tar xf %SOURCE0
 mv xdgmime-*/ xdgmime/
 
 %build
 cd ./xdgmime/
 make
-cd ..
-%meson -Dupdate-mimedb=false -Dxdg-mime-path=./xdgmime/
+cd ../shared-mime-info-2.0
+%meson -Dupdate-mimedb=false -Dxdg-mime-path=../xdgmime/
 %meson_build
 
 %install
@@ -112,6 +113,9 @@ update-mime-database -n %{_datadir}/mime &> /dev/null ||:
 %{_datadir}/gettext/its/shared-mime-info.loc
 
 %changelog
+* Wed Jul 21 2021 Vinicius Jarina <vinja@microsoft.com> - 2.0-4
+- Rebuilt for Mariner Core UI
+
 * Sat Aug 01 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2.0-3
 - Second attempt - Rebuilt for
   https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild

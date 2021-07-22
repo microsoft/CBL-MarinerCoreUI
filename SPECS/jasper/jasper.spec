@@ -6,7 +6,7 @@
 Summary: Implementation of the JPEG-2000 standard, Part 1
 Name:    jasper
 Version: 2.0.32
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: JasPer
 URL:     http://www.ece.uvic.ca/~frodo/jasper/
@@ -14,7 +14,6 @@ Source0: https://github.com/jasper-software/jasper/archive/version-%{version}.ta
 
 # skip hard-coded prefix/lib rpath
 Patch2: jasper-2.0.14-rpath.patch
-Patch3: jasper-freeglut.patch
 
 # architecture related patches
 Patch100: jasper-2.0.2-test-ppc64-disable.patch
@@ -22,11 +21,10 @@ Patch101: jasper-2.0.2-test-ppc64le-disable.patch
 
 # autoreconf
 BuildRequires: cmake
-BuildRequires: freeglut-devel 
 BuildRequires: libGLU-devel
-BuildRequires: libjpeg-devel
+BuildRequires: libjpeg-turbo-devel
 BuildRequires: libXmu-devel libXi-devel
-BuildRequires: pkgconfig doxygen
+BuildRequires: pkg-config
 BuildRequires: mesa-libGL-devel
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
@@ -42,8 +40,8 @@ from the JP2 and JPC formats.
 Summary: Header files, libraries and developer documentation
 Provides: libjasper-devel = %{version}-%{release}
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
-Requires: libjpeg-devel
-Requires: pkgconfig
+Requires: libjpeg-turbo-devel
+Requires: pkg-config
 %description devel
 %{summary}.
 
@@ -67,7 +65,7 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 %patch2 -p1 -b .rpath
 # Need to disable one test to be able to build it on ppc64 arch
 # At ppc64 this test just stuck (nothing happend - no exception or error)
-%patch3 -p1 -b .freeglut
+# %patch3 -p1 -b .freeglut
 
 %if "%{_arch}" == "ppc64"
 %patch100 -p1 -b .test-ppc64-disable
@@ -101,8 +99,6 @@ rm -f %{buildroot}%{_libdir}/lib*.la
 %check
 make test -C builder
 
-%ldconfig_scriptlets libs
-
 %files
 %{_bindir}/imgcmp
 %{_bindir}/imginfo
@@ -117,17 +113,18 @@ make test -C builder
 %{_libdir}/libjasper.so
 %{_libdir}/pkgconfig/jasper.pc
 
+%post libs -p /sbin/ldconfig
+%postun libs -p /sbin/ldconfig
+
 %files libs
 %doc README
 %license COPYRIGHT LICENSE
 %{_libdir}/libjasper.so.4*
 
-%files utils
-%{_bindir}/jiv
-%{_mandir}/man1/jiv.1*
-
-
 %changelog
+* Tue Jul 20 2021 Vinicius Jarina <vinja@microsoft.com> - 2.0.32-2
+- MarinerCoreUI migration
+
 * Wed Jun 02 2021 Josef Ridky <jridky@redhat.com> - 2.0.32-1
 - New upstream release 2.0.32 (#1950621)
 

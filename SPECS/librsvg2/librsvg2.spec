@@ -13,7 +13,7 @@
 Name:           librsvg2
 Summary:        An SVG library based on cairo
 Version:        2.50.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 
 License:        LGPLv2+
 URL:            https://wiki.gnome.org/Projects/LibRsvg
@@ -28,7 +28,7 @@ BuildRequires:  pkgconfig(cairo) >= %{cairo_version}
 BuildRequires:  pkgconfig(cairo-gobject) >= %{cairo_version}
 BuildRequires:  pkgconfig(cairo-png) >= %{cairo_version}
 BuildRequires:  pkgconfig(fontconfig)
-BuildRequires:  pkgconfig(gdk-pixbuf-2.0)
+BuildRequires:  pkgconfig(gdk-pixbuf2)
 BuildRequires:  pkgconfig(gio-2.0)
 BuildRequires:  pkgconfig(gio-unix-2.0)
 BuildRequires:  pkgconfig(glib-2.0)
@@ -44,8 +44,8 @@ BuildRequires:  rust
 BuildRequires:  rust-packaging
 %endif
 
-Requires:       cairo%{?_isa} >= %{cairo_version}
-Requires:       cairo-gobject%{?_isa} >= %{cairo_version}
+Requires:       UI-cairo%{?_isa} >= %{cairo_version}
+Requires:       UI-cairo-gobject%{?_isa} >= %{cairo_version}
 # We install a gdk-pixbuf svg loader
 Requires:       gdk-pixbuf2%{?_isa}
 
@@ -135,6 +135,10 @@ rm -vrf %{buildroot}%{_datadir}/doc
 %{_mandir}/man1/rsvg-convert.1*
 
 %changelog
+* Thu Jul 8 2021 Vinicius Jarina <vinja@microsoft.com> - 2.50.3-2
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
+
 * Thu Jan 28 2021 Kalev Lember <klember@redhat.com> - 2.50.3-1
 - Update to 2.50.3
 
