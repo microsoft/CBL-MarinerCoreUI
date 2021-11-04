@@ -37,6 +37,10 @@ BuildRequires:  itstool
 BuildRequires:  meson
 BuildRequires:  git
 
+BuildRequires:  marinerui-rpm-macros
+BuildRequires:  docbook-style-xsl
+BuildRequires:  docbook-dtd-xml
+
 # Disable pkgconfig autodep
 %global __requires_exclude ^/usr/bin/pkg-config$
 
@@ -51,14 +55,14 @@ and looking up the correct MIME type in a database.
 %prep
 %autosetup -S git
 tar xjf %SOURCE6
-tar xf %SOURCE0
+
 mv xdgmime-*/ xdgmime/
 
 %build
 cd ./xdgmime/
 make
-cd ../shared-mime-info-2.0
-%meson -Dupdate-mimedb=false -Dxdg-mime-path=../xdgmime/
+cd ..
+%meson -Dupdate-mimedb=false -Dxdgmime-path=./xdgmime/
 %meson_build
 
 %install

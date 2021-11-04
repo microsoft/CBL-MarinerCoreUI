@@ -19,16 +19,16 @@ License:        LGPLv2+
 URL:            https://wiki.gnome.org/Projects/LibRsvg
 Source0:        https://download.gnome.org/sources/librsvg/2.50/librsvg-%{version}.tar.xz
 
-BuildRequires: make
+BuildRequires:  make
 BuildRequires:  chrpath
 BuildRequires:  gcc
-BuildRequires:  git-core
+BuildRequires:  git
 BuildRequires:  gobject-introspection-devel
 BuildRequires:  pkgconfig(cairo) >= %{cairo_version}
 BuildRequires:  pkgconfig(cairo-gobject) >= %{cairo_version}
 BuildRequires:  pkgconfig(cairo-png) >= %{cairo_version}
-BuildRequires:  pkgconfig(fontconfig)
-BuildRequires:  pkgconfig(gdk-pixbuf2)
+BuildRequires:  fontconfig-devel
+BuildRequires:  gdk-pixbuf2-devel
 BuildRequires:  pkgconfig(gio-2.0)
 BuildRequires:  pkgconfig(gio-unix-2.0)
 BuildRequires:  pkgconfig(glib-2.0)
@@ -37,12 +37,14 @@ BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig(pangocairo)
 BuildRequires:  pkgconfig(pangoft2)
 BuildRequires:  vala
+BuildRequires:  vala-devel
+BuildRequires:  vala-tools
 %if 0%{?bundled_rust_deps}
-BuildRequires:  cargo
 BuildRequires:  rust
 %else
 BuildRequires:  rust-packaging
 %endif
+BuildRequires:  harfbuzz-devel >= 2.0.0
 
 Requires:       UI-cairo%{?_isa} >= %{cairo_version}
 Requires:       UI-cairo-gobject%{?_isa} >= %{cairo_version}

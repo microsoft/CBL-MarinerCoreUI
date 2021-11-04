@@ -23,6 +23,10 @@ BuildRequires:  pkgconfig(gobject-introspection-1.0) >= 0.9.3
 # layer; we need to actually have the mime type database.
 BuildRequires:  shared-mime-info
 
+BuildRequires:  marinerui-rpm-macros
+Provides: pkgconfig(gdk-pixbuf2) = %{version}-%{release}
+Provides: pkgconfig(gdk-pixbuf2-devel) = %{version}-%{release}
+
 Requires: glib%{?_isa} >= %{glib2_version}
 # We also need MIME information at runtime
 Requires: shared-mime-info
