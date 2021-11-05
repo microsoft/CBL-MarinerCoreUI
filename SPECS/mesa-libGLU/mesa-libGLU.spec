@@ -6,6 +6,8 @@ Release:        4%{?dist}
 Summary:        Mesa libGLU library
 
 License:        MIT
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
 URL:            http://mesa3d.org/
 Source0:        https://ftp.freedesktop.org/pub/mesa/glu/glu-%{version}.tar.xz
 Source2:        make-git-snapshot.sh
@@ -57,7 +59,8 @@ make %{?_smp_mflags}
 
 %changelog
 * Wed Jul 21 2021 Vinicius Jarina <vinja@microsoft.com> - 9.0.1-4
-- Rebuilt for Mariner Core UI
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- License verified.
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 9.0.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild

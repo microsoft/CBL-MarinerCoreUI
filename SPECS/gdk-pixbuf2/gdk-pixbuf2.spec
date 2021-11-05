@@ -6,8 +6,10 @@ Release:        4%{?dist}
 Summary:        An image loading library
 
 License:        LGPLv2+
-URL:            http://www.gtk.org
-Source0:        http://download.gnome.org/sources/gdk-pixbuf/2.40/gdk-pixbuf-%{version}.tar.xz
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL:            https://www.gtk.org
+Source0:        https://download.gnome.org/sources/gdk-pixbuf/2.40/gdk-pixbuf-%{version}.tar.xz
 
 BuildRequires:  gettext
 BuildRequires:  gtk-doc
@@ -148,7 +150,8 @@ gdk-pixbuf-query-loaders-%{__isa_bits} --update-cache
 
 %changelog
 * Wed Jul 21 2021 Vinicius Jarina <vinja@microsoft.com> - 2.40.0-4
-- Rebuilt for Mariner Core UI
+- Initial CBL-Mariner import from Fedora 33 (license: MIT)
+- License verified.
 
 * Mon Jul 27 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2.40.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild

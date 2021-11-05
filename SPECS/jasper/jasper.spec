@@ -9,8 +9,10 @@ Version: 2.0.32
 Release: 2%{?dist}
 
 License: JasPer
+Vendor:  Microsoft Corporation
+Distribution: Mariner
 URL:     http://www.ece.uvic.ca/~frodo/jasper/
-Source0: https://github.com/jasper-software/jasper/archive/version-%{version}.tar.gz
+Source0: https://github.com/jasper-software/jasper/archive/version-%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 # skip hard-coded prefix/lib rpath
 Patch2: jasper-2.0.14-rpath.patch
@@ -123,7 +125,8 @@ make test -C builder
 
 %changelog
 * Tue Jul 20 2021 Vinicius Jarina <vinja@microsoft.com> - 2.0.32-2
-- MarinerCoreUI migration
+- Initial CBL-Mariner import from Fedora 33 (license: MIT)
+- License verified.
 
 * Wed Jun 02 2021 Josef Ridky <jridky@redhat.com> - 2.0.32-1
 - New upstream release 2.0.32 (#1950621)
