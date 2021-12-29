@@ -3,35 +3,31 @@
 # ImageMagick
 # netpbm
 
-Summary: Implementation of the JPEG-2000 standard, Part 1
-Name:    jasper
-Version: 2.0.32
-Release: 2%{?dist}
-
-License: JasPer
-Vendor:  Microsoft Corporation
-Distribution: Mariner
-URL:     http://www.ece.uvic.ca/~frodo/jasper/
-Source0: https://github.com/jasper-software/jasper/archive/version-%{version}.tar.gz#/%{name}-%{version}.tar.gz
-
+Summary:        Implementation of the JPEG-2000 standard, Part 1
+Name:           jasper
+Version:        2.0.32
+Release:        2%{?dist}
+License:        JasPer
+Vendor:         Microsoft Corporation
+Distribution:   Mariner
+URL:            https://www.ece.uvic.ca/~frodo/jasper/
+Source0:        https://github.com/jasper-software/jasper/archive/version-%{version}.tar.gz#/%{name}-%{version}.tar.gz
 # skip hard-coded prefix/lib rpath
-Patch2: jasper-2.0.14-rpath.patch
-
+Patch2:         jasper-2.0.14-rpath.patch
 # architecture related patches
-Patch100: jasper-2.0.2-test-ppc64-disable.patch
-Patch101: jasper-2.0.2-test-ppc64le-disable.patch
-
+Patch100:       jasper-2.0.2-test-ppc64-disable.patch
+Patch101:       jasper-2.0.2-test-ppc64le-disable.patch
 # autoreconf
-BuildRequires: cmake
-BuildRequires: libGLU-devel
-BuildRequires: libjpeg-turbo-devel
-BuildRequires: libXmu-devel libXi-devel
-BuildRequires: pkg-config
-BuildRequires: mesa-libGL-devel
-
-Requires: %{name}-libs%{?_isa} = %{version}-%{release}
-BuildRequires: gcc
-BuildRequires: make
+BuildRequires:  cmake
+BuildRequires:  gcc
+BuildRequires:  libGLU-devel
+BuildRequires:  libXi-devel
+BuildRequires:  libXmu-devel
+BuildRequires:  libjpeg-turbo-devel
+BuildRequires:  make
+BuildRequires:  mesa-libGL-devel
+BuildRequires:  pkgconfig
+Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 
 %description
 This package contains an implementation of the image compression
@@ -39,27 +35,29 @@ standard JPEG-2000, Part 1. It consists of tools for conversion to and
 from the JP2 and JPC formats.
 
 %package devel
-Summary: Header files, libraries and developer documentation
-Provides: libjasper-devel = %{version}-%{release}
-Requires: %{name}-libs%{?_isa} = %{version}-%{release}
-Requires: libjpeg-turbo-devel
-Requires: pkg-config
+Summary:        Header files, libraries and developer documentation
+Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
+Requires:       libjpeg-turbo-devel
+Requires:       pkgconfig
+Provides:       libjasper-devel = %{version}-%{release}
+
 %description devel
 %{summary}.
 
 %package libs
-Summary: Runtime libraries for %{name}
-Conflicts: jasper < 1.900.1-4
+Summary:        Runtime libraries for %{name}
+Conflicts:      jasper < 1.900.1-4
+
 %description libs
 %{summary}.
 
 %package utils
-Summary: Nonessential utilities for %{name}
-Requires: %{name} = %{version}-%{release}
-Requires: %{name}-libs%{?_isa} = %{version}-%{release}
+Summary:        Nonessential utilities for %{name}
+Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
+
 %description utils
 %{summary}, including jiv and tmrdemo.
-
 
 %prep
 %setup -q -n %{name}-version-%{version}
@@ -80,7 +78,6 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 %patch101 -p1 -b .test-ppc64le-disable
 %endif
 
-
 %build
 mkdir builder
 %cmake \
@@ -89,14 +86,12 @@ mkdir builder
 
 %make_build -C builder
 
-
 %install
 make install/fast DESTDIR=%{buildroot} -C builder
 
 # Unpackaged files
 rm -f doc/README
-rm -f %{buildroot}%{_libdir}/lib*.la
-
+find %{buildroot} -type f -name "*.la" -delete -print
 
 %check
 make test -C builder
@@ -437,4 +432,3 @@ make test -C builder
 
 * Thu Jan 22 2004 Rex Dieter <rexdieter at sf.net> 1.700.5-0.fdr.0
 - first try
-
