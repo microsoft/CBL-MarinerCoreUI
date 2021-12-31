@@ -56,7 +56,6 @@ make %{?_smp_mflags}
 
 %post devel -p /sbin/ldconfig
 %postun devel -p /sbin/ldconfig
-
 %changelog
 * Wed Jul 21 2021 Vinicius Jarina <vinja@microsoft.com> - 9.0.1-4
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).

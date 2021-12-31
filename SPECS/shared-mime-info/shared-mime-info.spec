@@ -24,7 +24,6 @@ Source6:        https://gitlab.freedesktop.org/xdg/xdgmime/-/archive/6663a2288d1
 Patch0:         0001-Remove-sub-classing-from-OO.o-mime-types.patch
 # https://gitlab.freedesktop.org/xdg/shared-mime-info/-/merge_requests/80
 Patch1:         0001-data-Fix-pkg-config-installation-path.patch
-
 # Disable pkgconfig autodep
 %global __requires_exclude ^%{_bindir}/pkg-config$
 BuildRequires:  docbook-dtd-xml
