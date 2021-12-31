@@ -1,21 +1,21 @@
 #define gitdate 20120904
 
+Summary:        Mesa libGLU library
 Name:           mesa-libGLU
 Version:        9.0.1
 Release:        4%{?dist}
-Summary:        Mesa libGLU library
-
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL:            http://mesa3d.org/
+URL:            https://mesa3d.org/
 Source0:        https://ftp.freedesktop.org/pub/mesa/glu/glu-%{version}.tar.xz
 Source2:        make-git-snapshot.sh
-
-BuildRequires:  autoconf automake libtool
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
 BuildRequires:  mesa-libGL-devel
-#Requires:       
-Provides: libGLU
+#Requires:
+Provides:       libGLU
 
 %description
 Mesa implementation of the standard GLU OpenGL utility API.
@@ -23,7 +23,7 @@ Mesa implementation of the standard GLU OpenGL utility API.
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Provides:	libGLU-devel
+Provides:       libGLU-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -127,4 +127,3 @@ make %{?_smp_mflags}
 
 * Tue Sep 04 2012 Adam Jackson <ajax@redhat.com> 9.0-0.1
 - Initial packaging for split libGLU
-

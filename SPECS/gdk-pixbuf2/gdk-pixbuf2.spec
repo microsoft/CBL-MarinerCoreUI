@@ -1,37 +1,32 @@
-%global glib2_version 2.48.0
-
+Summary:        An image loading library
 Name:           gdk-pixbuf2
 Version:        2.40.0
 Release:        4%{?dist}
-Summary:        An image loading library
-
 License:        LGPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://www.gtk.org
 Source0:        https://download.gnome.org/sources/gdk-pixbuf/2.40/gdk-pixbuf-%{version}.tar.xz
-
+%global glib2_version 2.48.0
 BuildRequires:  gettext
 BuildRequires:  gtk-doc
-BuildRequires:  pkgconfig(gio-2.0) >= %{glib2_version}
-BuildRequires:  libpng-devel
-BuildRequires:  libjpeg-turbo-devel
-BuildRequires:  libtiff-devel
 BuildRequires:  jasper-devel
+BuildRequires:  libjpeg-turbo-devel
+BuildRequires:  libpng-devel
+BuildRequires:  libtiff-devel
+BuildRequires:  marinerui-rpm-macros
 BuildRequires:  meson
-BuildRequires:  pkgconfig(x11)
-BuildRequires:  pkgconfig(gobject-introspection-1.0) >= 0.9.3
 # gdk-pixbuf does a configure time check which uses the GIO mime
 # layer; we need to actually have the mime type database.
 BuildRequires:  shared-mime-info
-
-BuildRequires:  marinerui-rpm-macros
-Provides: pkgconfig(gdk-pixbuf2) = %{version}-%{release}
-Provides: pkgconfig(gdk-pixbuf2-devel) = %{version}-%{release}
-
-Requires: glib%{?_isa} >= %{glib2_version}
+BuildRequires:  pkgconfig(gio-2.0) >= %{glib2_version}
+BuildRequires:  pkgconfig(gobject-introspection-1.0) >= 0.9.3
+BuildRequires:  pkgconfig(x11)
+Requires:       glib%{?_isa} >= %{glib2_version}
 # We also need MIME information at runtime
-Requires: shared-mime-info
+Requires:       shared-mime-info
+Provides:       pkgconfig(gdk-pixbuf2) = %{version}-%{release}
+Provides:       pkgconfig(gdk-pixbuf2-devel) = %{version}-%{release}
 
 %description
 gdk-pixbuf is an image loading library that can be extended by loadable
@@ -39,42 +34,42 @@ modules for new image formats. It is used by toolkits such as GTK+ or
 clutter.
 
 %package modules
-Summary: Additional image modules for gdk-pixbuf
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Summary:        Additional image modules for gdk-pixbuf
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description modules
 This package contains the additional modules that are needed to load various
 image formats such as ICO and JPEG.
 
 %package xlib
-Summary: Additional library for using gdk-pixbuf with bare xlib
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Summary:        Additional library for using gdk-pixbuf with bare xlib
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description xlib
 This package contains the old libgdk-pixbuf-xlib library that is needed by some
 programs to load GdkPixbuf using bare XLib calls.
 
 %package xlib-devel
-Summary: Development files for gdk-pixbuf-xlib
-Requires: %{name}-xlib%{?_isa} = %{version}-%{release}
-Requires: %{name}-devel%{?_isa} = %{version}-%{release}
+Summary:        Development files for gdk-pixbuf-xlib
+Requires:       %{name}-devel%{?_isa} = %{version}-%{release}
+Requires:       %{name}-xlib%{?_isa} = %{version}-%{release}
 
 %description xlib-devel
 This package contains the libraries and header files that are needed
 for writing applications that are using gdk-pixbuf-xlib.
 
 %package devel
-Summary: Development files for gdk-pixbuf
-Requires: %{name}%{?_isa} = %{version}-%{release}
-Requires: glib-devel%{?_isa} >= %{glib2_version}
+Summary:        Development files for gdk-pixbuf
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       glib-devel%{?_isa} >= %{glib2_version}
 
 %description devel
 This package contains the libraries and header files that are needed
 for writing applications that are using gdk-pixbuf.
 
 %package tests
-Summary: Tests for the %{name} package
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Summary:        Tests for the %{name} package
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description tests
 The %{name}-tests package contains tests that can be used to verify
@@ -94,9 +89,9 @@ the functionality of the installed %{name} package.
 %install
 %meson_install
 
-touch $RPM_BUILD_ROOT%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.cache
+touch %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.cache
 
-(cd $RPM_BUILD_ROOT%{_bindir}
+(cd %{buildroot}%{_bindir}
  mv gdk-pixbuf-query-loaders gdk-pixbuf-query-loaders-%{__isa_bits}
 )
 

@@ -1,48 +1,43 @@
-Summary: Shared MIME information database
-Name: shared-mime-info
-Version: 2.0
-Release: 4%{?dist}
-License: GPLv2+
-URL: http://freedesktop.org/Software/shared-mime-info
-Source0: https://gitlab.freedesktop.org/xdg/shared-mime-info/uploads/0440063a2e6823a4b1a6fb2f2af8350f/shared-mime-info-2.0.tar.xz
-Source1: gnome-mimeapps.list
+Summary:        Shared MIME information database
+Name:           shared-mime-info
+Version:        2.0
+Release:        4%{?dist}
+License:        GPLv2+
+URL:            https://freedesktop.org/Software/shared-mime-info
+Source0:        https://gitlab.freedesktop.org/xdg/shared-mime-info/uploads/0440063a2e6823a4b1a6fb2f2af8350f/shared-mime-info-2.0.tar.xz
+Source1:        gnome-mimeapps.list
 # Generated with:
 # for i in `cat /home/hadess/Projects/jhbuild/totem/data/mime-type-list.txt | grep -v audio/flac | grep -v ^#` ; do if grep MimeType /home/hadess/Projects/jhbuild/rhythmbox/data/rhythmbox.desktop.in.in | grep -q "$i;" ; then echo "$i=org.gnome.Rhythmbox3.desktop;rhythmbox.desktop;org.gnome.Totem.desktop;" >> totem-defaults.list ; else echo "$i=org.gnome.Totem.desktop;" >> totem-defaults.list ; fi ; done ; for i in `cat /home/hadess/Projects/jhbuild/totem/data/uri-schemes-list.txt | grep -v ^#` ; do echo "x-scheme-handler/$i=org.gnome.Totem.desktop;" >> totem-defaults.list ; done
-Source2: totem-defaults.list
+Source2:        totem-defaults.list
 # Generated with:
 # for i in `cat /home/hadess/Projects/jhbuild/file-roller/data/supported-mime-types | sed 's/;//g'` application/x-source-rpm ; do if grep MimeType /usr/share/applications/org.gnome.Nautilus.desktop | grep -q "$i;" ; then echo "$i=org.gnome.Nautilus.desktop;org.gnome.FileRoller.desktop;" >> file-roller-defaults.list ; elif ! `grep -q $i gnome-mimeapps.list` ; then echo $i=org.gnome.FileRoller.desktop\; >> file-roller-defaults.list ; fi ; done && for i in `grep MimeType= /usr/share/applications/org.gnome.Nautilus.desktop | sed 's/MimeType=//' | sed 's/;/ /g'` ; do if ! `grep -q $i file-roller-defaults.list || grep -q $i gnome-mimeapps.list` ; then echo "missing handler $i" ; fi ; done
-Source3: file-roller-defaults.list
+Source3:        file-roller-defaults.list
 # Generated with:
 # for i in `grep MimeType= /usr/share/applications/org.gnome.eog.desktop | sed 's/MimeType=//' | sed 's/;/ /g'` ; do echo $i=org.gnome.eog.desktop\; >> eog-defaults.list ; done
-Source4: eog-defaults.list
+Source4:        eog-defaults.list
 # Generated with:
 # for i in `grep MimeType= /usr/share/applications/org.gnome.Evince.desktop | sed 's/MimeType=//' | sed 's/;/ /g'` ; do echo $i=org.gnome.Evince.desktop\; >> evince-defaults.list ; done
-Source5: evince-defaults.list
-
+Source5:        evince-defaults.list
 # Tarball for https://gitlab.freedesktop.org/xdg/xdgmime/-/tree/6663a2288d11b37bc07f5a01b4b85dcd377787e1
-Source6: https://gitlab.freedesktop.org/xdg/xdgmime/-/archive/6663a2288d11b37bc07f5a01b4b85dcd377787e1/xdgmime-6663a2288d11b37bc07f5a01b4b85dcd377787e1.tar.bz2
-
+Source6:        https://gitlab.freedesktop.org/xdg/xdgmime/-/archive/6663a2288d11b37bc07f5a01b4b85dcd377787e1/xdgmime-6663a2288d11b37bc07f5a01b4b85dcd377787e1.tar.bz2
 # Work-around for https://bugs.freedesktop.org/show_bug.cgi?id=40354
-Patch0: 0001-Remove-sub-classing-from-OO.o-mime-types.patch
-
+Patch0:         0001-Remove-sub-classing-from-OO.o-mime-types.patch
 # https://gitlab.freedesktop.org/xdg/shared-mime-info/-/merge_requests/80
-Patch1: 0001-data-Fix-pkg-config-installation-path.patch
-
-BuildRequires:  gcc
-BuildRequires:  libxml2-devel
-BuildRequires:  xmlto
-BuildRequires:  glib-devel
-BuildRequires:  gettext
-BuildRequires:  itstool
-BuildRequires:  meson
-BuildRequires:  git
-
-BuildRequires:  marinerui-rpm-macros
-BuildRequires:  docbook-style-xsl
-BuildRequires:  docbook-dtd-xml
+Patch1:         0001-data-Fix-pkg-config-installation-path.patch
 
 # Disable pkgconfig autodep
-%global __requires_exclude ^/usr/bin/pkg-config$
+%global __requires_exclude ^%{_bindir}/pkg-config$
+BuildRequires:  docbook-dtd-xml
+BuildRequires:  docbook-style-xsl
+BuildRequires:  gcc
+BuildRequires:  gettext
+BuildRequires:  git
+BuildRequires:  glib-devel
+BuildRequires:  itstool
+BuildRequires:  libxml2-devel
+BuildRequires:  marinerui-rpm-macros
+BuildRequires:  meson
+BuildRequires:  xmlto
 
 %description
 This is the freedesktop.org shared MIME info database.
@@ -54,7 +49,7 @@ and looking up the correct MIME type in a database.
 
 %prep
 %autosetup -S git
-tar xjf %SOURCE6
+tar xjf %{SOURCE6}
 
 mv xdgmime-*/ xdgmime/
 
@@ -68,27 +63,27 @@ cd ..
 %install
 %meson_install
 
-find $RPM_BUILD_ROOT%{_datadir}/mime -type d \
+find %{buildroot}%{_datadir}/mime -type d \
 | sed -e "s|^$RPM_BUILD_ROOT|%%dir |" > %{name}.files
-find $RPM_BUILD_ROOT%{_datadir}/mime -type f -not -path "*/packages/*" \
+find %{buildroot}%{_datadir}/mime -type f -not -path "*/packages/*" \
 | sed -e "s|^$RPM_BUILD_ROOT|%%ghost |" >> %{name}.files
 
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/applications
-install -m 644 %SOURCE1 $RPM_BUILD_ROOT/%{_datadir}/applications/gnome-mimeapps.list
-cat %SOURCE2 >> $RPM_BUILD_ROOT/%{_datadir}/applications/gnome-mimeapps.list
-cat %SOURCE3 >> $RPM_BUILD_ROOT/%{_datadir}/applications/gnome-mimeapps.list
-cat %SOURCE4 >> $RPM_BUILD_ROOT/%{_datadir}/applications/gnome-mimeapps.list
-cat %SOURCE5 >> $RPM_BUILD_ROOT/%{_datadir}/applications/gnome-mimeapps.list
+mkdir -p %{buildroot}/%{_datadir}/applications
+install -m 644 %{SOURCE1} %{buildroot}/%{_datadir}/applications/gnome-mimeapps.list
+cat %{SOURCE2} >> %{buildroot}/%{_datadir}/applications/gnome-mimeapps.list
+cat %{SOURCE3} >> %{buildroot}/%{_datadir}/applications/gnome-mimeapps.list
+cat %{SOURCE4} >> %{buildroot}/%{_datadir}/applications/gnome-mimeapps.list
+cat %{SOURCE5} >> %{buildroot}/%{_datadir}/applications/gnome-mimeapps.list
 
 # Support fallback/generic mimeapps.list (currently based on gnome-mimeapps.list), see
 # https://lists.fedoraproject.org/pipermail/devel/2015-July/212403.html
 # https://bugzilla.redhat.com/show_bug.cgi?id=1243049
-cp $RPM_BUILD_ROOT%{_datadir}/applications/gnome-mimeapps.list \
-   $RPM_BUILD_ROOT%{_datadir}/applications/mimeapps.list
+cp %{buildroot}%{_datadir}/applications/gnome-mimeapps.list \
+   %{buildroot}%{_datadir}/applications/mimeapps.list
 
 ## remove bogus translation files
 ## translations are already in the xml file installed
-rm -rf $RPM_BUILD_ROOT%{_datadir}/locale/*
+rm -rf %{buildroot}%{_datadir}/locale/*
 
 %check
 %meson_test

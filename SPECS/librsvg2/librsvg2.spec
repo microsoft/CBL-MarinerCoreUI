@@ -1,36 +1,32 @@
-# https://github.com/rust-lang/rust/issues/47714
-%undefine _strict_symbol_defs_build
-
-# We want verbose builds
-%global _configure_disable_silent_rules 1
-
-# Use bundled deps as we don't ship the exact right versions for all the
-# required rust libraries
-%global bundled_rust_deps 1
-
-%global cairo_version 1.16.0
-
-Name:           librsvg2
 Summary:        An SVG library based on cairo
+Name:           librsvg2
 Version:        2.50.3
 Release:        2%{?dist}
-
 License:        LGPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://wiki.gnome.org/Projects/LibRsvg
 Source0:        https://download.gnome.org/sources/librsvg/2.50/librsvg-%{version}.tar.xz
-
-BuildRequires:  make
+# We want verbose builds
+%global _configure_disable_silent_rules 1
+# Use bundled deps as we don't ship the exact right versions for all the
+# required rust libraries
+%global bundled_rust_deps 1
+%global cairo_version 1.16.0
 BuildRequires:  chrpath
+BuildRequires:  fontconfig-devel
 BuildRequires:  gcc
+BuildRequires:  gdk-pixbuf2-devel
 BuildRequires:  git
 BuildRequires:  gobject-introspection-devel
+BuildRequires:  harfbuzz-devel >= 2.0.0
+BuildRequires:  make
+BuildRequires:  vala
+BuildRequires:  vala-devel
+BuildRequires:  vala-tools
 BuildRequires:  pkgconfig(cairo) >= %{cairo_version}
 BuildRequires:  pkgconfig(cairo-gobject) >= %{cairo_version}
 BuildRequires:  pkgconfig(cairo-png) >= %{cairo_version}
-BuildRequires:  fontconfig-devel
-BuildRequires:  gdk-pixbuf2-devel
 BuildRequires:  pkgconfig(gio-2.0)
 BuildRequires:  pkgconfig(gio-unix-2.0)
 BuildRequires:  pkgconfig(glib-2.0)
@@ -38,20 +34,17 @@ BuildRequires:  pkgconfig(gthread-2.0)
 BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig(pangocairo)
 BuildRequires:  pkgconfig(pangoft2)
-BuildRequires:  vala
-BuildRequires:  vala-devel
-BuildRequires:  vala-tools
+Requires:       UI-cairo%{?_isa} >= %{cairo_version}
+Requires:       UI-cairo-gobject%{?_isa} >= %{cairo_version}
+# We install a gdk-pixbuf svg loader
+Requires:       gdk-pixbuf2%{?_isa}
+# https://github.com/rust-lang/rust/issues/47714
+%undefine _strict_symbol_defs_build
 %if 0%{?bundled_rust_deps}
 BuildRequires:  rust
 %else
 BuildRequires:  rust-packaging
 %endif
-BuildRequires:  harfbuzz-devel >= 2.0.0
-
-Requires:       UI-cairo%{?_isa} >= %{cairo_version}
-Requires:       UI-cairo-gobject%{?_isa} >= %{cairo_version}
-# We install a gdk-pixbuf svg loader
-Requires:       gdk-pixbuf2%{?_isa}
 
 %description
 An SVG library based on cairo.
@@ -79,15 +72,15 @@ This package provides extra utilities based on the librsvg library.
 # No bundled deps
 rm -vrf vendor .cargo Cargo.lock
 pushd rsvg_internals
-  %cargo_prep
+  %{cargo_prep}
   mv .cargo ..
 popd
 %endif
 
 %if ! 0%{?bundled_rust_deps}
-%generate_buildrequires
+%{generate_buildrequires}
 pushd rsvg_internals >/dev/null
-  %cargo_generate_buildrequires
+  %{cargo_generate_buildrequires}
 popd >/dev/null
 %endif
 
@@ -100,7 +93,7 @@ popd >/dev/null
 
 %install
 %make_install
-find %{buildroot} -type f -name '*.la' -print -delete
+find %{buildroot} -type f -name "*.la" -delete -print
 
 %find_lang librsvg
 
@@ -109,7 +102,7 @@ chrpath --delete %{buildroot}%{_bindir}/rsvg-convert
 chrpath --delete %{buildroot}%{_libdir}/gdk-pixbuf-2.0/*/loaders/libpixbufloader-svg.so
 
 # we install own docs
-rm -vrf %{buildroot}%{_datadir}/doc
+rm -vrf %{buildroot}%{_docdir}
 
 %files -f librsvg.lang
 %doc CONTRIBUTING.md README.md
@@ -139,7 +132,7 @@ rm -vrf %{buildroot}%{_datadir}/doc
 %{_mandir}/man1/rsvg-convert.1*
 
 %changelog
-* Thu Jul 8 2021 Vinicius Jarina <vinja@microsoft.com> - 2.50.3-2
+* Thu Jul 08 2021 Vinicius Jarina <vinja@microsoft.com> - 2.50.3-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
 
@@ -867,4 +860,3 @@ rm -vrf %{buildroot}%{_datadir}/doc
 
 * Wed Apr 26 2000 Ramiro Estrugo <ramiro@eazel.com>
 - created this thing
-

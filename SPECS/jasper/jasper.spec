@@ -26,7 +26,7 @@ BuildRequires:  libXmu-devel
 BuildRequires:  libjpeg-turbo-devel
 BuildRequires:  make
 BuildRequires:  mesa-libGL-devel
-BuildRequires:  pkgconfig
+BuildRequires:  pkg-config
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 
 %description
@@ -38,7 +38,7 @@ from the JP2 and JPC formats.
 Summary:        Header files, libraries and developer documentation
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 Requires:       libjpeg-turbo-devel
-Requires:       pkgconfig
+Requires:       pkg-config
 Provides:       libjasper-devel = %{version}-%{release}
 
 %description devel
