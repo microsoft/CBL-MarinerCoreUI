@@ -8,7 +8,8 @@ License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://mesa3d.org/
-Source0:        https://ftp.freedesktop.org/pub/mesa/glu/glu-%{version}.tar.xz
+Source0:        https://mesa.freedesktop.org/archive/glu/glu-%{version}.tar.xz
+Source1:        LICENSE.PTR
 Source2:        make-git-snapshot.sh
 BuildRequires:  autoconf
 BuildRequires:  automake
@@ -31,6 +32,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q -n glu-%{?gitdate:%{gitdate}}%{?!gitdate:%{version}}
+cp %{SOURCE1} .
 
 %build
 autoreconf -v -i -f
@@ -45,6 +47,7 @@ make %{?_smp_mflags}
 %postun -p /sbin/ldconfig
 
 %files
+%license LICENSE.PTR
 %{_libdir}/libGLU.so.1
 %{_libdir}/libGLU.so.1.3.*
 
@@ -58,7 +61,8 @@ make %{?_smp_mflags}
 %postun devel -p /sbin/ldconfig
 %changelog
 * Wed Jul 21 2021 Vinicius Jarina <vinja@microsoft.com> - 9.0.1-4
-- Initial CBL-Mariner import from Fedora 33 (license: MIT).
+- Initial CBL-Mariner import from Fedora 33
+- Added a "LICENSE.PTR" source clarifying the project's license.
 - License verified.
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 9.0.1-3

@@ -440,7 +440,7 @@
         "other": {
           "name": "mesa-libGLU",
           "version": "9.0.1",
-          "downloadUrl": "ftp://ftp.freedesktop.org/pub/mesa/glu/glu-9.0.1.tar.xz"
+          "downloadUrl": "https://mesa.freedesktop.org/archive/glu/glu-9.0.1.tar.xz"
         }
       }
     },
