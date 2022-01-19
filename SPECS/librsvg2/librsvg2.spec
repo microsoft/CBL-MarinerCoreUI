@@ -1,3 +1,15 @@
+# https://github.com/rust-lang/rust/issues/47714
+%undefine _strict_symbol_defs_build
+
+# We want verbose builds
+%global _configure_disable_silent_rules 1
+
+# Use bundled deps as we don't ship the exact right versions for all the
+# required rust libraries
+%global bundled_rust_deps 1
+
+%global cairo_version 1.16.0
+
 Summary:        An SVG library based on cairo
 Name:           librsvg2
 Version:        2.50.3
@@ -7,12 +19,6 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://wiki.gnome.org/Projects/LibRsvg
 Source0:        https://download.gnome.org/sources/librsvg/2.50/librsvg-%{version}.tar.xz
-# We want verbose builds
-%global _configure_disable_silent_rules 1
-# Use bundled deps as we don't ship the exact right versions for all the
-# required rust libraries
-%global bundled_rust_deps 1
-%global cairo_version 1.16.0
 BuildRequires:  chrpath
 BuildRequires:  fontconfig-devel
 BuildRequires:  gcc
@@ -38,8 +44,6 @@ Requires:       UI-cairo%{?_isa} >= %{cairo_version}
 Requires:       UI-cairo-gobject%{?_isa} >= %{cairo_version}
 # We install a gdk-pixbuf svg loader
 Requires:       gdk-pixbuf2%{?_isa}
-# https://github.com/rust-lang/rust/issues/47714
-%undefine _strict_symbol_defs_build
 %if 0%{?bundled_rust_deps}
 BuildRequires:  rust
 %else

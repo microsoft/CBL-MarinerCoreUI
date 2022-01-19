@@ -113,6 +113,7 @@ update-mime-database -n %{_datadir}/mime &> /dev/null ||:
 %changelog
 * Wed Jul 21 2021 Vinicius Jarina <vinja@microsoft.com> - 2.0-4
 - Rebuilt for Mariner Core UI
+- License verified.
 
 * Sat Aug 01 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2.0-3
 - Second attempt - Rebuilt for

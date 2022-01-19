@@ -1,3 +1,5 @@
+%global glib2_version 2.48.0
+
 Summary:        An image loading library
 Name:           gdk-pixbuf2
 Version:        2.40.0
@@ -7,7 +9,6 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://www.gtk.org
 Source0:        https://download.gnome.org/sources/gdk-pixbuf/2.40/gdk-pixbuf-%{version}.tar.xz
-%global glib2_version 2.48.0
 BuildRequires:  gettext
 BuildRequires:  gtk-doc
 BuildRequires:  jasper-devel

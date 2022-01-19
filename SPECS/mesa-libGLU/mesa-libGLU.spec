@@ -1,5 +1,3 @@
-#define gitdate 20120904
-
 Summary:        Mesa libGLU library
 Name:           mesa-libGLU
 Version:        9.0.1
@@ -61,7 +59,7 @@ make %{?_smp_mflags}
 %postun devel -p /sbin/ldconfig
 %changelog
 * Wed Jul 21 2021 Vinicius Jarina <vinja@microsoft.com> - 9.0.1-4
-- Initial CBL-Mariner import from Fedora 33
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - Added a "LICENSE.PTR" source clarifying the project's license.
 - License verified.
 
