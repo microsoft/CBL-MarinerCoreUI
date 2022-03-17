@@ -49,7 +49,7 @@ wayland-protocols.
 
 %changelog
 * Tue Mar 15 2022 Hideyuki Nagase <hideyukn@microsoft.com> - 1.25-2
-- Initial CBL-Mariner import from Fedora 26 (license: MIT).
+- Initial CBL-Mariner import from Fedora 36 (license: MIT).
 - License verified.
 - Added explicit "Provides" for "pkgconfig(*)".
 
