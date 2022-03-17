@@ -53,6 +53,7 @@ Wayland development documentation
 
 %package -n libwayland-client
 Summary:        Wayland client library
+
 %description -n libwayland-client
 Wayland client library
 
@@ -61,14 +62,16 @@ Summary:        Wayland cursor library
 
 %description -n libwayland-cursor
 Wayland cursor library
- 
+
 %package -n libwayland-egl
 Summary:        Wayland egl library
+
 %description -n libwayland-egl
 Wayland egl library
 
 %package -n libwayland-server
 Summary:        Wayland server library
+
 %description -n libwayland-server
 Wayland server library
 
