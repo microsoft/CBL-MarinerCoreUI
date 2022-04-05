@@ -1,24 +1,20 @@
 Summary:        Wayland Compositor Infrastructure
 Name:           wayland
-Version:        1.20.0
-Release:        4%{?dist}
+Version:        1.18.0
+Release:        3%{?dist}
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://wayland.freedesktop.org/
 Source0:        https://wayland.freedesktop.org/releases/%{name}-%{version}.tar.xz
-BuildRequires:  docbook-style-xsl
-BuildRequires:  doxygen
+
+Patch0:         0001-Idle-loop-thread-safe-fix.patch
+
+BuildRequires:  chrpath
 BuildRequires:  expat-devel
 BuildRequires:  gcc
-BuildRequires:  graphviz
 BuildRequires:  libffi-devel
-BuildRequires:  libxml2-devel
-BuildRequires:  libxslt
-BuildRequires:  marinerui-rpm-macros
-BuildRequires:  meson
 BuildRequires:  pkg-config
-BuildRequires:  xmlto
 
 %description
 Wayland is a protocol for a compositor to talk to its clients as well as a C
@@ -29,16 +25,18 @@ applications, X servers (rootless or fullscreen) or other display servers.
 
 %package        devel
 Summary:        Development files for %{name}
-Requires:       libwayland-client%{?_isa} = %{version}-%{release}
-Requires:       libwayland-cursor%{?_isa} = %{version}-%{release}
-Requires:       libwayland-egl%{?_isa} = %{version}-%{release}
-Requires:       libwayland-server%{?_isa} = %{version}-%{release}
+
 Provides:       pkgconfig(wayland-client) = %{version}-%{release}
 Provides:       pkgconfig(wayland-cursor) = %{version}-%{release}
 Provides:       pkgconfig(wayland-egl) = %{version}-%{release}
 Provides:       pkgconfig(wayland-egl-backend) = %{version}-%{release}
 Provides:       pkgconfig(wayland-scanner) = %{version}-%{release}
-Provides:       pkgconfig(wayland-server) = %{version}-%{release}
+Provides:       pkgconfig(wayland-server)  = %{version}-%{release}
+
+Requires:       libwayland-client%{?_isa} = %{version}-%{release}
+Requires:       libwayland-cursor%{?_isa} = %{version}-%{release}
+Requires:       libwayland-egl%{?_isa} = %{version}-%{release}
+Requires:       libwayland-server%{?_isa} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -46,6 +44,7 @@ developing applications that use %{name}.
 
 %package doc
 Summary:        Wayland development documentation
+
 BuildArch:      noarch
 
 %description doc
@@ -79,28 +78,37 @@ Wayland server library
 %autosetup -p1
 
 %build
-%meson -Ddocumentation=false
-%meson_build
+%configure \
+  --disable-static \
+  --disable-documentation
+make %{?_smp_mflags}
 
 %install
-%meson_install
+%make_install
+
+find %{buildroot} -type f -name "*.la" -delete -print
+
+# Remove lib64 rpaths
+chrpath -d %{buildroot}%{_libdir}/libwayland-cursor.so
 
 %check
-%meson_test
+mkdir -m 700 tests/run
+XDG_RUNTIME_DIR=$PWD/tests/run make check || \
+{ rc=$?; cat test-suite.log; exit $rc; }
 
 %files devel
-%{_bindir}/wayland-scanner
-%{_includedir}/wayland-*.h
-%{_libdir}/pkgconfig/wayland-*.pc
-%{_libdir}/libwayland-*.so
-%{_datadir}/aclocal/wayland-scanner.m4
 %dir %{_datadir}/wayland
+%{_bindir}/wayland-scanner
+%{_datadir}/aclocal/wayland-scanner.m4
 %{_datadir}/wayland/wayland-scanner.mk
-%{_datadir}/wayland/wayland.xml
 %{_datadir}/wayland/wayland.dtd
+%{_datadir}/wayland/wayland.xml
+%{_includedir}/wayland-*.h
+%{_libdir}/libwayland-*.so
+%{_libdir}/pkgconfig/wayland-*.pc
 
 %files doc
-%doc README
+%doc README TODO
 
 %files -n libwayland-client
 %license COPYING
@@ -119,30 +127,14 @@ Wayland server library
 %{_libdir}/libwayland-server.so.0*
 
 %changelog
-* Tue Mar 15 2022 Hideyuki Nagase <hideyukn@microsoft.com> - 1.20.0-4
-- Initial CBL-Mariner import from Fedora 36 (license: MIT).
+* Mon Dec 14 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.18.0-3
+- Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
-- Added explicit "Provides" for "pkgconfig(*)".
-
-* Sat Jan 22 2022 Fedora Release Engineering <releng@fedoraproject.org> - 1.20.0-3
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
-
-* Sat Jan 08 2022 Miro Hrončok <mhroncok@redhat.com> - 1.20.0-2
-- Rebuilt for https://fedoraproject.org/wiki/Changes/LIBFFI34
-
-* Thu Dec 16 2021 Kalev Lember <klember@redhat.com> - 1.20.0-1
-- Update to 1.20.0
-
-* Fri Jul 23 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.19.0-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
-
-* Thu Jan 28 2021 Kalev Lember <klember@redhat.com> - 1.19.0-1
-- Update to 1.19.0
-- Switch to meson build system
-- Drop old provides
-
-* Wed Jan 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.18.0-3
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+- Added a patch making the event loop thread-safe.
+- Added explicit Provides for "pkgconfig(*)".
+- Disabled documentation to remove BuildRequires on: 'graphviz'.
+- Documentation also removed BuildRequires on: 'docbook-style-xsl', 'doxygen', 'libxml2-devel', 'libxslt', and 'xmlto'.
+- Replaced BuildRequires 'pkgconfig(libffi)' with 'libffi-devel'.
 
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.18.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
