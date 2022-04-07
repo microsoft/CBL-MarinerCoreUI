@@ -18,9 +18,9 @@ BuildRequires:  meson
 BuildRequires:  pkg-config
 BuildRequires:  python3-devel
 BuildRequires:  pkgconfig(libevdev)
-BuildRequires:  pkgconfig(libudev)
 BuildRequires:  pkgconfig(libwacom)
 BuildRequires:  pkgconfig(mtdev)
+BuildRequires:  systemd-devel
 
 %description
 libinput is a library that handles input devices for display servers and other
