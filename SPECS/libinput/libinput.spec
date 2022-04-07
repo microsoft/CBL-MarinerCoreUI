@@ -100,7 +100,7 @@ find %{buildroot}/%{_mandir}/man1 -type f -regextype posix-egrep -regex "$UTILS_
 %{_mandir}/man1/libinput-test-suite.1*
 
 %changelog
-* Wed Apr 08 2022 Hideyuki Nagase <hideyukn@microsoft.com> - 1.16.4-3
+* Wed Apr 06 2022 Hideyuki Nagase <hideyukn@microsoft.com> - 1.16.4-3
 - Replace pkgconfig(libevdev) with systemd-devel.
 
 * Wed Dec 16 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.16.4-2
