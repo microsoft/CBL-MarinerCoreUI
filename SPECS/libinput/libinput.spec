@@ -3,7 +3,7 @@
 Summary:        Input device library
 Name:           libinput
 Version:        1.16.4
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -100,6 +100,9 @@ find %{buildroot}/%{_mandir}/man1 -type f -regextype posix-egrep -regex "$UTILS_
 %{_mandir}/man1/libinput-test-suite.1*
 
 %changelog
+* Wed Apr 08 2022 Hideyuki Nagase <hideyukn@microsoft.com> - 1.16.4-3
+- Replace pkgconfig(libevdev) with systemd-devel.
+
 * Wed Dec 16 2020 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.16.4-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.
