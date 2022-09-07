@@ -149,8 +149,8 @@
         "type": "other",
         "other": {
           "name": "libinput",
-          "version": "1.16.4",
-          "downloadUrl": "https://www.freedesktop.org/software/libinput/libinput-1.16.4.tar.xz"
+          "version": "1.16.5",
+          "downloadUrl": "https://www.freedesktop.org/software/libinput/libinput-1.16.5.tar.xz"
         }
       }
     },
