@@ -2,13 +2,14 @@
 
 Summary:        Input device library
 Name:           libinput
-Version:        1.16.4
-Release:        3%{?dist}
+Version:        1.16.5
+Release:        1%{?dist}
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://www.freedesktop.org/wiki/Software/libinput/
 Source0:        https://www.freedesktop.org/software/%{name}/%{name}-%{version}.tar.xz
+Patch1:         CVE-2022-1215.patch
 
 BuildRequires:  check
 BuildRequires:  gcc
@@ -49,7 +50,7 @@ The %{name}-test package contains the libinput test suite. It is not
 intended to be run by users.
 
 %prep
-%autosetup
+%autosetup -p1
 
 %build
 %meson -Ddebug-gui=false \
@@ -100,6 +101,9 @@ find %{buildroot}/%{_mandir}/man1 -type f -regextype posix-egrep -regex "$UTILS_
 %{_mandir}/man1/libinput-test-suite.1*
 
 %changelog
+* Wed Aug 31 2022 Jon Slobodzian <joslobo@microsoft.com> - 1.16.5-1
+- Upgrade to 1.16.5-1 and patch CVE-2022-1215
+
 * Wed Apr 06 2022 Hideyuki Nagase <hideyukn@microsoft.com> - 1.16.4-3
 - Replace pkgconfig(libevdev) with systemd-devel.
 
