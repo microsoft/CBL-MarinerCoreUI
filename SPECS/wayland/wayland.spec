@@ -1,12 +1,12 @@
 Summary:        Wayland Compositor Infrastructure
 Name:           wayland
-Version:        1.20.0
-Release:        4%{?dist}
+Version:        1.21.0
+Release:        1%{?dist}
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://wayland.freedesktop.org/
-Source0:        https://wayland.freedesktop.org/releases/%{name}-%{version}.tar.xz
+Source0:        https://gitlab.freedesktop.org/%{name}/%{name}/-/releases/%{version}/downloads/%{name}-%{version}.tar.xz
 BuildRequires:  docbook-style-xsl
 BuildRequires:  doxygen
 BuildRequires:  expat-devel
@@ -40,7 +40,6 @@ Provides:       pkgconfig(wayland-egl) = %{version}-%{release}
 Provides:       pkgconfig(wayland-egl-backend) = %{version}-%{release}
 Provides:       pkgconfig(wayland-scanner) = %{version}-%{release}
 Provides:       pkgconfig(wayland-server) = %{version}-%{release}
-
 %description    devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
@@ -120,6 +119,12 @@ Wayland server library
 %{_libdir}/libwayland-server.so.0*
 
 %changelog
+* Fri Oct 07 2022 Jon Slobodzian <joslobo@microsoft.com> - 1.21.0-1
+- Upgrade to version 1.21.0 to fix CVE-2021-3782
+
+* Thu Apr 07 2022 Hideyuki Nagase <hideyukn@microsoft.com> - 1.20.0-5
+- Added "Requires: libffi-devel" for devel package.
+
 * Tue Mar 15 2022 Hideyuki Nagase <hideyukn@microsoft.com> - 1.20.0-4
 - Initial CBL-Mariner import from Fedora 36 (license: MIT).
 - License verified.
